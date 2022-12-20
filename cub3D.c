@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:17 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/20 19:51:53 by acosta-a         ###   ########.fr       */
+/*   Updated: 2022/12/20 19:55:25 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,9 @@ void	check_args (char **argv)
 		map_name = ft_substr(argv[1], (map_len - 4), 5);
 	else
 		print_exit("Map must be .cub\n");
-	printf("%d \n", map_len);
 	if (!ft_strncmp(map_name, ".cub", 5))
 	{
-		printf("%s \n", map_name);
+		printf("%s \n", map_name); //apemas pra voce visualizar que ele pegou a extensao correta
 		free(map_name);
 		return ;
 	}
