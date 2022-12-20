@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   ft_putstrs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/20 16:50:00 by acosta-a         ###   ########.fr       */
+/*   Created: 2022/04/15 15:45:05 by mcesar-d          #+#    #+#             */
+/*   Updated: 2022/09/12 21:39:50 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-#define CUB3D_H
+#include "libft.h"
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "libft/libft.h"
-//acho bom colocar no header cada função separada pelo nome do arquivo
-/* cub3D.c*/
-
-
-/* exit_utils.c*/
-void	print_exit(char *input);
-
-
-#endif
+void	ft_putstrs(char *before, char *str, char *after, int fd)
+{
+	if (before)
+		write(fd, before, ft_strlen(before));
+	if (str)
+		write(fd, str, ft_strlen(str));
+	if (after)
+		write(fd, after, ft_strlen(after));
+}

@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   ft_findrchr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/20 16:50:00 by acosta-a         ###   ########.fr       */
+/*   Created: 2022/10/30 10:15:53 by acosta-a          #+#    #+#             */
+/*   Updated: 2022/10/30 10:15:55 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-#define CUB3D_H
+#include "libft.h"
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "libft/libft.h"
-//acho bom colocar no header cada função separada pelo nome do arquivo
-/* cub3D.c*/
+int	ft_findrchr(const char *s, int c)
+{
+	int	len_str;
 
-
-/* exit_utils.c*/
-void	print_exit(char *input);
-
-
-#endif
+	len_str = ft_strlen(s) - 1;
+	if (s == NULL)
+		return (0);
+	if (c > 255)
+		return (0);
+	if (c == 0)
+		return (0);
+	while (len_str >= 0)
+	{
+		if (s[len_str] == 0 && s[len_str] != c)
+			return (0);
+		if (s[len_str] == c)
+			return (len_str);
+		len_str--;
+	}
+	return (0);
+}

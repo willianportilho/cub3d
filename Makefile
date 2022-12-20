@@ -6,28 +6,35 @@
 #    By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/16 22:45:46 by acosta-a          #+#    #+#              #
-#    Updated: 2022/12/20 15:44:03 by acosta-a         ###   ########.fr        #
+#    Updated: 2022/12/20 17:02:40 by acosta-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 
-SRCS = cub3D.c
-
+# Compilation #
+SRCS = cub3D.c exit_utils.c
 FLAGS = -g -Werror -Wextra -Wall
-
+RM = rm -rf
 OBJS = ${SRCS:.c=.o}
 
+#HEADER = /include#
+LIBFT = ./libft/libft.a
+LIBFT_PATH = ./libft
+
 $(NAME) : $(OBJS)
-	gcc $(FLAGS) $(SRCS) -o $(NAME)
+	make -C ${LIBFT_PATH}
+	gcc  $(FLAGS) $(SRCS) $(LIBFT) -o $(NAME)
 
 all: $(NAME)
 
 clean:
-	rm -rf $(OBJS)
+	$(RM) $(OBJS)
+	make clean -C ${LIBFT_PATH}
 
 fclean: clean
-	rm -rf $(NAME)
+	$(RM) $(NAME)
+	make fclean -C ${LIBFT_PATH}
 
 re: fclean all clean
 

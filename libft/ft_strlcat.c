@@ -1,29 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/20 16:50:00 by acosta-a         ###   ########.fr       */
+/*   Created: 2022/04/08 00:33:29 by mcesar-d          #+#    #+#             */
+/*   Updated: 2022/11/01 00:45:54 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-#define CUB3D_H
+#include "libft.h"
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "libft/libft.h"
-//acho bom colocar no header cada função separada pelo nome do arquivo
-/* cub3D.c*/
+size_t	ft_strlcat(char *dest, const char *src, size_t size)
+{
+	size_t	len;
+	size_t	len1;
+	size_t	i;
 
-
-/* exit_utils.c*/
-void	print_exit(char *input);
-
-
-#endif
+	len = ft_strlen(src);
+	len1 = ft_strlen(dest);
+	i = 0;
+	if (size <= len1)
+		return (len + size);
+	else
+		len += len1;
+	while (src[i] != 0 && len1 + 1 < size)
+	{
+		dest[len1] = src[i];
+		len1++;
+		i++;
+	}
+	dest[len1] = 0;
+	return (len);
+}
