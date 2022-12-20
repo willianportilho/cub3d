@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# define BUFFER_SIZE 1024 // adicionei o buffer_size da get_next_line
 
 typedef struct s_list
 {
@@ -67,5 +68,12 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 int		ft_findrchr(const char *s, int c);
 void	ft_putstrs(char *before, char *str, char *after, int fd);
+
+// get_next_line_bonus (funções auxiliares não estáticas)
+char	*get_next_line(int fd);
+char	*cut_act(char *actual);
+char	*line_to_send(char *actual);
+char	*ft_strjoin_alt(char *s1, char *s2);
+int		check_break(char *actual);
 
 #endif
