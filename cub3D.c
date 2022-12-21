@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:17 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/21 00:41:53 by acosta-a         ###   ########.fr       */
+/*   Updated: 2022/12/21 19:16:36 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ char	**read_cubfile(char *map)
 	if (fd != -1)
 		print_exit("File cannot be a directory");
 	fd = open(map, O_RDONLY);
+	if (fd == -1)
+		print_exit("File cannot be a opened");
 	single_line_map = '\0';
 	line = get_next_line(fd);
 	while (line != NULL)
@@ -77,6 +79,6 @@ int	main(int argc, char **argv)
 	init_game(&game);
 	check_args(argv);
 	game.map = read_cubfile(argv[1]); // lendo o mapa e transformando em vetor
-//	parse_setting();
+	parse_settings(&game, game.map);
 	clean_exit(&game);
 }
