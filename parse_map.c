@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:39:20 by wportilh          #+#    #+#             */
-/*   Updated: 2022/12/22 18:16:36 by wportilh         ###   ########.fr       */
+/*   Updated: 2022/12/22 20:11:55 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,28 @@ char    **ft_str_arraydup(char **array)
 /*análise do mapa*/
 void    parse_map(t_game *game)
 {
+    int     i;
+    int     j;
     char    **only_map;
 
+    i = -1;
+    j = 0;
     only_map = ft_str_arraydup(game->map + 6); // Aqui eu coloco manualmente a posição do mapa. Depois podemos mudar isso.
-    print_vector(only_map); //Aqui eu imprimo o novo mapa para testes
+    if (!only_map)
+        return (destroy_pointers_char(only_map)); // Estou limpando aqui por enquanto, mas depois podemos unir na função clean se eu incluir only_map no t_game
+    print_vector(only_map); // Aqui eu imprimo o novo mapa para testes
     //print_vector(game->map); //Aqui eu imprimo todo o .cub
+    while(only_map[++i]) // Por enquanto, nessa função itero o mapa e checo caracteres inválidos. Aceito somente esses: " 01ENSW"
+    {
+        while(only_map[i][j])
+        {
+            if (ft_findrchr(" 01ENSW", only_map[i][j++]) == 0)
+            {
+                printf("Error: invalid character (line %d, column %d)\n", i + 1, j);
+                return (destroy_pointers_char(only_map));
+            }
+        }
+        j = 0;
+    }
+    destroy_pointers_char(only_map);
 }
