@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:17 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/21 19:16:36 by acosta-a         ###   ########.fr       */
+/*   Updated: 2022/12/22 00:29:38 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 /*função que faz leitura do mapa e o transforma em um vetor
 ela retorna um vetor onde cada indice do vetor é uma linha*/
+
 char	**read_cubfile(char *map)
 {
 	int		fd;
@@ -35,6 +36,7 @@ char	**read_cubfile(char *map)
 		free(line);
 		line = get_next_line(fd);
 	}
+	remove_space(single_line_map);
 	vector_map = ft_split(single_line_map, '\n');
 	free(single_line_map);
 	return (vector_map);
@@ -66,6 +68,8 @@ void	init_game(t_game *game)
 	//não precisei alocar memoria abaixo mass acho que vai precisar
 //	game = malloc(sizeof(t_game));
 //	game = ft_calloc(sizeof(t_game), 1);
+//	ft_bzero(game, sizeof(game));
+//	ft_bzero(game->settings, sizeof(game->settings));
 	game->x = 99;
 }
 
@@ -76,9 +80,10 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		print_exit("Error\nType 2 arguments");
-	init_game(&game);
+//	init_game(&game);
 	check_args(argv);
 	game.map = read_cubfile(argv[1]); // lendo o mapa e transformando em vetor
+//	print_vector(game.map); apenas pra testar como mapa foi salvo
 	parse_settings(&game, game.map);
 	clean_exit(&game);
 }
