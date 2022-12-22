@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.c                                            :+:      :+:    :+:   */
+/*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:17 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/22 00:29:38 by acosta-a         ###   ########.fr       */
+/*   Updated: 2022/12/22 18:13:33 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,10 @@ int	main(int argc, char **argv)
 //	init_game(&game);
 	check_args(argv);
 	game.map = read_cubfile(argv[1]); // lendo o mapa e transformando em vetor
-//	print_vector(game.map); apenas pra testar como mapa foi salvo
+//	print_vector(game.map); //apenas pra testar como mapa foi salvo
 	parse_settings(&game, game.map);
+//  Deixei uma função específica para o parser do mapa por enquanto, só para facilitar.
+//  Quando acabarmos essa parte, acho que dá para organizar melhor
+	parse_map(&game);
 	clean_exit(&game);
 }

@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/16 22:45:46 by acosta-a          #+#    #+#              #
-#    Updated: 2022/12/22 00:07:21 by acosta-a         ###   ########.fr        #
+#    Updated: 2022/12/22 16:59:54 by wportilh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 
 # Compilation #
-SRCS = cub3D.c exit_utils.c parse_settings.c parse_utils.c
+SRCS = cub3D.c exit_utils.c parse_settings.c parse_utils.c parse_map.c
 FLAGS = -g -Werror -Wextra -Wall
 RM = rm -rf
 OBJS = ${SRCS:.c=.o}
