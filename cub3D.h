@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/22 17:00:08 by wportilh         ###   ########.fr       */
+/*   Updated: 2022/12/23 00:50:55 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@
 # include <string.h>
 # include <math.h>
 # include "libft/libft.h"
+
+# define	TRUE 1 // Vou precisar em algumas funções
+# define	FALSE 0 // Essa também kkk
+
 /*
 typedef struct s_settings
 {

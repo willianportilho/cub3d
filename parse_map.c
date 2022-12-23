@@ -6,11 +6,14 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:39:20 by wportilh          #+#    #+#             */
-/*   Updated: 2022/12/22 23:28:43 by wportilh         ###   ########.fr       */
+/*   Updated: 2022/12/23 00:58:19 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+/* Deixei tudo nesse arquivo para facilitar, mas depois que estiver ok, 
+   eu mudo o que precisar de lugar para ficar mais clean*/
 
 /* Retorna o tamanho de um array (vetor) de string*/
 size_t  ft_str_arraylen(char **array)
@@ -25,8 +28,8 @@ size_t  ft_str_arraylen(char **array)
     return (array_size);
 }
 
-/* Retorna um novo array (vetor) alocado com malloc (a memória do array antigo não é liberada)*/
-/* Pelo menos por enquanto, estou pegando o game.map e fazendo o novo array a partir do mapa, depois dos elementos*/
+/* Retorna um novo array (vetor) alocado com malloc (a memória do array antigo não é liberada)
+   Pelo menos por enquanto, estou pegando o game.map e fazendo o novo array a partir do mapa, depois dos elementos*/
 char    **ft_str_arraydup(char **array)
 {
     int     i;
@@ -48,48 +51,79 @@ char    **ft_str_arraydup(char **array)
     return (new_array);
 }
 
-/* Checa se o caractere 'c' é encontrado na string 'str'*/
-int ft_check_char(char *str, int c)
+/* Por enquanto, nessa função, itero o mapa e checo caracteres inválidos. Aceito somente esses: " 01ENSW"*/
+void    check_invalid_characters(char ***map)
 {
     int i;
+    int j;
 
     i = -1;
-    if (!str)
-        return (-1);
-    while (str[++i])
+    j = -1;
+    while((*map)[++i])
     {
-        if ((unsigned char)str[i] == c)
-            return (c);
+        while((*map)[i][j])
+        {
+            if (ft_strchr(" 10ENSW", (*map)[i][++j]) == NULL)
+            {
+                // estou colocando bastante informações por enquanto para facilitar no desenvolvimento
+                printf("Error\ninvalid character: '%d' (line %d, column %d)\n", (*map)[i][j], i + 1, j + 1);
+                destroy_pointers_char(*map);
+                exit(-1);
+            }
+        }
+        j = -1;
     }
-    return (-1);
 }
 
-/*análise do mapa*/
-void    parse_map(t_game *game)
+/* Checa se as linhas do mapa começam com 1 da esquerda para a direita.*/
+void    check_walls_line_left(char ***map)
 {
-    int     i;
-    int     j;
-    char    **only_map;
+    int i;
+    int j;
+    int check_wall;
 
     i = -1;
-    j = 0;
+    j = -1;
+    check_wall = FALSE;
+    while ((*map)[++i])
+    {
+        while ((*map)[i][++j])
+        {
+            if ((*map)[i][j] == '1')
+            {
+                check_wall = TRUE;
+                break ;
+            }
+            else if ((*map)[i][j] != ' ')
+            {
+                printf("Error\ninvalid format: '%c' (line %d, column %d): 1 are required around the map\n", (*map)[i][j], i + 1, j + 1);
+                destroy_pointers_char(*map);
+                exit (-1);
+            }
+        }
+        if (check_wall == FALSE)
+        {
+            printf("Error\ninvalid format: '%c' (line %d, column %d): 1 are required around the map\n", (*map)[i][j], i + 1, j + 1);
+            destroy_pointers_char(*map);
+            exit (-1);
+        }
+        j = -1;
+        check_wall = FALSE;
+    }
+}
+
+/*análise do mapa
+  Essa análise pode ter várias funções no começo, mas aos poucos vou tentar diminuir e otimizar*/
+void    parse_map(t_game *game)
+{
+    char    **only_map;
+
     only_map = ft_str_arraydup(game->map + 6); // Aqui eu coloco manualmente a posição do mapa. Depois podemos mudar isso.
     if (!only_map)
         return (destroy_pointers_char(only_map)); // Estou limpando aqui por enquanto, mas depois podemos unir na função clean se eu incluir only_map no t_game
-    print_vector(only_map); // Aqui eu imprimo o novo mapa para testes
+    //print_vector(only_map); // Aqui eu imprimo o novo mapa para testes
     //print_vector(game->map); //Aqui eu imprimo todo o .cub
-    while(only_map[++i]) // Por enquanto, nessa função, itero o mapa e checo caracteres inválidos. Aceito somente esses: " 01ENSW"
-    {
-        while(only_map[i][j])
-        {
-            if (ft_check_char(" 10ENSW", only_map[i][j++]) == -1)
-            {
-                printf("char: '%d'\n", ft_check_char(" 10ENSW", only_map[i][j - 1]));
-                printf("Error\ninvalid character '%d' (line %d, column %d)\n", only_map[i][j - 1], i + 1, j);
-                return (destroy_pointers_char(only_map));
-            }
-        }
-        j = 0;
-    }
+    check_invalid_characters(&only_map);
+    check_walls_line_left(&only_map);
     destroy_pointers_char(only_map);
 }
