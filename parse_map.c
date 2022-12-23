@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:39:20 by wportilh          #+#    #+#             */
-/*   Updated: 2022/12/23 16:19:51 by wportilh         ###   ########.fr       */
+/*   Updated: 2022/12/23 16:58:07 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,31 +88,51 @@ void    check_walls_1(t_game *game)
 {
     int i;
     int j;
-    int size;
     char **arr;
 
     i = -1;
     arr = game->map;
-    size = ft_strlen(arr[0]);
     while (arr[++i])
     {
         j = -1;
-        if ((ft_strchr("0ENSW", arr[i][0])) || (ft_strchr("0ENSW", arr[i][size - 1])))
-            map_error("invalid format: needed '1' around the map", game);
         while (arr[i][++j])
         {
             if (arr[i][j] == ' ')
             {
                 if ((j > 0) && (ft_strchr("0ENSW", arr[i][j - 1])))
-                    map_error("invalid format: needed 1 around the map", game);
+                    map_error("invalid format1: needed 1 around the map", game); // Acho que vou fazer um define com essas mensagens depois
                 if ((arr[i][j + 1]) && (ft_strchr("0ENSW", arr[i][j + 1])))
-                    map_error("invalid format: needed 1 around the map", game);
+                    map_error("invalid format2: needed 1 around the map", game);
                 if ((i > 0) && (ft_strchr("0ENSW", arr[i - 1][j])))
-                    map_error("invalid format: needed 1 around the map", game);
+                    map_error("invalid format3: needed 1 around the map", game);
                 if ((arr[i + 1]) && (ft_strchr("0ENSW", arr[i + 1][j])))
-                    map_error("invalid format: needed 1 around the map", game);
+                    map_error("invalid format4: needed 1 around the map", game);
             }
         }
+    }
+}
+
+/*Essa fução checa se as linhas e colunas no index 0 e último index antes do '\0' são diferentes de espaço ' ' ou um '1'*/
+void    check_walls_2(t_game *game)
+{
+    int i;
+    int j;
+    int size;
+
+    i = -1;
+    j = -1;
+    size = ft_strlen(game->map[0]);
+    while (game->map[++i]) // checa linhas
+    {
+        if ((ft_strchr("0ENSW", game->map[i][0])) // index 0
+         || (ft_strchr("0ENSW", game->map[i][size - 1]))) // último index
+            map_error("invalid format5: needed '1' around the map", game);
+    }
+    while (++j < size) // checa colunas
+    {
+        if ((ft_strchr("0ENSW", game->map[0][j])) // index 0
+         || (ft_strchr("0ENSW", game->map[ft_str_arraylen(game->map) - 1][j]))) // último index
+            map_error("invalid format6: needed '1' around the map", game);
     }
 }
 
@@ -125,4 +145,5 @@ void    parse_map(t_game *game)
         return (destroy_pointers_char(game->map)); // Estou limpando aqui por enquanto, mas depois podemos unir na função clean se eu incluir game->map no t_game
     check_invalid_characters(game);
     check_walls_1(game);
+    check_walls_2(game);
 }
