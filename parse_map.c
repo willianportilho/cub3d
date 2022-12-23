@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:39:20 by wportilh          #+#    #+#             */
-/*   Updated: 2022/12/23 15:20:57 by wportilh         ###   ########.fr       */
+/*   Updated: 2022/12/23 16:19:51 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ char    **ft_str_arrayndup_free(size_t start, char **array)
     return (new_array);
 }
 
-int map_error(int i, int j, char *message, t_game *game)
+int map_error(char *message, t_game *game)
 {
     // estou colocando bastante informações por enquanto para facilitar no desenvolvimento
-    printf("Error\n%s: '%c' (line %d, column %d)\n", message, game->map[i][j], i + 1, j + 1);
+    printf("Error\n%s\n", message);
     clean_exit(game);
     exit(-1);
 }
@@ -76,7 +76,7 @@ void    check_invalid_characters(t_game *game)
         while(game->map[i][++j])
         {
             if (ft_strchr(" 10ENSW", game->map[i][j]) == NULL)
-                map_error(i, j, "invalid character", game);
+                map_error("invalid character", game);
         }
     }
 }
@@ -84,29 +84,33 @@ void    check_invalid_characters(t_game *game)
 /* Aqui estou testando uma outra abordagem que parece melhor, para checar se ' ' espaços estão ao lado de um caratere proibido "0ENSW"
    os espaços só podem ficar ao lado de espaços ' ' e muros '1'
    Por enquanto, eu tirei o "!= NULL" das checagens para caber na norma (80 colunas), mas depois vejo se consigo otimizar para ficar mais legível*/
-void    check_walls(t_game *game)
+void    check_walls_1(t_game *game)
 {
     int i;
     int j;
+    int size;
     char **arr;
 
     i = -1;
     arr = game->map;
+    size = ft_strlen(arr[0]);
     while (arr[++i])
     {
         j = -1;
+        if ((ft_strchr("0ENSW", arr[i][0])) || (ft_strchr("0ENSW", arr[i][size - 1])))
+            map_error("invalid format: needed '1' around the map", game);
         while (arr[i][++j])
         {
             if (arr[i][j] == ' ')
             {
                 if ((j > 0) && (ft_strchr("0ENSW", arr[i][j - 1])))
-                    map_error(i, j, "invalid format1", game);
+                    map_error("invalid format: needed 1 around the map", game);
                 if ((arr[i][j + 1]) && (ft_strchr("0ENSW", arr[i][j + 1])))
-                    map_error(i, j, "invalid format2", game);
+                    map_error("invalid format: needed 1 around the map", game);
                 if ((i > 0) && (ft_strchr("0ENSW", arr[i - 1][j])))
-                    map_error(i, j, "invalid format3", game);
+                    map_error("invalid format: needed 1 around the map", game);
                 if ((arr[i + 1]) && (ft_strchr("0ENSW", arr[i + 1][j])))
-                    map_error(i, j, "invalid format4", game);
+                    map_error("invalid format: needed 1 around the map", game);
             }
         }
     }
@@ -120,5 +124,5 @@ void    parse_map(t_game *game)
     if (!game->map)
         return (destroy_pointers_char(game->map)); // Estou limpando aqui por enquanto, mas depois podemos unir na função clean se eu incluir game->map no t_game
     check_invalid_characters(game);
-    check_walls(game);
+    check_walls_1(game);
 }
