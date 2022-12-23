@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:39:20 by wportilh          #+#    #+#             */
-/*   Updated: 2022/12/23 01:23:43 by wportilh         ###   ########.fr       */
+/*   Updated: 2022/12/23 14:46:55 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,83 +28,89 @@ size_t  ft_str_arraylen(char **array)
     return (array_size);
 }
 
-/* Retorna um novo array (vetor) alocado com malloc (a memória do array antigo não é liberada)
+/* Retorna um novo array (vetor) alocado com malloc (a memória do array É LIBERADA, antes não era)
+   start define de qual index a cópia comecará
    Pelo menos por enquanto, estou pegando o game.map e fazendo o novo array a partir do mapa, depois dos elementos*/
-char    **ft_str_arraydup(char **array)
+char    **ft_str_arrayndup_free(size_t start, char **array)
 {
-    int     i;
+    size_t  i;
     char    **new_array;
 
     if (!array)
         return (NULL);
-    i = -1;
-    new_array = malloc((ft_str_arraylen(array) + 1) * sizeof(char *));
+    if (start > ft_str_arraylen(array))
+        return (NULL);
+    new_array = malloc((start + 1) * sizeof(char *));
     if (!new_array)
         return (NULL);
-    while (array[++i])
+    i = -1;
+    while (++i < start)
     {
-        new_array[i] = ft_strdup(array[i]);
+        new_array[i] = ft_strdup(array[start]);
         if (!new_array[i])
             return (NULL);
     }
     new_array[i] = NULL;
+    destroy_pointers_char(array);
     return (new_array);
 }
 
-int parse_map_error(char **map, char *message, int i, int j)
+int parse_map_error(int i, int j, char *message, t_game *game)
 {
     // estou colocando bastante informações por enquanto para facilitar no desenvolvimento
-    printf("Error\n%s: '%c' (line %d, column %d)\n", message, map[i][j], i + 1, j + 1);
-    destroy_pointers_char(map);
+    printf("Error\n%s: '%c' (line %d, column %d)\n", message, game->map[i][j], i + 1, j + 1);
+    clean_exit(game);
     exit(-1);
 }
 
 /* Por enquanto, nessa função, itero o mapa e checo caracteres inválidos. Aceito somente esses: " 01ENSW"*/
-void    check_invalid_characters(char ***map)
+void    check_invalid_characters(t_game *game)
 {
     int i;
     int j;
 
     i = -1;
     j = -1;
-    while((*map)[++i])
+    while(game->map[++i])
     {
-        while((*map)[i][++j])
+        while(game->map[i][++j])
         {
-            if (ft_strchr(" 10ENSW", (*map)[i][j]) == NULL)
-                parse_map_error(*map, "invalid character", i, j);
+            if (ft_strchr(" 10ENSW", game->map[i][j]) == NULL)
+                parse_map_error(i, j, "invalid character", game);
         }
         j = -1;
     }
-    printf("OK\n");
 }
 
-/* Checa se as linhas do mapa começam com 1 da esquerda para a direita.*/
-void    check_walls_line_left(char ***map)
+/* Aqui estou testando uma outra abordagem que parece melhor, para checar se ' ' espaços estão ao lado de um caratere proibido "0ENSW"
+   os espaços só podem ficar ao lado de espaços ' ' e muros '1'
+   Por enquanto, eu tirei o "!= NULL" das checagens para caber na norma (80 colunas), mas depois vejo se consigo otimizar para ficar mais legível*/
+void    check_walls(t_game *game)
 {
     int i;
     int j;
-    int check_wall;
+    char **arr;
 
     i = -1;
     j = -1;
-    check_wall = FALSE;
-    while ((*map)[++i])
+    arr = game->map;
+    while (arr[++i])
     {
-        while ((*map)[i][++j])
+        while (arr[i][++j])
         {
-            if ((*map)[i][j] == '1')
+            if (arr[i][j] == ' ')
             {
-                check_wall = TRUE;
-                break ;
+                if ((j > 0) && (ft_strchr("0ENSW", arr[i][j - 1])))
+                    parse_map_error(i, j, "invalid format1", game);
+                if ((arr[i][j + 1]) && (ft_strchr("0ENSW", arr[i][j + 1])))
+                    parse_map_error(i, j, "invalid format2", game);
+                if ((i > 0) && (ft_strchr("0ENSW", arr[i - 1][j])))
+                    parse_map_error(i, j, "invalid format3", game);
+                if ((arr[i + 1][j]) && (ft_strchr("0ENSW", arr[i + 1][j])))
+                    parse_map_error(i, j, "invalid format4", game);
             }
-            else if ((*map)[i][j] != ' ')
-                parse_map_error(*map, "invalid format", i, j);
         }
-        if (check_wall == FALSE)
-            parse_map_error(*map, "invalid format: 1 are required around the map", i, j);
         j = -1;
-        check_wall = FALSE;
     }
 }
 
@@ -112,14 +118,11 @@ void    check_walls_line_left(char ***map)
   Essa análise pode ter várias funções no começo, mas aos poucos vou tentar diminuir e otimizar*/
 void    parse_map(t_game *game)
 {
-    char    **only_map;
-
-    only_map = ft_str_arraydup(game->map + 6); // Aqui eu coloco manualmente a posição do mapa. Depois podemos mudar isso.
-    if (!only_map)
-        return (destroy_pointers_char(only_map)); // Estou limpando aqui por enquanto, mas depois podemos unir na função clean se eu incluir only_map no t_game
-    //print_vector(only_map); // Aqui eu imprimo o novo mapa para testes
+    game->map = ft_str_arrayndup_free(6, game->map); // Aqui eu coloco manualmente a posição do mapa. Depois podemos mudar isso.
+    if (!game->map)
+        return (destroy_pointers_char(game->map)); // Estou limpando aqui por enquanto, mas depois podemos unir na função clean se eu incluir game->map no t_game
+    //print_vector(game->map); // Aqui eu imprimo o novo mapa para testes
     //print_vector(game->map); //Aqui eu imprimo todo o .cub
-    check_invalid_characters(&only_map);
-    check_walls_line_left(&only_map);
-    destroy_pointers_char(only_map);
+    check_invalid_characters(game);
+    check_walls(game);
 }
