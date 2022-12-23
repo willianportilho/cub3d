@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:39:20 by wportilh          #+#    #+#             */
-/*   Updated: 2022/12/22 20:11:55 by wportilh         ###   ########.fr       */
+/*   Updated: 2022/12/22 23:28:43 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,22 @@ char    **ft_str_arraydup(char **array)
     return (new_array);
 }
 
+/* Checa se o caractere 'c' é encontrado na string 'str'*/
+int ft_check_char(char *str, int c)
+{
+    int i;
+
+    i = -1;
+    if (!str)
+        return (-1);
+    while (str[++i])
+    {
+        if ((unsigned char)str[i] == c)
+            return (c);
+    }
+    return (-1);
+}
+
 /*análise do mapa*/
 void    parse_map(t_game *game)
 {
@@ -62,13 +78,14 @@ void    parse_map(t_game *game)
         return (destroy_pointers_char(only_map)); // Estou limpando aqui por enquanto, mas depois podemos unir na função clean se eu incluir only_map no t_game
     print_vector(only_map); // Aqui eu imprimo o novo mapa para testes
     //print_vector(game->map); //Aqui eu imprimo todo o .cub
-    while(only_map[++i]) // Por enquanto, nessa função itero o mapa e checo caracteres inválidos. Aceito somente esses: " 01ENSW"
+    while(only_map[++i]) // Por enquanto, nessa função, itero o mapa e checo caracteres inválidos. Aceito somente esses: " 01ENSW"
     {
         while(only_map[i][j])
         {
-            if (ft_findrchr(" 01ENSW", only_map[i][j++]) == 0)
+            if (ft_check_char(" 10ENSW", only_map[i][j++]) == -1)
             {
-                printf("Error: invalid character (line %d, column %d)\n", i + 1, j);
+                printf("char: '%d'\n", ft_check_char(" 10ENSW", only_map[i][j - 1]));
+                printf("Error\ninvalid character '%d' (line %d, column %d)\n", only_map[i][j - 1], i + 1, j);
                 return (destroy_pointers_char(only_map));
             }
         }
