@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:39:20 by wportilh          #+#    #+#             */
-/*   Updated: 2022/12/23 14:46:55 by wportilh         ###   ########.fr       */
+/*   Updated: 2022/12/23 15:20:57 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,24 @@ char    **ft_str_arrayndup_free(size_t start, char **array)
 
     if (!array)
         return (NULL);
-    if (start > ft_str_arraylen(array))
+    if (start >= ft_str_arraylen(array))
         return (NULL);
-    new_array = malloc((start + 1) * sizeof(char *));
+    new_array = malloc((ft_str_arraylen(array) - start + 1) * sizeof(char *));
     if (!new_array)
         return (NULL);
     i = -1;
-    while (++i < start)
+    while (array[start])
     {
-        new_array[i] = ft_strdup(array[start]);
+        new_array[++i] = ft_strdup(array[start++]);
         if (!new_array[i])
             return (NULL);
     }
-    new_array[i] = NULL;
+    new_array[++i] = NULL;
     destroy_pointers_char(array);
     return (new_array);
 }
 
-int parse_map_error(int i, int j, char *message, t_game *game)
+int map_error(int i, int j, char *message, t_game *game)
 {
     // estou colocando bastante informações por enquanto para facilitar no desenvolvimento
     printf("Error\n%s: '%c' (line %d, column %d)\n", message, game->map[i][j], i + 1, j + 1);
@@ -70,15 +70,14 @@ void    check_invalid_characters(t_game *game)
     int j;
 
     i = -1;
-    j = -1;
     while(game->map[++i])
     {
+        j = -1;
         while(game->map[i][++j])
         {
             if (ft_strchr(" 10ENSW", game->map[i][j]) == NULL)
-                parse_map_error(i, j, "invalid character", game);
+                map_error(i, j, "invalid character", game);
         }
-        j = -1;
     }
 }
 
@@ -92,25 +91,24 @@ void    check_walls(t_game *game)
     char **arr;
 
     i = -1;
-    j = -1;
     arr = game->map;
     while (arr[++i])
     {
+        j = -1;
         while (arr[i][++j])
         {
             if (arr[i][j] == ' ')
             {
                 if ((j > 0) && (ft_strchr("0ENSW", arr[i][j - 1])))
-                    parse_map_error(i, j, "invalid format1", game);
+                    map_error(i, j, "invalid format1", game);
                 if ((arr[i][j + 1]) && (ft_strchr("0ENSW", arr[i][j + 1])))
-                    parse_map_error(i, j, "invalid format2", game);
+                    map_error(i, j, "invalid format2", game);
                 if ((i > 0) && (ft_strchr("0ENSW", arr[i - 1][j])))
-                    parse_map_error(i, j, "invalid format3", game);
-                if ((arr[i + 1][j]) && (ft_strchr("0ENSW", arr[i + 1][j])))
-                    parse_map_error(i, j, "invalid format4", game);
+                    map_error(i, j, "invalid format3", game);
+                if ((arr[i + 1]) && (ft_strchr("0ENSW", arr[i + 1][j])))
+                    map_error(i, j, "invalid format4", game);
             }
         }
-        j = -1;
     }
 }
 
@@ -121,8 +119,6 @@ void    parse_map(t_game *game)
     game->map = ft_str_arrayndup_free(6, game->map); // Aqui eu coloco manualmente a posição do mapa. Depois podemos mudar isso.
     if (!game->map)
         return (destroy_pointers_char(game->map)); // Estou limpando aqui por enquanto, mas depois podemos unir na função clean se eu incluir game->map no t_game
-    //print_vector(game->map); // Aqui eu imprimo o novo mapa para testes
-    //print_vector(game->map); //Aqui eu imprimo todo o .cub
     check_invalid_characters(game);
     check_walls(game);
 }
