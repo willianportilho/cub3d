@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:39:20 by wportilh          #+#    #+#             */
-/*   Updated: 2022/12/23 16:58:07 by wportilh         ###   ########.fr       */
+/*   Updated: 2022/12/23 18:54:56 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,34 @@ int map_error(char *message, t_game *game)
     exit(-1);
 }
 
+/*Pega somente o mapa, sem os elementos. Essa variável start é incrementada até achar as 6 correspondências com strnstr
+  Se não acha, retorna erro. Com start, consigo saber de qual index eu começo a copiar o mapa*/
+void    get_only_map(t_game *game)
+{
+    int i;
+    int size;
+    int start;
+
+    i = -1;
+    start = 0;
+    while (start < 6 && game->map[++i])
+    {
+        size = ft_strlen(game->map[i]) - 1;
+        if ((ft_strnstr(game->map[i], "WE", size) != 0)
+        || (ft_strnstr(game->map[i], "EA", size) != 0)
+        || (ft_strnstr(game->map[i], "NO", size) != 0)
+        || (ft_strnstr(game->map[i], "SO", size) != 0)
+        || (ft_strnstr(game->map[i], "F", size) != 0)
+        || (ft_strnstr(game->map[i], "C", size) != 0))
+            start++;
+    }
+    if (start < 6)
+        map_error("needed 6 elements", game);
+    game->map = ft_str_arrayndup_free(start, game->map); // Aqui eu coloco manualmente a posição do mapa. Depois podemos mudar isso.
+    if (!game->map)
+        return (destroy_pointers_char(game->map)); // Estou limpando aqui por enquanto, mas depois podemos unir na função clean se eu incluir game->map no t_game
+}
+
 /* Por enquanto, nessa função, itero o mapa e checo caracteres inválidos. Aceito somente esses: " 01ENSW"*/
 void    check_invalid_characters(t_game *game)
 {
@@ -100,13 +128,13 @@ void    check_walls_1(t_game *game)
             if (arr[i][j] == ' ')
             {
                 if ((j > 0) && (ft_strchr("0ENSW", arr[i][j - 1])))
-                    map_error("invalid format1: needed 1 around the map", game); // Acho que vou fazer um define com essas mensagens depois
+                    map_error("invalid format: needed 1 around the map", game); // Acho que vou fazer um define com essas mensagens depois
                 if ((arr[i][j + 1]) && (ft_strchr("0ENSW", arr[i][j + 1])))
-                    map_error("invalid format2: needed 1 around the map", game);
+                    map_error("invalid format: needed 1 around the map", game);
                 if ((i > 0) && (ft_strchr("0ENSW", arr[i - 1][j])))
-                    map_error("invalid format3: needed 1 around the map", game);
+                    map_error("invalid format: needed 1 around the map", game);
                 if ((arr[i + 1]) && (ft_strchr("0ENSW", arr[i + 1][j])))
-                    map_error("invalid format4: needed 1 around the map", game);
+                    map_error("invalid format: needed 1 around the map", game);
             }
         }
     }
@@ -126,13 +154,13 @@ void    check_walls_2(t_game *game)
     {
         if ((ft_strchr("0ENSW", game->map[i][0])) // index 0
          || (ft_strchr("0ENSW", game->map[i][size - 1]))) // último index
-            map_error("invalid format5: needed '1' around the map", game);
+            map_error("invalid format: needed '1' around the map", game);
     }
     while (++j < size) // checa colunas
     {
         if ((ft_strchr("0ENSW", game->map[0][j])) // index 0
          || (ft_strchr("0ENSW", game->map[ft_str_arraylen(game->map) - 1][j]))) // último index
-            map_error("invalid format6: needed '1' around the map", game);
+            map_error("invalid format: needed '1' around the map", game);
     }
 }
 
@@ -140,9 +168,7 @@ void    check_walls_2(t_game *game)
   Essa análise pode ter várias funções no começo, mas aos poucos vou tentar diminuir e otimizar*/
 void    parse_map(t_game *game)
 {
-    game->map = ft_str_arrayndup_free(6, game->map); // Aqui eu coloco manualmente a posição do mapa. Depois podemos mudar isso.
-    if (!game->map)
-        return (destroy_pointers_char(game->map)); // Estou limpando aqui por enquanto, mas depois podemos unir na função clean se eu incluir game->map no t_game
+    get_only_map(game);
     check_invalid_characters(game);
     check_walls_1(game);
     check_walls_2(game);
