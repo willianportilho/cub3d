@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:39:20 by wportilh          #+#    #+#             */
-/*   Updated: 2022/12/23 00:58:19 by wportilh         ###   ########.fr       */
+/*   Updated: 2022/12/23 01:23:43 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,14 @@ char    **ft_str_arraydup(char **array)
     return (new_array);
 }
 
+int parse_map_error(char **map, char *message, int i, int j)
+{
+    // estou colocando bastante informações por enquanto para facilitar no desenvolvimento
+    printf("Error\n%s: '%c' (line %d, column %d)\n", message, map[i][j], i + 1, j + 1);
+    destroy_pointers_char(map);
+    exit(-1);
+}
+
 /* Por enquanto, nessa função, itero o mapa e checo caracteres inválidos. Aceito somente esses: " 01ENSW"*/
 void    check_invalid_characters(char ***map)
 {
@@ -61,18 +69,14 @@ void    check_invalid_characters(char ***map)
     j = -1;
     while((*map)[++i])
     {
-        while((*map)[i][j])
+        while((*map)[i][++j])
         {
-            if (ft_strchr(" 10ENSW", (*map)[i][++j]) == NULL)
-            {
-                // estou colocando bastante informações por enquanto para facilitar no desenvolvimento
-                printf("Error\ninvalid character: '%d' (line %d, column %d)\n", (*map)[i][j], i + 1, j + 1);
-                destroy_pointers_char(*map);
-                exit(-1);
-            }
+            if (ft_strchr(" 10ENSW", (*map)[i][j]) == NULL)
+                parse_map_error(*map, "invalid character", i, j);
         }
         j = -1;
     }
+    printf("OK\n");
 }
 
 /* Checa se as linhas do mapa começam com 1 da esquerda para a direita.*/
@@ -95,18 +99,10 @@ void    check_walls_line_left(char ***map)
                 break ;
             }
             else if ((*map)[i][j] != ' ')
-            {
-                printf("Error\ninvalid format: '%c' (line %d, column %d): 1 are required around the map\n", (*map)[i][j], i + 1, j + 1);
-                destroy_pointers_char(*map);
-                exit (-1);
-            }
+                parse_map_error(*map, "invalid format", i, j);
         }
         if (check_wall == FALSE)
-        {
-            printf("Error\ninvalid format: '%c' (line %d, column %d): 1 are required around the map\n", (*map)[i][j], i + 1, j + 1);
-            destroy_pointers_char(*map);
-            exit (-1);
-        }
+            parse_map_error(*map, "invalid format: 1 are required around the map", i, j);
         j = -1;
         check_wall = FALSE;
     }
