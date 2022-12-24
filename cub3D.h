@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.h                                            :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/23 00:50:55 by wportilh         ###   ########.fr       */
+/*   Updated: 2022/12/23 23:46:03 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,27 @@
 # define	TRUE 1 // Vou precisar em algumas funções
 # define	FALSE 0 // Essa também kkk
 
-/*
-typedef struct s_settings
+typedef struct s_rgb
 {
-}	t_settings;
-*/
+	int				r;
+	int				g;
+	int				b;
+}					t_rgb;
+
 typedef struct s_game
 {
-	int				x;
+	int				settings_count;
 	char			*no_wall_path;
 	char			*so_wall_path;
 	char			*we_wall_path;
 	char			*ea_wall_path;
 	char			*f_inputs;
 	char			*c_inputs;
+	t_rgb			c;
+	t_rgb			f;
 	char			**map;
 }	t_game;
 
-
-/*acho bom colocar no header cada função separada pelo nome do arquivo*/
 /* cub3D.c*/
 
 /* exit_utils.c*/

@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:28:40 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/21 19:16:56 by acosta-a         ###   ########.fr       */
+/*   Updated: 2022/12/23 22:23:23 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,12 @@ void	print_exit(char *input)
 void	clean_exit(t_game *game)
 {
 	destroy_pointers_char(game->map);
-//	free(game);
+	free(game->no_wall_path);
+	free(game->so_wall_path);
+	free(game->we_wall_path);
+	free(game->ea_wall_path);
+	free(game->c_inputs);
+	free(game->f_inputs);
 	exit (1);
 }
 

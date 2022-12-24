@@ -6,49 +6,112 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 18:30:52 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/22 00:28:38 by acosta-a         ###   ########.fr       */
+/*   Updated: 2022/12/24 01:16:02 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+//função pega numero das cores do C e salva em vetor rgb red green blue
+void	get_c_colors(t_game *game, char *map_line)
+{
+	int		i;
+	int		j;
+	char	*color;
+
+	i = 0;
+	while (map_line && map_line[i] != ',')
+		i++;
+	color = ft_substr(map_line, 1, i - 1);
+	game->c.r = ft_atoi(color);
+	free(color);
+	j = i + 1;
+	i++;
+	while (map_line && map_line[i] != ',')
+		i++;
+	color = ft_substr(map_line, j, i - j);
+	game->c.g = ft_atoi(color);
+	free(color);
+	j = i;
+	while (map_line && map_line[i])
+		i++;
+	color = ft_substr(map_line, j + 1, i - j);
+	game->c.b = ft_atoi(color);
+	free(color);
+}
+
+//função pega numero das cores do F e salva em vetor rgb red green blue
+void	get_f_colors(t_game *game, char *map_line)
+{
+	int		i;
+	int		j;
+	char	*color;
+
+	i = 0;
+	while (map_line && map_line[i] != ',')
+		i++;
+	color = ft_substr(map_line, 1, i - 1);
+	game->f.r = ft_atoi(color);
+	free(color);
+	j = i + 1;
+	i++;
+	while (map_line && map_line[i] != ',')
+		i++;
+	color = ft_substr(map_line, j, i - j);
+	game->f.g = ft_atoi(color);
+	free(color);
+	j = i;
+	while (map_line && map_line[i])
+		i++;
+	color = ft_substr(map_line, j + 1, i - j);
+	game->f.b = ft_atoi(color);
+	free(color);
+}
 
 int	get_settings_2(t_game *game, char *map_line)
 {
 	if (map_line && !ft_strncmp(map_line, "F", 1))
 	{
-		game->f_inputs = ft_substr(map_line, 1,  ft_strlen(map_line) - 1);
-		printf("%s", game->f_inputs);
-		return(1);
+		game->f_inputs = ft_substr(map_line, 1, ft_strlen(map_line) - 1);
+		get_f_colors(game, map_line);
+		game->settings_count += 17;
+		return (1);
 	}
 	if (map_line && !ft_strncmp(map_line, "C", 1))
 	{
-		game->c_inputs = ft_substr(map_line, 1,  ft_strlen(map_line) - 1);
-		return(1);
-	}
-	return (0);
-}
-//função que pega tudo que vem escrito após o NO, EA, SO ,WE , F e C  
-int	get_settings(t_game *game, char *map_line)
-{
-	if (map_line && !ft_strncmp(map_line, "NO", 2))
-	{
-		game->no_wall_path = ft_substr(map_line, 2,  ft_strlen(map_line) - 2);
-		return(1);
-	}
-	if (map_line && !ft_strncmp(map_line, "SO", 2))
-	{
-		game->so_wall_path = ft_substr(map_line, 2,  ft_strlen(map_line) - 2);
-		return(1);
-	}
-	if (map_line && !ft_strncmp(map_line, "WE", 2))
-	{
-		game->we_wall_path = ft_substr(map_line, 2,  ft_strlen(map_line) - 2);
-		return(1);
+		game->c_inputs = ft_substr(map_line, 1, ft_strlen(map_line) - 1);
+		get_c_colors(game, map_line);
+		game->settings_count += 19;
+		return (1);
 	}
 	if (map_line && !ft_strncmp(map_line, "EA", 2))
 	{
 		game->ea_wall_path = ft_substr(map_line, 2,  ft_strlen(map_line) - 2);
-		return(1);
+		game->settings_count += 13;
+		return (1);
+	}
+	return (0);
+}
+
+//função que pega tudo que vem escrito após o NO, EA, SO ,WE , F e C
+int	get_settings(t_game *game, char *map_line)
+{
+	if (map_line && !ft_strncmp(map_line, "NO", 2))
+	{
+		game->no_wall_path = ft_substr(map_line, 2, ft_strlen(map_line) - 2);
+		game->settings_count += 5;
+		return (1);
+	}
+	if (map_line && !ft_strncmp(map_line, "SO", 2))
+	{
+		game->so_wall_path = ft_substr(map_line, 2, ft_strlen(map_line) - 2);
+		game->settings_count += 7;
+		return (1);
+	}
+	if (map_line && !ft_strncmp(map_line, "WE", 2))
+	{
+		game->we_wall_path = ft_substr(map_line, 2, ft_strlen(map_line) - 2);
+		game->settings_count += 11;
+		return (1);
 	}
 	if (get_settings_2(game, map_line) == 1)
 		return (1);
@@ -61,15 +124,18 @@ void	parse_settings(t_game *game, char **map)
 	int		j;
 
 	i = -1;
-	while (map[i++])
+	while (map[++i])
 	{
 		j = 0;
 		while (map[i] && map[i][j])
 		{
+			if (i < 6)
+				remove_space(map[i]);
 			if (get_settings(game, map[i]) == 1)
 				i++;
 			j++;
 		}
 	}
-	printf("teste\n");
+	if (game->settings_count != 72)
+		print_exit("You must type 6 settings");
 }

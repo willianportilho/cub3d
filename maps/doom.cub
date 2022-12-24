@@ -1,11 +1,10 @@
 WE ./textures/walls/doom_8.XPM
 EA ./textures/walls/doom_6.XPM
-      NO ./textures/walls/doom_7.XPM
-SO ./textures/walls/doom_3.XPM
+NO 			./textures/walls/doom_7.XPM
+SO    ./textures/walls/doom_3.XPM
 
-F 10, 10, 10
-C 0, 0, 0
-
+C 0, 0,0
+F 170, 109,101
 11111111111111111111111
 10011111111111111111111
 1E000000000100010000111
