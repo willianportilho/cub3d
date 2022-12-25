@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/23 23:46:03 by acosta-a         ###   ########.fr       */
+/*   Updated: 2022/12/25 16:03:51 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@
 # include <sys/stat.h>
 # include <string.h>
 # include <math.h>
+# include "mlx.h"
 # include "libft/libft.h"
+# include "minilibx-linux/mlx.h"
 
 # define	TRUE 1 // Vou precisar em algumas funções
 # define	FALSE 0 // Essa também kkk
@@ -36,6 +38,8 @@ typedef struct s_rgb
 typedef struct s_game
 {
 	int				settings_count;
+	void			*mlx;
+	void			*window;
 	char			*no_wall_path;
 	char			*so_wall_path;
 	char			*we_wall_path;
@@ -63,5 +67,8 @@ char	*remove_space(char *str);
 
 /* parse_map.c*/
 void    parse_map(t_game *game);
+
+/* play_game.c*/
+void	play_game(t_game *game);
 
 #endif

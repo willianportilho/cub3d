@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:17 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/24 00:43:38 by acosta-a         ###   ########.fr       */
+/*   Updated: 2022/12/25 16:35:04 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ char	**read_cubfile(char *map)
 	return (vector_map);
 }
 
-/*check_args OK: função checando se o arquivo mapa é .cub
-	, caso não seja programa é finalizado*/
 void	check_args(char **argv)
 {
 	int		map_len;
@@ -82,10 +80,8 @@ int	main(int argc, char **argv)
 	init_game(&game);
 	check_args(argv);
 	game.map = read_cubfile(argv[1]); // lendo o mapa e transformando em vetor
-//	print_vector(game.map); //apenas pra testar como mapa foi salvo
 	parse_settings(&game, game.map);
-//  Deixei uma função específica para o parser do mapa por enquanto, só para facilitar.
-//  Quando acabarmos essa parte, acho que dá para organizar melhor
 	parse_map(&game);
+//	play_game(&game);
 	clean_exit(&game);
 }
