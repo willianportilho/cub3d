@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 15:18:14 by wportilh          #+#    #+#             */
-/*   Updated: 2022/12/26 15:19:38 by wportilh         ###   ########.fr       */
+/*   Updated: 2022/12/26 15:49:27 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,27 @@ void	check_walls_2(t_game *game)
 	}
 }
 
+/* Checa as condições dos espaços com 0ENSW*/
+static void	check_conditions(int i, int j, t_game *game)
+{
+	if ((j > 0) && (game->map[i][j - 1] == '1'))
+	{
+		if ((game->map[i + 1]) && (ft_strchr("0ENSW", game->map[i + 1][j - 1])))
+			map_error("invalid format1: needed 1 around the map", game);
+		if ((i > 1) && (ft_strchr("0ENSW", game->map[i - 1][j - 1])))
+			map_error("invalid format2: needed 1 around the map", game);
+	}
+	if ((game->map[i][j + 1]) && (game->map[i][j + 1] == '1'))
+	{
+		if ((game->map[i + 1]) && (ft_strchr("0ENSW", game->map[i + 1][j + 1])))
+			map_error("invalid format3: needed 1 around the map", game);
+		if ((i > 1) && (ft_strchr("0ENSW", game->map[i - 1][j + 1])))
+			map_error("invalid format4: needed 1 around the map", game);
+	}
+}
+
 /*
-	Essa função checa se alguma quina que tenha espaço coincide com 0
+	Essa função checa se alguma quina que tenha espaço coincide com 0ENSW
 	
 	ex: 1111
 		11 1
@@ -90,22 +109,7 @@ void	check_corners(t_game *game)
 		while (game->map[i][++j])
 		{
 			if (game->map[i][j] == ' ')
-			{
-				if ((j > 0) && (game->map[i][j - 1] == '1'))
-				{
-					if ((game->map[i + 1]) && (ft_strchr("0ENSW", game->map[i + 1][j - 1])))
-						map_error("invalid format1: needed 1 around the map", game);
-					if ((i > 1) && (ft_strchr("0ENSW", game->map[i - 1][j - 1])))
-						map_error("invalid format2: needed 1 around the map", game);
-				}
-				if ((game->map[i][j + 1]) && (game->map[i][j + 1] == '1'))
-				{
-					if ((game->map[i + 1]) && (ft_strchr("0ENSW", game->map[i + 1][j + 1])))
-						map_error("invalid format3: needed 1 around the map", game);
-					if ((i > 1) && (ft_strchr("0ENSW", game->map[i - 1][j + 1])))
-						map_error("invalid format4: needed 1 around the map", game);
-				}
-			}
+				check_conditions(i, j, game);
 		}
 	}
 }
