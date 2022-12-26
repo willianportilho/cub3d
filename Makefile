@@ -6,7 +6,7 @@
 #    By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/16 22:45:46 by acosta-a          #+#    #+#              #
-#    Updated: 2022/12/26 15:55:43 by wportilh         ###   ########.fr        #
+#    Updated: 2022/12/26 16:02:04 by wportilh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,9 +23,9 @@ parse_map_2.c play_game.c
 OBJS = ${SRCS:.c=.o}
 
 #HEADER = /include#
-LIBFT = libft.a
+LIBFT = ./libft/libft.a
 LIBFT_PATH = ./libft
-MLX = libmlx.a
+MLX = ./minilibx-linux/libmlx.a
 MLX_PATH = ./minilibx-linux
 
 all: $(NAME)
@@ -34,7 +34,7 @@ $(MLX):
 	make -C $(MLX_PATH)
 
 $(LIBFT):
-	make -C $(LIBFT_PATH) $(LIBFT)
+	make -C $(LIBFT_PATH)
 
 $(NAME) : $(OBJS) $(LIBFT) $(MLX)
 	gcc $(FLAGS) -o $(NAME) $(OBJS) -L $(LIBFT_PATH) -L $(MLX_PATH) -lft $(MLX_FLAGS)
