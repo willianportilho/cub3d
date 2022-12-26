@@ -6,7 +6,7 @@
 #    By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/16 22:45:46 by acosta-a          #+#    #+#              #
-#    Updated: 2022/12/26 13:31:33 by wportilh         ###   ########.fr        #
+#    Updated: 2022/12/26 15:40:08 by wportilh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,8 @@ MLX_FLAGS = -lm -lbsd -lmlx -lXext -lX11
 RM = rm -rf
 
 #Objects
-SRCS = cub3D.c exit_utils.c parse_settings.c parse_utils.c parse_map.c \
-play_game.c
+SRCS = cub3D.c exit_utils.c parse_settings.c parse_utils.c parse_map_1.c \
+parse_map_2.c play_game.c
 OBJS = ${SRCS:.c=.o}
 
 #HEADER = /include#
@@ -36,7 +36,7 @@ $(MLX):
 $(LIBFT):
 	make -C $(LIBFT_PATH) $(LIBFT)
 
-$(NAME) : $(OBJS) $(LIBFT_PATH) $(LIBFT) $(MLX_PATH) $(MLX)
+$(NAME) : $(OBJS) $(LIBFT_PATH)/$(LIBFT) $(MLX_PATH)/$(MLX)
 	gcc $(FLAGS) -o $(NAME) $(OBJS) -L $(LIBFT_PATH) -L $(MLX_PATH) -lft $(MLX_FLAGS)
 
 clean:

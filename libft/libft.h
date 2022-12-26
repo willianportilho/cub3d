@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 20:28:41 by mcesar-d          #+#    #+#             */
-/*   Updated: 2022/10/04 15:10:11 by acosta-a         ###   ########.fr       */
+/*   Updated: 2022/12/26 15:31:43 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,19 @@ void	ft_lstclear(t_list **lst, void (*del)(void *));
 int		ft_findrchr(const char *s, int c);
 void	ft_putstrs(char *before, char *str, char *after, int fd);
 
-// get_next_line_bonus (funções auxiliares não estáticas)
+/* ---------------------------------------------------------------------*\
+|	get_next_line_bonus													|
+\* ---------------------------------------------------------------------*/
 char	*get_next_line(int fd);
 char	*cut_act(char *actual);
 char	*line_to_send(char *actual);
 char	*ft_strjoin_alt(char *s1, char *s2);
 int		check_break(char *actual);
+
+/* ---------------------------------------------------------------------*\
+|	extra funtions														|
+\* ---------------------------------------------------------------------*/
+char	**ft_str_arrayndup_free(size_t start, char **array);
+size_t	ft_str_arraylen(char **array);
 
 #endif
