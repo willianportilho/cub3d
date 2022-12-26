@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:39:20 by wportilh          #+#    #+#             */
-/*   Updated: 2022/12/26 13:06:53 by wportilh         ###   ########.fr       */
+/*   Updated: 2022/12/26 14:33:11 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,46 @@ void    check_walls_2(t_game *game)
 	}
 }
 
+/*
+	Essa função checa se alguma quina que tenha espaço coincide com 0
+	
+	ex: 1111
+		11 1
+		1011 (esse 0 é errado nesse cenário)
+		1111
+*/
+void	check_corners(t_game *game)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (game->map[++i])
+	{
+		j = -1;
+		while (game->map[i][++j])
+		{
+			if (game->map[i][j] == ' ')
+			{
+				if ((j > 0) && (game->map[i][j - 1] == '1'))
+				{
+					if ((game->map[i + 1]) && (ft_strchr("0ENSW", game->map[i + 1][j - 1])))
+						map_error("invalid format1: needed 1 around the map", game);
+					if ((i > 1) && (ft_strchr("0ENSW", game->map[i - 1][j - 1])))
+						map_error("invalid format2: needed 1 around the map", game);
+				}
+				if ((game->map[i][j + 1]) && (game->map[i][j + 1] == '1'))
+				{
+					if ((game->map[i + 1]) && (ft_strchr("0ENSW", game->map[i + 1][j + 1])))
+						map_error("invalid format3: needed 1 around the map", game);
+					if ((i > 1) && (ft_strchr("0ENSW", game->map[i - 1][j + 1])))
+						map_error("invalid format4: needed 1 around the map", game);
+				}
+			}
+		}
+	}
+}
+
 /*análise do mapa
   Essa análise pode ter várias funções no começo, mas aos poucos vou tentar diminuir e otimizar*/
 void    parse_map(t_game *game)
@@ -215,4 +255,5 @@ void    parse_map(t_game *game)
 	check_characters(game);
 	check_walls_1(game);
 	check_walls_2(game);
+	check_corners(game);
 }
