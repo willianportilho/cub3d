@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/25 16:03:51 by acosta-a         ###   ########.fr       */
+/*   Updated: 2022/12/25 18:49:37 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,15 @@
 
 # define	TRUE 1 // Vou precisar em algumas funções
 # define	FALSE 0 // Essa também kkk
+
+typedef struct s_img
+{
+void	*img_ptr;
+int		*data;
+int		size_l;
+int		bpp;
+int		endian;
+}	t_img;
 
 typedef struct s_rgb
 {
@@ -49,6 +58,7 @@ typedef struct s_game
 	t_rgb			c;
 	t_rgb			f;
 	char			**map;
+	t_img			img;
 }	t_game;
 
 /* cub3D.c*/

@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:17 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/25 16:35:04 by acosta-a         ###   ########.fr       */
+/*   Updated: 2022/12/25 18:54:13 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,6 @@ int	main(int argc, char **argv)
 	game.map = read_cubfile(argv[1]); // lendo o mapa e transformando em vetor
 	parse_settings(&game, game.map);
 	parse_map(&game);
-//	play_game(&game);
+	play_game(&game);
 	clean_exit(&game);
 }
