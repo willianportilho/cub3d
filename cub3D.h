@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/26 15:06:16 by acosta-a         ###   ########.fr       */
+/*   Updated: 2022/12/29 23:54:53 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,17 @@ typedef struct s_img
 	void	*img_ptr;
 	char	*addr;
 	int		*data;
+	int		wdt;
+	int		hgt;
 	int		size_l;
 	int		bpp;
 	int		endian;
 }	t_img;
+
+typedef struct s_textu
+{
+	t_img			img;
+}					t_textu;
 
 typedef struct s_rgb
 {
@@ -58,8 +65,10 @@ typedef struct s_game
 	char			*c_inputs;
 	t_rgb			c;
 	t_rgb			f;
+	t_textu			textu[4];
 	char			**map;
 	t_img			img;
+	int				i;
 }	t_game;
 
 /* cub3D.c*/

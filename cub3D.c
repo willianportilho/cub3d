@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.c                                            :+:      :+:    :+:   */
+/*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:17 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/25 18:54:13 by acosta-a         ###   ########.fr       */
+/*   Updated: 2022/12/30 00:05:12 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,8 @@ void	check_args(char **argv)
 
 void	init_game(t_game *game)
 {
-	//não precisei alocar memoria abaixo mass acho que vai precisar
-//	game = malloc(sizeof(t_game));
-//	game = ft_calloc(sizeof(t_game), 1);
-//	ft_bzero(game, sizeof(game));
-//	ft_bzero(game->settings, sizeof(game->settings));
 	game->settings_count = 0;
+	game->i = 0;
 }
 
 /*main principal já checa quantos argumentos e se for != de 2 ele sai*/
