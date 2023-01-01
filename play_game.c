@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/31 21:10:36 by wportilh         ###   ########.fr       */
+/*   Updated: 2022/12/31 21:24:40 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # define WIDTH 320
 # define HEIGHT 200
 
+/*Adiciona pixel por pixel nas coordenadas que damos*/
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color)
 {
 	char	*dst;
@@ -23,6 +24,7 @@ void	my_mlx_pixel_put(t_img *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
+/*Adiciona um fundo à tela (preenche a metade da tela)*/
 void	fill_background(t_game *game)
 {
 	int	x;
@@ -35,6 +37,14 @@ void	fill_background(t_game *game)
 		while (++x < WIDTH)
 			my_mlx_pixel_put(&game->img, x, y, 0XBEBEFF);
 	}
+	--y;
+	while (++y < HEIGHT)
+	{
+		x = -1;
+		while (++x < WIDTH)
+			my_mlx_pixel_put(&game->img, x, y, 0X696969);
+	}
+	printf("teste: x = %d, y = %d\n", x, y);
 }
 
 void	play_game(t_game *game)
