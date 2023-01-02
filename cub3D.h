@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/29 23:54:53 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/02 15:30:37 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@
 
 # define TRUE 1 // Vou precisar em algumas funções
 # define FALSE 0 // Essa também kkk
+
+typedef struct s_player
+{
+	int		pos[2];
+	int		dir[2];
+	float	plane[2];
+}					t_player;	
 
 typedef struct s_img
 {
@@ -69,6 +76,7 @@ typedef struct s_game
 	char			**map;
 	t_img			img;
 	int				i;
+	t_player		player;
 }	t_game;
 
 /* cub3D.c*/
