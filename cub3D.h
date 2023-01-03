@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/02 15:30:37 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/03 20:04:13 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,18 @@
 
 # define TRUE 1 // Vou precisar em algumas funções
 # define FALSE 0 // Essa também kkk
+
+typedef struct s_delta
+{
+	float	*delta_dist_x;
+	float	*delta_dist_y;
+}					t_delta;
+
+typedef struct s_ray
+{
+	float	*ray_dir_x;
+	float	ray_dir_y;
+}					t_ray;
 
 typedef struct s_player
 {
@@ -77,6 +89,8 @@ typedef struct s_game
 	t_img			img;
 	int				i;
 	t_player		player;
+	t_ray			ray;
+	t_delta			delta;
 }	t_game;
 
 /* cub3D.c*/
