@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/02 22:34:56 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/03 01:29:58 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,24 +58,41 @@ static void	init_player(t_game *game)
 	game->player.plane[1] = 0; // posição y do vetor plane no mapa (não muda);
 }
 
-/* Aloca um vetor de tamanho WIDTH e calcula o vetor do cada pixel correspondente ao vetor plane
-   Algo interessante de se notar, é que o resultado se refere a posição x do vetor. A posição y
-   não é alocada, porque em todos os casos será 1, já que câmera plane tem altura 0 no y.
-   Isso poderá mudar no futuro se precisarmos fazer cálculos com y.*/
-static void	calc_pixel_position(t_game *game)
+/*	Cálculo dos raios.
+	Quando calculo camera_pixel, não aloco o y com malloc, porque o valor dele não muda.
+	game->player.plane[1] é o y, que sempre é 0. (se precisar no futuro, talvez na rotação, aloco ele também).
+	Ou seja, o que interessa é calcular x, que varia.
+	
+	A mesma coisa se aplica ao ray_dir, mas acho que na rotação vou precisar (ou não kkk) alocar ele.
+*/
+static void	calc_ray_dir(t_game *game)
 {
-	float	pixel;
-	float	*pixel_position;
+	float	i;
+	float	vetor_size;
+	float	*camera_pixel_x;
+	float	*ray_dir_x;
+	float	camera_pixel_y;
+	float	ray_dir_y;
 
-	pixel_position = malloc((WIDTH + 1) * sizeof(float));
-	if (!pixel_position)
+	camera_pixel_x = malloc((WIDTH + 1) * sizeof(float));
+	if (!camera_pixel_x)
 		exit (EXIT_FAILURE);
-	pixel = -1;
-	while (++pixel <= WIDTH)
-		pixel_position[(int)pixel] = 2 * (pixel/WIDTH) - 1;
-	//pixel = -1;
-	//while (++pixel <= WIDTH)
-	//	printf("%f\n", pixel_position[(int)pixel]);
+	ray_dir_x = malloc((WIDTH + 1) * sizeof(float));
+	if (!ray_dir_x)
+		exit (EXIT_FAILURE);
+	i = -1;
+	while (++i <= WIDTH)
+	{
+		vetor_size = 2 * (i/WIDTH) - 1; // Calcula o tamanho do vetor dos raios em relação à player.plane
+		camera_pixel_x[(int)i] = (vetor_size * game->player.plane[0]); // (multiplicação de vetores) Calcula a posição dos vetores dos raios
+		ray_dir_x[(int)i] = camera_pixel_x[(int)i] + game->player.dir[0]; // (soma de vetores) Calcula a direção dos raios
+	}
+	camera_pixel_y = (vetor_size * game->player.plane[1]);
+	ray_dir_y = -1;
+	//i = -1;
+	//while (++i <= WIDTH)
+	//	printf("%f\n", camera_pixel_x[(int)i]);
+	//printf("%f\n", i - 1);
 }
 
 void	play_game(t_game *game)
@@ -86,7 +103,7 @@ void	play_game(t_game *game)
 	game->img.addr = mlx_get_data_addr(game->img.img_ptr, &game->img.bpp, &game->img.wdt, &game->img.endian);
 	fill_background(game);
 	init_player(game);
-	calc_pixel_position(game);
+	calc_ray_dir(game);
 	mlx_put_image_to_window(game->mlx, game->window, game->img.img_ptr, 0, 0);
 	mlx_loop(game->mlx);
 }
