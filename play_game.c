@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/02 21:12:03 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/02 22:34:56 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,24 @@ static void	init_player(t_game *game)
 	game->player.plane[1] = 0; // posição y do vetor plane no mapa (não muda);
 }
 
-/* Calcula a posição do raio, retornando o pixel correspondente no vetor plane*/
-static float	calc_ray_pixel_position(float x, float resolution)
+/* Aloca um vetor de tamanho WIDTH e calcula o vetor do cada pixel correspondente ao vetor plane
+   Algo interessante de se notar, é que o resultado se refere a posição x do vetor. A posição y
+   não é alocada, porque em todos os casos será 1, já que câmera plane tem altura 0 no y.
+   Isso poderá mudar no futuro se precisarmos fazer cálculos com y.*/
+static void	calc_pixel_position(t_game *game)
 {
-	float	ray_position;
+	float	pixel;
+	float	*pixel_position;
 
-	ray_position = 2 * (x/resolution) - 1;
-	return (ray_position);
+	pixel_position = malloc((WIDTH + 1) * sizeof(float));
+	if (!pixel_position)
+		exit (EXIT_FAILURE);
+	pixel = -1;
+	while (++pixel <= WIDTH)
+		pixel_position[(int)pixel] = 2 * (pixel/WIDTH) - 1;
+	//pixel = -1;
+	//while (++pixel <= WIDTH)
+	//	printf("%f\n", pixel_position[(int)pixel]);
 }
 
 void	play_game(t_game *game)
@@ -75,13 +86,7 @@ void	play_game(t_game *game)
 	game->img.addr = mlx_get_data_addr(game->img.img_ptr, &game->img.bpp, &game->img.wdt, &game->img.endian);
 	fill_background(game);
 	init_player(game);
-	float 	i = -1;
-	float	result;
-	while (++i <= WIDTH)
-	{
-		result = calc_ray_pixel_position(i, WIDTH);
-		//printf("ray position: %f\n", result); // printa todos os raios de acordo com a resolução horizontal (WIDTH)
-	}
+	calc_pixel_position(game);
 	mlx_put_image_to_window(game->mlx, game->window, game->img.img_ptr, 0, 0);
 	mlx_loop(game->mlx);
 }
