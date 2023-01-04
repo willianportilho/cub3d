@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/04 13:58:35 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/04 18:08:36 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,13 @@
 
 typedef struct s_dda
 {
-	int		step_x;
-	int		step_y;
+	int		*step_x;
+	int		*step_y;
+	int		*hit_side;
+	float	*wall_map_pos_x;
+	float	*wall_map_pos_y;
+	float	*dda_line_size_x;
+	float	*dda_line_size_y;
 }					t_dda;
 
 typedef struct s_dist

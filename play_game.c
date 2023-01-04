@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/04 14:19:44 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/04 18:15:42 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	calc_delta_dist_x_and_y(t_game *game)
 	if (!game->delta.delta_dist_y)
 		exit (EXIT_FAILURE);
 	i = -1;
-	while (++i < WIDTH)
+	while (++i <= WIDTH)
 	{
 		ray_dir_hypotenuse = sqrt(pow(game->ray.ray_dir_x[i], 2) + pow(game->ray.ray_dir_y, 2)); // Magnitude do ray dir
 		game->delta.delta_dist_x[i] = ray_dir_hypotenuse / game->ray.ray_dir_x[i]; // magnitude do ray_dir dividida por ray dir_x (semelhança de triângulos)
@@ -132,30 +132,36 @@ void	calc_dist_to_side_x_and_y(t_game *game)
 	game->dist.dist_to_side_y = malloc((WIDTH + 1) * sizeof(float));
 	if (!game->dist.dist_to_side_y)
 		exit (EXIT_FAILURE);
+	game->dda.step_x = malloc((WIDTH + 1) * sizeof(int));
+	if (!game->dda.step_x)
+		exit (EXIT_FAILURE);
+	game->dda.step_y = malloc((WIDTH + 1) * sizeof(int));
+	if (!game->dda.step_y)
+		exit (EXIT_FAILURE);
 	i = -1;
-	while (++i < WIDTH)
+	while (++i <= WIDTH)
 	{
 		if (game->ray.ray_dir_x < 0)
 		{
-			game->dda.step_x = -1;
+			game->dda.step_x[i] = -1;
 			game->dist.dist_to_side_x[i] = (game->player.pos[0] \
 			- floor(game->player.pos[0])) * game->delta.delta_dist_x[i];
 		}
 		else
 		{
-			game->dda.step_x = 1;
+			game->dda.step_x[i] = 1;
 			game->dist.dist_to_side_x[i] = (floor(game->player.pos[0]) \
 			+ 1 - game->player.pos[0]) * game->delta.delta_dist_x[i];
 		}
 		if (game->ray.ray_dir_y < 0)
 		{
-			game->dda.step_y = -1;
+			game->dda.step_y[i] = -1;
 			game->dist.dist_to_side_y[i] = (game->player.pos[1] \
 			- floor(game->player.pos[1])) * game->delta.delta_dist_y[i];
 		}
 		else
 		{
-			game->dda.step_y = 1;
+			game->dda.step_y[i] = 1;
 			game->dist.dist_to_side_y[i] = (floor(game->player.pos[1]) \
 			+ 1 - game->player.pos[1]) * game->delta.delta_dist_y[i];
 		}
@@ -168,7 +174,51 @@ void	calc_dist_to_side_x_and_y(t_game *game)
 
 void	dda_find_wall(t_game *game)
 {
-	printf("\n");
+	int	i;
+	int	hit;
+
+	game->dda.hit_side = malloc((WIDTH + 1) * sizeof(float));
+	if (!game->dda.hit_side)
+		exit (EXIT_FAILURE);
+	game->dda.wall_map_pos_x = malloc((WIDTH + 1) * sizeof(float));
+	if (!game->dda.wall_map_pos_x)
+		exit (EXIT_FAILURE);
+	game->dda.wall_map_pos_y = malloc((WIDTH + 1) * sizeof(float));
+	if (!game->dda.wall_map_pos_y)
+		exit (EXIT_FAILURE);
+	game->dda.dda_line_size_x = malloc((WIDTH + 1) * sizeof(float));
+	if (!game->dda.dda_line_size_x)
+		exit (EXIT_FAILURE);
+	game->dda.dda_line_size_y = malloc((WIDTH + 1) * sizeof(float));
+	if (!game->dda.dda_line_size_y)
+		exit (EXIT_FAILURE);
+	i = -1;
+	while (++i <= WIDTH)
+	{
+		hit = FALSE;
+		game->dda.dda_line_size_x[i] = game->dist.dist_to_side_x[i];
+		game->dda.dda_line_size_y[i] = game->dist.dist_to_side_y[i];
+		game->dda.wall_map_pos_x[i] = game->player.pos[0];
+		game->dda.wall_map_pos_y[i] = game->player.pos[1];
+		while (hit != TRUE)
+		{
+			if (game->dda.dda_line_size_x[i] < game->dda.dda_line_size_y[i])
+			{
+				game->dda.hit_side[i] = 0;
+				game->dda.dda_line_size_x[i] += game->delta.delta_dist_x[i];
+				game->dda.wall_map_pos_x[i] += game->dda.step_x[i];
+			}
+			else
+			{
+				game->dda.hit_side[i] = 1;
+				game->dda.dda_line_size_y[i] += game->delta.delta_dist_y[i];
+				game->dda.wall_map_pos_y[i] += game->dda.step_y[i];
+			}
+			if (game->map[(int)floor(game->dda.wall_map_pos_y[i])][(int)floor(game->dda.wall_map_pos_x[i])] > '0')
+				hit = TRUE;
+		}
+		//printf("hit_side = %d\n", game->dda.hit_side[i]); // testes
+	}	
 }
 
 void	play_game(t_game *game)
