@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/04 18:15:42 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/04 18:31:16 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,11 @@ void	calc_delta_dist_x_and_y(t_game *game)
 	}
 }
 
+
+/*
+	Calcula a distância do personagem até a 1ª linha vertical, x.
+	Calcula a distância do personagem até a 1ª linha horizontal, y.
+*/
 void	calc_dist_to_side_x_and_y(t_game *game)
 {
 	int	i;
@@ -141,11 +146,11 @@ void	calc_dist_to_side_x_and_y(t_game *game)
 	i = -1;
 	while (++i <= WIDTH)
 	{
-		if (game->ray.ray_dir_x < 0)
+		if (game->ray.ray_dir_x < 0) // Dependendo da direção do raio x, a fórmula muda
 		{
 			game->dda.step_x[i] = -1;
 			game->dist.dist_to_side_x[i] = (game->player.pos[0] \
-			- floor(game->player.pos[0])) * game->delta.delta_dist_x[i];
+			- floor(game->player.pos[0])) * game->delta.delta_dist_x[i]; // O floor tira tudo depois do '.' (ex: 5.50510 = 5.00000)
 		}
 		else
 		{
@@ -153,7 +158,7 @@ void	calc_dist_to_side_x_and_y(t_game *game)
 			game->dist.dist_to_side_x[i] = (floor(game->player.pos[0]) \
 			+ 1 - game->player.pos[0]) * game->delta.delta_dist_x[i];
 		}
-		if (game->ray.ray_dir_y < 0)
+		if (game->ray.ray_dir_y < 0) // Dependendo da direção do raio y, a fórmula muda
 		{
 			game->dda.step_y[i] = -1;
 			game->dist.dist_to_side_y[i] = (game->player.pos[1] \
@@ -172,6 +177,10 @@ void	calc_dist_to_side_x_and_y(t_game *game)
 	}
 }
 
+/*
+	Acha o muro, mas sem calcular a distância.
+	Obtemos as coordenadas do personagem até o muro e o lado do quadrado que o raio bateu.
+*/
 void	dda_find_wall(t_game *game)
 {
 	int	i;
@@ -196,28 +205,28 @@ void	dda_find_wall(t_game *game)
 	while (++i <= WIDTH)
 	{
 		hit = FALSE;
-		game->dda.dda_line_size_x[i] = game->dist.dist_to_side_x[i];
-		game->dda.dda_line_size_y[i] = game->dist.dist_to_side_y[i];
+		game->dda.dda_line_size_x[i] = game->dist.dist_to_side_x[i]; // O 1º valor sempre será essa distância
+		game->dda.dda_line_size_y[i] = game->dist.dist_to_side_y[i]; // O 1º valor sempre será essa distância
 		game->dda.wall_map_pos_x[i] = game->player.pos[0];
 		game->dda.wall_map_pos_y[i] = game->player.pos[1];
 		while (hit != TRUE)
 		{
 			if (game->dda.dda_line_size_x[i] < game->dda.dda_line_size_y[i])
 			{
-				game->dda.hit_side[i] = 0;
-				game->dda.dda_line_size_x[i] += game->delta.delta_dist_x[i];
-				game->dda.wall_map_pos_x[i] += game->dda.step_x[i];
+				game->dda.hit_side[i] = 0; // Na última iteração de i, se entrar nesse if, definirá que o raio bateu no lado vertical
+				game->dda.dda_line_size_x[i] += game->delta.delta_dist_x[i];  // Aquele 1º valor + o delta x
+				game->dda.wall_map_pos_x[i] += game->dda.step_x[i]; // Itera as coordenadas do mapa horizontalmente (x), um quadrado por vez
 			}
 			else
 			{
-				game->dda.hit_side[i] = 1;
-				game->dda.dda_line_size_y[i] += game->delta.delta_dist_y[i];
-				game->dda.wall_map_pos_y[i] += game->dda.step_y[i];
+				game->dda.hit_side[i] = 1; //Na última iteração de i, se entrar nesse if, definirá que o raio bateu no lado horizontal
+				game->dda.dda_line_size_y[i] += game->delta.delta_dist_y[i]; // Aquele 1º valor + o delta y
+				game->dda.wall_map_pos_y[i] += game->dda.step_y[i]; // Itera as coordenadas do mapa verticalmente (y), um quadrado por vez
 			}
-			if (game->map[(int)floor(game->dda.wall_map_pos_y[i])][(int)floor(game->dda.wall_map_pos_x[i])] > '0')
+			if (game->map[(int)floor(game->dda.wall_map_pos_y[i])][(int)floor(game->dda.wall_map_pos_x[i])] == '1') // Checa se a coordenada é um muro
 				hit = TRUE;
 		}
-		//printf("hit_side = %d\n", game->dda.hit_side[i]); // testes
+		printf("hit_side = %d\n", game->dda.hit_side[i]); // testes
 	}	
 }
 
