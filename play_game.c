@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/04 13:59:20 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/04 14:19:44 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,12 @@ void	calc_delta_dist_x_and_y(t_game *game)
 		ray_dir_hypotenuse = sqrt(pow(game->ray.ray_dir_x[i], 2) + pow(game->ray.ray_dir_y, 2)); // Magnitude do ray dir
 		game->delta.delta_dist_x[i] = ray_dir_hypotenuse / game->ray.ray_dir_x[i]; // magnitude do ray_dir dividida por ray dir_x (semelhança de triângulos)
 		game->delta.delta_dist_y[i] = ray_dir_hypotenuse / game->ray.ray_dir_y; // magnitude do ray_dir dividida por ray dir_y (semelhança de triângulos)
+		if (game->delta.delta_dist_x[i] < 0)
+			game->delta.delta_dist_x[i] = game->delta.delta_dist_x[i] * -1; // transforma nº negativos em positivos
+		if (game->delta.delta_dist_y[i] < 0)
+			game->delta.delta_dist_y[i] = game->delta.delta_dist_y[i] * -1; // transforma nº negativos em positivos
+		//printf("result x: %f\n", game->delta.delta_dist_x[i]);
+		//printf("result y: %f\n", game->delta.delta_dist_y[i]);
 		//printf("   i: %d\n", i);
 		//printf("hypo: %f\n", ray_dir_hypotenuse);
 		//printf("rayx: %f\n", game->ray.ray_dir_x[i]);
@@ -133,26 +139,28 @@ void	calc_dist_to_side_x_and_y(t_game *game)
 		{
 			game->dda.step_x = -1;
 			game->dist.dist_to_side_x[i] = (game->player.pos[0] \
-			- abs(game->player.pos[0])) * game->delta.delta_dist_x[i];
+			- floor(game->player.pos[0])) * game->delta.delta_dist_x[i];
 		}
 		else
 		{
 			game->dda.step_x = 1;
-			game->dist.dist_to_side_x[i] = (abs(game->player.pos[0]) \
+			game->dist.dist_to_side_x[i] = (floor(game->player.pos[0]) \
 			+ 1 - game->player.pos[0]) * game->delta.delta_dist_x[i];
 		}
 		if (game->ray.ray_dir_y < 0)
 		{
 			game->dda.step_y = -1;
 			game->dist.dist_to_side_y[i] = (game->player.pos[1] \
-			- abs(game->player.pos[1])) * game->delta.delta_dist_y[i];
+			- floor(game->player.pos[1])) * game->delta.delta_dist_y[i];
 		}
 		else
 		{
 			game->dda.step_y = 1;
-			game->dist.dist_to_side_y[i] = (abs(game->player.pos[1]) \
+			game->dist.dist_to_side_y[i] = (floor(game->player.pos[1]) \
 			+ 1 - game->player.pos[1]) * game->delta.delta_dist_y[i];
 		}
+		//printf("result: %f\n", floor(game->player.pos[0])); // testes
+		//printf("result: %f\n", floor(game->player.pos[1]));
 		//printf("result: %f\n", game->dist.dist_to_side_x[i]);
 		//printf("result: %f\n", game->dist.dist_to_side_y[i]);
 	}
@@ -160,7 +168,7 @@ void	calc_dist_to_side_x_and_y(t_game *game)
 
 void	dda_find_wall(t_game *game)
 {
-	printf("teste\n");
+	printf("\n");
 }
 
 void	play_game(t_game *game)
