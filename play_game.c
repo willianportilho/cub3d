@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/04 00:55:00 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/04 13:59:20 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ static void	init_player(t_game *game)
 {
 	game->player.pos[0] = 5.5; // posição x do player no mapa;
 	game->player.pos[1] = 5.5; // posição y do player no mapa;
-	game->player.abs_pos[0] = abs(game->player.pos[0]); // posição x absoluta do player no mapa;
-	game->player.abs_pos[1] = abs(game->player.pos[1]); // posição y absoluta do player no mapa;
 	game->player.dir[0] = 0; // posição x do vetor dir no mapa (não muda);
 	game->player.dir[1] = -1; // posição y do vetor dir no mapa (não muda);
 	game->player.plane[0] = 0.66; // posição x do vetor plane no mapa (não muda);
@@ -131,21 +129,38 @@ void	calc_dist_to_side_x_and_y(t_game *game)
 	i = -1;
 	while (++i < WIDTH)
 	{
-		if (game->ray.ray_dir_x <= 0)
+		if (game->ray.ray_dir_x < 0)
+		{
+			game->dda.step_x = -1;
 			game->dist.dist_to_side_x[i] = (game->player.pos[0] \
-			- game->player.abs_pos[0]) * game->delta.delta_dist_x[i];
+			- abs(game->player.pos[0])) * game->delta.delta_dist_x[i];
+		}
 		else
-			game->dist.dist_to_side_x[i] = (game->player.abs_pos[0] + 1 \
-			- game->player.pos[0]) * game->delta.delta_dist_x[i];
-		if (game->ray.ray_dir_y <= 0)
+		{
+			game->dda.step_x = 1;
+			game->dist.dist_to_side_x[i] = (abs(game->player.pos[0]) \
+			+ 1 - game->player.pos[0]) * game->delta.delta_dist_x[i];
+		}
+		if (game->ray.ray_dir_y < 0)
+		{
+			game->dda.step_y = -1;
 			game->dist.dist_to_side_y[i] = (game->player.pos[1] \
-			- game->player.abs_pos[1]) * game->delta.delta_dist_y[i];
+			- abs(game->player.pos[1])) * game->delta.delta_dist_y[i];
+		}
 		else
-			game->dist.dist_to_side_y[i] = (game->player.abs_pos[1] + 1 \
-			- game->player.pos[1]) * game->delta.delta_dist_y[i];
-		printf("result: %f\n", game->dist.dist_to_side_x[i]);
-		printf("result: %f\n", game->dist.dist_to_side_y[i]);
+		{
+			game->dda.step_y = 1;
+			game->dist.dist_to_side_y[i] = (abs(game->player.pos[1]) \
+			+ 1 - game->player.pos[1]) * game->delta.delta_dist_y[i];
+		}
+		//printf("result: %f\n", game->dist.dist_to_side_x[i]);
+		//printf("result: %f\n", game->dist.dist_to_side_y[i]);
 	}
+}
+
+void	dda_find_wall(t_game *game)
+{
+	printf("teste\n");
 }
 
 void	play_game(t_game *game)
@@ -159,6 +174,7 @@ void	play_game(t_game *game)
 	calc_ray_dir(game);
 	calc_delta_dist_x_and_y(game);
 	calc_dist_to_side_x_and_y(game);
+	dda_find_wall(game);
 	mlx_put_image_to_window(game->mlx, game->window, game->img.img_ptr, 0, 0);
 	mlx_loop(game->mlx);
 }
