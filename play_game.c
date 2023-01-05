@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   play_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/05 00:26:52 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/05 02:04:05 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ static void	fill_background(t_game *game)
 */
 static void	init_player(t_game *game)
 {
-	game->player.pos[0] = 6; // posição x do player no mapa;
-	game->player.pos[1] = 5; // posição y do player no mapa;
-	game->player.dir[0] = 0; // posição x do vetor dir no mapa (não muda);
-	game->player.dir[1] = -1; // posição y do vetor dir no mapa (não muda);
+	game->player.pos[0] = 3; // posição x do player no mapa;
+	game->player.pos[1] = 3; // posição y do player no mapa;
+	game->player.dir[0] = 1.0; // posição x do vetor dir no mapa (não muda);
+	game->player.dir[1] = 1.0; // posição y do vetor dir no mapa (não muda);
 	game->player.plane[0] = 0.66; // posição x do vetor plane no mapa (não muda);
 	game->player.plane[1] = 0; // posição y do vetor plane no mapa (não muda);
 	//game->player.dir[0] = (game->player.dir[0] * cos(45)) - (game->player.dir[1] * sin(45));
@@ -64,7 +64,7 @@ static void	init_player(t_game *game)
 	Quando calculo camera_pixel, não aloco o y com malloc, porque o valor dele não muda.
 	game->player.plane[1] é o y, que sempre é 0. (se precisar no futuro, talvez na rotação, aloco ele também).
 	Ou seja, o que interessa é calcular x, que varia.
-	
+
 	A mesma coisa se aplica ao ray_dir, mas acho que na rotação vou precisar (ou não kkk) alocar ele.
 */
 static void	calc_ray_dir(t_game *game)
@@ -247,7 +247,7 @@ void	dda_find_wall(t_game *game)
 				hit = TRUE;
 		}
 		//printf("hit_side = %d\n", game->dda.hit_side[i]); // testes
-	}	
+	}
 }
 
 /*
@@ -266,8 +266,8 @@ void	calc_perpendicular_distance(t_game *game)
 	{
 		if (game->dda.hit_side[i] == 0)
 		{
-			game->dda.perpendicular_ray[i] = 
-			(game->dda.wall_map_pos_x[i] - game->player.pos[0] 
+			game->dda.perpendicular_ray[i] =
+			(game->dda.wall_map_pos_x[i] - game->player.pos[0]
 			+ ((1 - game->dda.step_x[i]) / 2)); // Essa fórmula pega a distancia perpendicular do raio até o player para x
 			if (game->dda.perpendicular_ray[i] < 0)
 				game->dda.perpendicular_ray[i] = game->dda.perpendicular_ray[i] * -1; // Transforma o número em positivo
@@ -275,8 +275,8 @@ void	calc_perpendicular_distance(t_game *game)
 		}
 		else
 		{
-			game->dda.perpendicular_ray[i] = 
-			(game->dda.wall_map_pos_y[i] - game->player.pos[1] 
+			game->dda.perpendicular_ray[i] =
+			(game->dda.wall_map_pos_y[i] - game->player.pos[1]
 			+ ((1 - game->dda.step_y[i]) / 2)); //// Essa fórmula pega a distancia perpendicular do raio até o player para y
 			if (game->dda.perpendicular_ray[i] < 0)
 				game->dda.perpendicular_ray[i] = game->dda.perpendicular_ray[i] * -1; // Transforma o número em positivo
@@ -309,9 +309,82 @@ void	calc_size_lines_to_print(t_game *game)
 			color = 0XFF0000;
 		while (wall_start < wall_end)
 				my_mlx_pixel_put(&game->img, i, wall_start++, color);
-		//printf("start: %d\n", wall_start);
-		//printf("  end: %d\n", wall_end); 0X8B0000 (escuro) 0XFF000 (claro)
 	}
+	mlx_put_image_to_window(game->mlx, game->window, game->img.img_ptr, 0, 0);
+}
+
+void	ft_rotate(t_game *game, double angle) // rotaciona o player
+{
+	double	tmp;
+
+	tmp = cos(angle) * game->player.dir[0]  - sin(angle) * game->player.dir[1];
+	game->player.dir[1] = sin(angle) * game->player.dir[0]  + cos(angle)
+		* game->player.dir[1];
+	game->player.dir[0] = tmp;
+}
+
+void	up_down(t_game *game, int direction) // função pra cima e baixo
+{
+	int	speed;
+
+	speed = 1;
+	if (direction == UP)
+	{
+		if(game->map[(int)(game->player.pos[0] + game->player.dir[0] * speed)]
+			[(int)game->player.pos[1]] == '0');
+			game->player.pos[0] += game->player.dir[0] * speed;
+		if(game->map[(int)game->player.pos[0]][(int)(game->player.pos[1] +
+			game->player.dir[1] * speed)] == '0');
+			game->player.pos[1] += game->player.dir[1] * speed;
+	}
+	if (direction == DOWN)
+	{
+		if(game->map[(int)(game->player.pos[0] + game->player.dir[0] * speed)]
+			[(int)game->player.pos[1]] == '0');
+			game->player.pos[0] -= game->player.dir[0] * speed;
+		if(game->map[(int)game->player.pos[0]][(int)(game->player.pos[1] +
+			game->player.dir[1] * speed)] == '0');
+			game->player.pos[1] -= game->player.dir[1] * speed;
+	}
+}
+
+int	ft_close(t_game *game) // fecha o jogo vai pra exit_utils depois
+{
+	printf("Bye bye\n");
+//	mlx_destroy_window(game->mlx, game->window);
+	clean_exit(game);
+	return (1);
+}
+
+int	game_play(t_game *game)
+{
+	fill_background(game);
+	calc_ray_dir(game);
+	calc_delta_dist_x_and_y(game);
+	calc_dist_to_side_x_and_y(game);
+	dda_find_wall(game);
+	calc_perpendicular_distance(game);
+	calc_size_lines_to_print(game);
+	return (0);
+}
+
+int		ft_key(int key, t_game *game) // leitura de teclas
+{
+	if (key == 113 || key == 65307)
+		ft_close(game);
+	else if (key == W)
+		up_down(game , UP);
+	else if (key == S)
+		up_down(game , DOWN);
+/*	else if (key == A)
+		left_right
+	else if (key == D)
+		left_right*/
+	else if (key == 65361) // gira pra esquerda pressionando seta
+		ft_rotate(game, PI / 36);
+	else if (key == 65363)// gira pra direita pressionando seta
+		ft_rotate(game, -PI / 36);
+	game_play(game);
 }
 
 void	play_game(t_game *game)
@@ -320,14 +393,9 @@ void	play_game(t_game *game)
 	game->window = mlx_new_window(game->mlx, WIDTH, HEIGHT, "cub3d");
 	game->img.img_ptr = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	game->img.addr = mlx_get_data_addr(game->img.img_ptr, &game->img.bpp, &game->img.wdt, &game->img.endian);
-	fill_background(game);
 	init_player(game);
-	calc_ray_dir(game);
-	calc_delta_dist_x_and_y(game);
-	calc_dist_to_side_x_and_y(game);
-	dda_find_wall(game);
-	calc_perpendicular_distance(game);
-	calc_size_lines_to_print(game);
-	mlx_put_image_to_window(game->mlx, game->window, game->img.img_ptr, 0, 0);
+	mlx_loop_hook(game->mlx, &game_play, game); //roda o jogo em loop
+	mlx_key_hook(game->window, &ft_key, game); // verifica tecla foi pressionada
+	mlx_hook(game->window, 33, 1L << 17, ft_close, game); // Clicar no X =ESC
 	mlx_loop(game->mlx);
 }

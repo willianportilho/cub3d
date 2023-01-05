@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/04 22:36:29 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/05 02:03:12 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,18 @@
 
 # define TRUE 1 // Vou precisar em algumas funções
 # define FALSE 0 // Essa também kkk
+# define PI 3.14159265359
+# define WHITE 0x0000FF00 // só pra testar
+# define BLUE 0x000000FF // só pra testar
+# define TILE_SIZE 64 // tamanho dos .xpm
+# define UP 1
+# define DOWN 0
+# define RIGHT 1
+# define LEFT 0
+# define W	119
+# define S	115
+# define D	100
+# define A	97
 
 typedef struct s_print_line
 {
@@ -65,10 +77,10 @@ typedef struct s_ray
 
 typedef struct s_player
 {
-	int		dir[2];
+	float	dir[2];
 	float	pos[2];
 	float	plane[2];
-}					t_player;	
+}					t_player;
 
 typedef struct s_img
 {
