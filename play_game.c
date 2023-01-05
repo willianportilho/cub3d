@@ -6,14 +6,14 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/04 22:08:45 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/05 00:02:16 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-# define WIDTH 320
-# define HEIGHT 200
+# define WIDTH 1024
+# define HEIGHT 768
 
 /*Adiciona pixel por pixel nas coordenadas que damos*/
 static void	my_mlx_pixel_put(t_img *data, int x, int y, int color)
@@ -50,12 +50,14 @@ static void	fill_background(t_game *game)
 */
 static void	init_player(t_game *game)
 {
-	game->player.pos[0] = 5.5; // posição x do player no mapa;
-	game->player.pos[1] = 5.5; // posição y do player no mapa;
+	game->player.pos[0] = 6; // posição x do player no mapa;
+	game->player.pos[1] = 5; // posição y do player no mapa;
 	game->player.dir[0] = 0; // posição x do vetor dir no mapa (não muda);
 	game->player.dir[1] = -1; // posição y do vetor dir no mapa (não muda);
 	game->player.plane[0] = 0.66; // posição x do vetor plane no mapa (não muda);
 	game->player.plane[1] = 0; // posição y do vetor plane no mapa (não muda);
+	//game->player.dir[0] = (game->player.dir[0] * cos(45)) - (game->player.dir[1] * sin(45));
+    //game->player.plane[1] = (game->player.plane[0] * sin(45)) + (game->player.plane[1] * cos(45));
 }
 
 /*	Cálculo dos raios.
@@ -244,10 +246,14 @@ void	dda_find_wall(t_game *game)
 			if (game->map[(int)floor(game->dda.wall_map_pos_y[i])][(int)floor(game->dda.wall_map_pos_x[i])] == '1') // Checa se a coordenada é um muro
 				hit = TRUE;
 		}
-		printf("hit_side = %d\n", game->dda.hit_side[i]); // testes
+		//printf("hit_side = %d\n", game->dda.hit_side[i]); // testes
 	}	
 }
 
+/*
+	Cálculo simplificado que obtem rays perpendiculares ao plano do player,
+	protegendo os muros do efeito "olho de peixe"
+*/
 void	calc_perpendicular_distance(t_game *game)
 {
 	int	i;
@@ -280,6 +286,34 @@ void	calc_perpendicular_distance(t_game *game)
 	}
 }
 
+void	calc_size_lines_to_print(t_game *game)
+{
+	int		i;
+	int		wall_start;
+	int		wall_end;
+	int		color;
+
+	game->print_line.wall_line_height = malloc((WIDTH + 1) * sizeof(float));
+	if (!game->print_line.wall_line_height)
+		exit (EXIT_FAILURE);
+	i = -1;
+	while (++i <= WIDTH)
+		game->print_line.wall_line_height[i] = HEIGHT / game->dda.perpendicular_ray[i];
+	i = -1;
+	while (++i <= WIDTH)
+	{
+		wall_start = (HEIGHT / 2) - (game->print_line.wall_line_height[i] / 2);
+		wall_end = (HEIGHT / 2) + (game->print_line.wall_line_height[i] / 2);
+		color = 0X8B0000;
+		if (game->dda.hit_side[i] == 1)
+			color = 0XFF0000;
+		while (wall_start < wall_end)
+				my_mlx_pixel_put(&game->img, i, wall_start++, color);
+		//printf("start: %d\n", wall_start);
+		//printf("  end: %d\n", wall_end); 0X8B0000 (escuro) 0XFF000 (claro)
+	}
+}
+
 void	play_game(t_game *game)
 {
 	game->mlx = mlx_init();
@@ -293,6 +327,7 @@ void	play_game(t_game *game)
 	calc_dist_to_side_x_and_y(game);
 	dda_find_wall(game);
 	calc_perpendicular_distance(game);
+	calc_size_lines_to_print(game);
 	mlx_put_image_to_window(game->mlx, game->window, game->img.img_ptr, 0, 0);
 	mlx_loop(game->mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/04 21:15:33 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/04 22:36:29 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@
 
 # define TRUE 1 // Vou precisar em algumas funções
 # define FALSE 0 // Essa também kkk
+
+typedef struct s_print_line
+{
+	float	*wall_line_height;
+}					t_print_line;
 
 typedef struct s_dda
 {
@@ -111,6 +116,7 @@ typedef struct s_game
 	t_delta			delta;
 	t_dist			dist;
 	t_dda			dda;
+	t_print_line	print_line;
 }	t_game;
 
 /* cub3D.c*/
