@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/04 21:35:43 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/04 21:40:44 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,19 +244,19 @@ void	calc_perpendicular_distance(t_game *game)
 		{
 			game->dda.perpendicular_ray[i] = 
 			(game->dda.wall_map_pos_x[i] - game->player.pos[0] 
-			+ ((1 - game->dda.step_x[i]) / 2));
+			+ ((1 - game->dda.step_x[i]) / 2)); // Essa fórmula pega a distancia perpendicular do raio até o player para x
 			if (game->dda.perpendicular_ray[i] < 0)
-				game->dda.perpendicular_ray[i] = game->dda.perpendicular_ray[i] * -1;
-			game->dda.perpendicular_ray[i] = game->dda.perpendicular_ray[i] / game->ray.ray_dir_x[i];
+				game->dda.perpendicular_ray[i] = game->dda.perpendicular_ray[i] * -1; // Transforma o número em positivo
+			game->dda.perpendicular_ray[i] = game->dda.perpendicular_ray[i] / game->ray.ray_dir_x[i]; // trecho final da fórmula
 		}
 		else
 		{
 			game->dda.perpendicular_ray[i] = 
 			(game->dda.wall_map_pos_y[i] - game->player.pos[1] 
-			+ ((1 - game->dda.step_y[i]) / 2));
+			+ ((1 - game->dda.step_y[i]) / 2)); //// Essa fórmula pega a distancia perpendicular do raio até o player para y
 			if (game->dda.perpendicular_ray[i] < 0)
-				game->dda.perpendicular_ray[i] = game->dda.perpendicular_ray[i] * -1;
-			game->dda.perpendicular_ray[i] = game->dda.perpendicular_ray[i] / game->ray.ray_dir_y;
+				game->dda.perpendicular_ray[i] = game->dda.perpendicular_ray[i] * -1; // Transforma o número em positivo
+			game->dda.perpendicular_ray[i] = game->dda.perpendicular_ray[i] / game->ray.ray_dir_y; // trecho final da fórmula
 		}
 		//printf("result = %f\n", game->dda.perpendicular_ray[i]); //testes
 	}
