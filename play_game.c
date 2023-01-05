@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/05 02:04:05 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/05 14:42:25 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,7 +322,7 @@ void	ft_rotate(t_game *game, double angle) // rotaciona o player
 		* game->player.dir[1];
 	game->player.dir[0] = tmp;
 }
-
+// up_down e left_right funcionam da mesma maneira, elas somam a posição do player no eixo 0 =x e eixo 1 = y quanto o player andou baseado na direção que ele está apontando. Se trata de uma soma de vetores.
 void	up_down(t_game *game, int direction) // função pra cima e baixo
 {
 	int	speed;
@@ -345,6 +345,31 @@ void	up_down(t_game *game, int direction) // função pra cima e baixo
 		if(game->map[(int)game->player.pos[0]][(int)(game->player.pos[1] +
 			game->player.dir[1] * speed)] == '0');
 			game->player.pos[1] -= game->player.dir[1] * speed;
+	}
+}
+
+void	left_right(t_game *game, int direction) // função pra mover esq/dir
+{
+	int	speed;
+
+	speed = 1;
+	if (direction == RIGHT)
+	{
+		if(game->map[(int)(game->player.pos[0] + game->player.dir[1] * speed)]
+			[(int)game->player.pos[1]] == '0');
+			game->player.pos[0] += game->player.dir[1] * speed;
+		if(game->map[(int)game->player.pos[0]][(int)(game->player.pos[1] -
+			game->player.dir[0] * speed)] == '0');
+			game->player.pos[1] -= game->player.dir[0] * speed;
+	}
+	if (direction == LEFT)
+	{
+		if(game->map[(int)(game->player.pos[0] - game->player.dir[1] * speed)]
+			[(int)game->player.pos[1]] == '0');
+			game->player.pos[0] -= game->player.dir[1] * speed;
+		if(game->map[(int)game->player.pos[0]][(int)(game->player.pos[1] +
+			game->player.dir[0] * speed)] == '0');
+			game->player.pos[1] += game->player.dir[0] * speed;
 	}
 }
 
@@ -376,10 +401,10 @@ int		ft_key(int key, t_game *game) // leitura de teclas
 		up_down(game , UP);
 	else if (key == S)
 		up_down(game , DOWN);
-/*	else if (key == A)
-		left_right
+	else if (key == A)
+		left_right(game , LEFT);
 	else if (key == D)
-		left_right*/
+		left_right(game , RIGHT);
 	else if (key == 65361) // gira pra esquerda pressionando seta
 		ft_rotate(game, PI / 36);
 	else if (key == 65363)// gira pra direita pressionando seta
