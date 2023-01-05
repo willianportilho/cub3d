@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/04 21:49:48 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/04 22:08:45 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,26 @@ void	calc_delta_dist_x_and_y(t_game *game)
 	while (++i <= WIDTH)
 	{
 		//ray_dir_hypotenuse = sqrt(pow(game->ray.ray_dir_x[i], 2) + pow(game->ray.ray_dir_y, 2)); // Magnitude do ray dir *Não é mais necessário
-		game->delta.delta_dist_x[i] = 1 / game->ray.ray_dir_x[i]; // magnitude do ray_dir dividida por ray dir_x (semelhança de triângulos) *agora é dividido por 1 para simplificar
-		game->delta.delta_dist_y[i] = 1 / game->ray.ray_dir_y; // magnitude do ray_dir dividida por ray dir_y (semelhança de triângulos) *agora é dividido por 1 para simplificar
+		if (game->ray.ray_dir_x[i] == 0) // Tratamento caso 0
+		{
+			game->ray.ray_dir_x[i] = 1;
+			game->ray.ray_dir_y = 0;
+		}
+		else
+		{
+			if (game->ray.ray_dir_y > 0)
+				game->delta.delta_dist_x[i] = 1 / game->ray.ray_dir_x[i]; // magnitude do ray_dir dividida por ray dir_x (semelhança de triângulos) *agora é dividido por 1 para simplificar
+		}
+		if (game->ray.ray_dir_y == 0) // Tratamento caso 0
+		{
+			game->ray.ray_dir_y = 1;
+			game->ray.ray_dir_x[i] = 0;
+		}
+		else
+		{
+			if (game->ray.ray_dir_x[i] > 0)
+				game->delta.delta_dist_y[i] = 1 / game->ray.ray_dir_y; // magnitude do ray_dir dividida por ray dir_y (semelhança de triângulos) *agora é dividido por 1 para simplificar
+		}
 		if (game->delta.delta_dist_x[i] < 0)
 			game->delta.delta_dist_x[i] = game->delta.delta_dist_x[i] * -1; // transforma nº negativos em positivos
 		if (game->delta.delta_dist_y[i] < 0)
