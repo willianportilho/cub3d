@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/04 18:08:36 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/04 21:15:33 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_dda
 	float	*wall_map_pos_y;
 	float	*dda_line_size_x;
 	float	*dda_line_size_y;
+	float	*perpendicular_ray;
 }					t_dda;
 
 typedef struct s_dist

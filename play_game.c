@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/04 18:31:16 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/04 21:35:43 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,38 @@ void	dda_find_wall(t_game *game)
 	}	
 }
 
+void	calc_perpendicular_distance(t_game *game)
+{
+	int	i;
+
+	game->dda.perpendicular_ray = malloc((WIDTH + 1) * sizeof(float));
+	if (!game->dda.perpendicular_ray)
+		exit (EXIT_FAILURE);
+	i = -1;
+	while (++i <= WIDTH)
+	{
+		if (game->dda.hit_side[i] == 0)
+		{
+			game->dda.perpendicular_ray[i] = 
+			(game->dda.wall_map_pos_x[i] - game->player.pos[0] 
+			+ ((1 - game->dda.step_x[i]) / 2));
+			if (game->dda.perpendicular_ray[i] < 0)
+				game->dda.perpendicular_ray[i] = game->dda.perpendicular_ray[i] * -1;
+			game->dda.perpendicular_ray[i] = game->dda.perpendicular_ray[i] / game->ray.ray_dir_x[i];
+		}
+		else
+		{
+			game->dda.perpendicular_ray[i] = 
+			(game->dda.wall_map_pos_y[i] - game->player.pos[1] 
+			+ ((1 - game->dda.step_y[i]) / 2));
+			if (game->dda.perpendicular_ray[i] < 0)
+				game->dda.perpendicular_ray[i] = game->dda.perpendicular_ray[i] * -1;
+			game->dda.perpendicular_ray[i] = game->dda.perpendicular_ray[i] / game->ray.ray_dir_y;
+		}
+		//printf("result = %f\n", game->dda.perpendicular_ray[i]); //testes
+	}
+}
+
 void	play_game(t_game *game)
 {
 	game->mlx = mlx_init();
@@ -242,6 +274,7 @@ void	play_game(t_game *game)
 	calc_delta_dist_x_and_y(game);
 	calc_dist_to_side_x_and_y(game);
 	dda_find_wall(game);
+	calc_perpendicular_distance(game);
 	mlx_put_image_to_window(game->mlx, game->window, game->img.img_ptr, 0, 0);
 	mlx_loop(game->mlx);
 }
