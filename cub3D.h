@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/05 02:03:12 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/06 01:12:47 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include "libft/libft.h"
 # include "minilibx-linux/mlx.h"
 
+# define WIDTH 1024
+# define HEIGHT 768
 # define TRUE 1 // Vou precisar em algumas funções
 # define FALSE 0 // Essa também kkk
 # define PI 3.14159265359
@@ -44,6 +46,15 @@ typedef struct s_print_line
 {
 	float	*wall_line_height;
 }					t_print_line;
+
+typedef struct s_print_textu
+{
+	int		textu_index;
+	float	wallx;
+	int		textux;
+	float	step;
+	float	texpos;
+}	t_print_textu;
 
 typedef struct s_dda
 {
@@ -129,6 +140,7 @@ typedef struct s_game
 	t_dist			dist;
 	t_dda			dda;
 	t_print_line	print_line;
+	t_print_textu	print_textu;
 }	t_game;
 
 /* cub3D.c*/
@@ -161,6 +173,19 @@ void	check_walls_2(t_game *game);
 void	check_corners(t_game *game);
 
 /* play_game.c*/
-void	play_game(t_game *game);;
+void	play_game(t_game *game);
+int		game_play(t_game *game);
+int		ft_close(t_game *game);
+
+
+/* move.c*/
+void	ft_rotate(t_game *game, double angle);
+void	up_down(t_game *game, int direction);
+void	left_right(t_game *game, int direction);
+int		ft_key(int key, t_game *game);
+
+/* print_texture.c*/
+void	print_texture(t_game *game, int wall_start, int wall_end, int i);
+void	get_texture(t_game *game);
 
 #endif
