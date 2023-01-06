@@ -6,12 +6,12 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/06 01:06:19 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/06 01:27:37 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
+//função que ralmente imprimi as texturas
 void	print_texture_2(t_game *game, int wall_start, int wall_end, int i)
 {
 	int	y;
@@ -30,7 +30,7 @@ void	print_texture_2(t_game *game, int wall_start, int wall_end, int i)
 		y++;
 	}
 }
-
+//lendo a linha que vai ser printada e calculando os tamanhos e coordenas antes de atribuir os pixels
 void	print_texture(t_game *game, int wall_start, int wall_end, int i)
 {
 //	textu_index; //indice do pixel da textura a ser usado

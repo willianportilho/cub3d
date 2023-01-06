@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/06 01:14:10 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/06 01:19:44 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,12 +305,12 @@ void	calc_size_lines_to_print(t_game *game)
 			wall_start = 0;
 		if (wall_end >= HEIGHT)
 			wall_end = HEIGHT - 1;
-		color = 0X8B0000; // se comentar das linhas 308 a 312 e descomentar a linha 313 ele printa com texturas ja
+/*		color = 0X8B0000; // se comentar das linhas 308 a 312 e descomentar a linha 313 ele printa com texturas ja
 		if (game->dda.hit_side[i] == 1)
 			color = 0XFF0000;
 		while (wall_start < wall_end)
-				my_mlx_pixel_put(&game->img, i, wall_start++, color);
-//		print_texture(game, wall_start, wall_end, i);
+				my_mlx_pixel_put(&game->img, i, wall_start++, color);*/
+		print_texture(game, wall_start, wall_end, i);
 	}
 	mlx_put_image_to_window(game->mlx, game->window, game->img.img_ptr, 0, 0);
 }
