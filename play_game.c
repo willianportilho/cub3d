@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/07 17:41:03 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/07 18:35:28 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ static void	fill_background(t_game *game)
 	{
 		x = -1;
 		while (++x < WIDTH)
-			my_mlx_pixel_put(&game->img, x, y, 0XBEBEFF);
+			my_mlx_pixel_put(&game->img, x, y, createRGB(game->c.r, game->c.g, game->c.b));
 	}
 	--y;
 	while (++y < HEIGHT)
 	{
 		x = -1;
 		while (++x < WIDTH)
-			my_mlx_pixel_put(&game->img, x, y, 0X696969);
+			my_mlx_pixel_put(&game->img, x, y, createRGB(game->f.r, game->f.g, game->f.b));
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/07 17:27:22 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/07 18:06:04 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	print_texture_2(t_game *game, int wall_start, int wall_end, int i)
 		textuy = (int)game->print_textu.texpos & (TILE_SIZE - 1);
 		game->print_textu.texpos += game->print_textu.step;
 		color = game->textu[game->print_textu.textu_index].img.data[TILE_SIZE * textuy + game->print_textu.textux];
-		if (game->dda.hit_side == 1)
-			color = (color >> 1) & 8355711;
-		else if (game->dda.hit_side == 0)
-			color = (color >> 1) & 8355711;
+//		if (game->dda.hit_side == 1)
+//			color = (color >> 1) & 8355711;
+//		else if (game->dda.hit_side == 0)
+//			color = (color >> 1) & 8355711;
 		game->img.data[y * WIDTH + i] = color;
 		y++;
 	}

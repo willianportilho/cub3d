@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/07 13:14:30 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/07 18:35:04 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,5 +184,8 @@ int		ft_key(int key, t_game *game);
 /* print_texture.c*/
 void	print_texture(t_game *game, int wall_start, int wall_end, int i);
 void	get_texture(t_game *game);
+
+/* game_utils.c*/
+int createRGB(int r, int g, int b);
 
 #endif
