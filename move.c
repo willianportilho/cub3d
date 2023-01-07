@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/06 01:04:33 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/07 00:32:01 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,18 @@
 
 void	ft_rotate(t_game *game, double angle) // rotaciona o player
 {
-	double	tmp;
+	float    tmp;
+    float    tmpplane;
 
-	tmp = cos(angle) * game->player.dir[0]  - sin(angle) * game->player.dir[1];
-	game->player.dir[1] = sin(angle) * game->player.dir[0]  + cos(angle)
-		* game->player.dir[1];
-	game->player.dir[0] = tmp;
+    tmp = cos(angle) * game->player.dir[0]  - sin(angle) * game->player.dir[1];
+    game->player.dir[1] = sin(angle) * game->player.dir[0]  + cos(angle)
+        * game->player.dir[1];
+    game->player.dir[0] = tmp;
+
+    tmpplane = cos(angle) * game->player.camera_plane[0] - sin(angle) * game->player.camera_plane[1];
+    game->player.camera_plane[1]  = sin(angle) * game->player.camera_plane[0] + cos(angle)
+        * game->player.camera_plane[1] ;
+    game->player.camera_plane[0] = tmpplane;
 }
 // up_down e left_right funcionam da mesma maneira, elas somam a posição do player no eixo 0 =x e eixo 1 = y quanto o player andou baseado na direção que ele está apontando. Se trata de uma soma de vetores.
 void	up_down(t_game *game, int direction) // função pra cima e baixo
