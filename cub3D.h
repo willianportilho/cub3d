@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/06 01:12:47 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/07 13:14:30 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,6 @@
 # define D	100
 # define A	97
 
-typedef struct s_print_line
-{
-	float	*wall_line_height;
-}					t_print_line;
 
 typedef struct s_print_textu
 {
@@ -58,39 +54,41 @@ typedef struct s_print_textu
 
 typedef struct s_dda
 {
-	int		*step_x;
-	int		*step_y;
-	int		*hit_side;
-	float	*wall_map_pos_x;
-	float	*wall_map_pos_y;
-	float	*dda_line_size_x;
-	float	*dda_line_size_y;
-	float	*perpendicular_ray;
+	int		step_x;
+	int		step_y;
+	int		hit_side;
+	int		map_pos[2];
+	float	wall_map_pos_x;
+	float	wall_map_pos_y;
+	float	line_size_x;
+	float	line_size_y;
+	float	perpendicular_ray;
+	float	wall_line_height;
 }					t_dda;
 
 typedef struct s_dist
 {
-	float	*dist_to_side_x;
-	float	*dist_to_side_y;
+	float	side_x;
+	float	side_y;
 }					t_dist;
 
 typedef struct s_delta
 {
-	float	*delta_dist_x;
-	float	*delta_dist_y;
-}					t_delta;
+	float	dist_x;
+	float	dist_y;
+}			t_delta;
 
 typedef struct s_ray
 {
-	float	*ray_dir_x;
-	float	ray_dir_y;
-}					t_ray;
+	float	dir_x;
+	float	dir_y;
+}			t_ray;
 
 typedef struct s_player
 {
 	float	dir[2];
 	float	pos[2];
-	float	plane[2];
+	float	camera_plane[2];
 }					t_player;
 
 typedef struct s_img
@@ -139,7 +137,6 @@ typedef struct s_game
 	t_delta			delta;
 	t_dist			dist;
 	t_dda			dda;
-	t_print_line	print_line;
 	t_print_textu	print_textu;
 }	t_game;
 
