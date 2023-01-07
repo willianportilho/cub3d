@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/07 17:17:22 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/07 17:41:03 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	calc_dist_to_side_x_and_y(t_game *game)
 	}
 	else
 	{
-		game->dist.side_x = ((float)game->dda.map_pos[1] + 1 - game->player.pos[1]) * game->delta.dist_x;
+		game->dist.side_x = ((float)game->dda.map_pos[0] + 1 - game->player.pos[0]) * game->delta.dist_x;
 		game->dda.step_x = 1;
 	}
 	if (game->ray.dir_y < 0)
