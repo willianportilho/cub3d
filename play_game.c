@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/07 12:15:10 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/07 13:14:50 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,35 +43,150 @@ static void	fill_background(t_game *game)
 	}
 }
 
-/*		color = 0X8B0000; // se comentar das linhas 308 a 312 e descomentar a linha 313 ele printa com texturas ja
-void	calc_size_lines_to_print(t_game *game)
+static void	init_player(t_game *game)
 {
-	int		i;
-	int		color;
-
-	game->print_line.wall_line_height = malloc((WIDTH + 1) * sizeof(float));
-	if (!game->print_line.wall_line_height)
-		exit (EXIT_FAILURE);
-	i = -1;
-	while (++i <= WIDTH)
-		game->print_line.wall_line_height[i] = HEIGHT / game->dda.perpendicular_ray[i];
-	i = -1;
-	while (++i <= WIDTH)
-	{
-		wall_start = (HEIGHT / 2) - (game->print_line.wall_line_height[i] / 2);
-		wall_end = (HEIGHT / 2) + (game->print_line.wall_line_height[i] / 2);
-		if (wall_start < 0)
-			wall_start = 0;
-		if (wall_end >= HEIGHT)
-			wall_end = HEIGHT - 1;
-		if (game->dda.hit_side[i] == 1)
-			color = 0XFF0000;
-		while (wall_start < wall_end)
-		print_texture(game, wall_start, wall_end, i);
-	}
-	mlx_put_image_to_window(game->mlx, game->window, game->img.img_ptr, 0, 0);
+	game->player.pos[0] = 5;
+	game->player.pos[1] = 5;
+	game->player.dir[0] = 0;
+	game->player.dir[1] = -1;
+	game->player.camera_plane[0] = 0.66;
+	game->player.camera_plane[1] = 0;
 }
-				my_mlx_pixel_put(&game->img, i, wall_start++, color);*/
+
+static void	calc_ray_dir(float pixel, t_game *game)
+{
+	float	multiplier = 2 * (pixel / WIDTH) - 1;
+	float	camera_pixel[2];
+	
+	camera_pixel[0] = game->player.camera_plane[0] * multiplier;
+	camera_pixel[1] = game->player.camera_plane[1] * multiplier;
+	game->ray.dir_x = game->player.dir[0] + camera_pixel[0];
+	game->ray.dir_y = game->player.dir[1] + camera_pixel[1];
+}
+
+void	calc_delta_dist_x_and_y(t_game *game)
+{
+	if (game->ray.dir_x == 0)
+	{
+		game->delta.dist_x = 1;
+		game->delta.dist_y = 0;
+	}
+	else
+	{
+		if (game->ray.dir_y)
+		{
+			game->delta.dist_x = 1 / game->ray.dir_x;
+			if (game->delta.dist_x < 0)
+				game->delta.dist_x *= -1;
+		}
+	}
+	if (game->ray.dir_y == 0)
+	{
+		game->delta.dist_x = 0;
+		game->delta.dist_y = 1;
+	}
+	else
+	{
+		if (game->ray.dir_x)
+		{
+			game->delta.dist_y = 1 / game->ray.dir_y;
+			if (game->delta.dist_y < 0)
+				game->delta.dist_y *= -1;
+		}
+	}
+}
+
+void	calc_dist_to_side_x_and_y(t_game *game)
+{
+	game->dda.map_pos[0] = (int)game->player.pos[0];
+	game->dda.map_pos[1] = (int)game->player.pos[1];
+	if (game->ray.dir_x < 0)
+	{
+		game->dist.side_x = (game->player.pos[0] - (float)game->dda.map_pos[0]) * game->delta.dist_x;
+		game->dda.step_x = -1;
+	}
+	else
+	{
+		game->dist.side_x = ((float)game->dda.map_pos[1] + 1 - game->player.pos[1]) * game->delta.dist_x;
+		game->dda.step_x = 1;
+	}
+	if (game->ray.dir_y < 0)
+	{
+		game->dist.side_y = (game->player.pos[1] - (float)game->dda.map_pos[1]) * game->delta.dist_y;
+		game->dda.step_y = -1;
+	}
+	else
+	{
+		game->dist.side_y = ((float)game->dda.map_pos[1] + 1 - game->player.pos[1]) * game->delta.dist_y;
+		game->dda.step_y = 1;
+	}
+}
+
+void	dda_find_wall(t_game *game)
+{
+	int		hit = FALSE;
+
+	game->dda.line_size_x = game->dist.side_x;
+	game->dda.line_size_y = game->dist.side_y;
+	game->dda.wall_map_pos_x = game->dda.map_pos[0];
+	game->dda.wall_map_pos_y = game->dda.map_pos[1];
+	while (hit == FALSE)
+	{
+		if (game->dda.line_size_x < game->dda.line_size_y)
+		{
+			game->dda.wall_map_pos_x += game->dda.step_x;
+			game->dda.line_size_x += game->delta.dist_x;
+			game->dda.hit_side = 0;
+		}
+		else
+		{
+			game->dda.wall_map_pos_y += game->dda.step_y;
+			game->dda.line_size_y += game->delta.dist_y;
+			game->dda.hit_side = 1;
+		}
+		if (game->map[(int)game->dda.wall_map_pos_x][(int)game->dda.wall_map_pos_y] > '0')
+			hit = TRUE;
+	}
+}
+
+void	calc_perpendicular_distance(t_game *game)
+{
+	if (game->dda.hit_side == 0)
+	{
+		game->dda.perpendicular_ray = (game->dda.wall_map_pos_x - game->player.pos[0] + ((1 - game->dda.step_x) / 2));
+		if (game->dda.perpendicular_ray < 0)
+			game->dda.perpendicular_ray *= -1;
+		game->dda.perpendicular_ray /= game->ray.dir_x;
+	}
+	else
+	{
+		game->dda.perpendicular_ray = (game->dda.wall_map_pos_y - game->player.pos[1] + ((1 - game->dda.step_y) / 2));
+		if (game->dda.perpendicular_ray < 0)
+			game->dda.perpendicular_ray *= -1;
+		game->dda.perpendicular_ray /= game->ray.dir_y;
+	}
+}
+
+void	calc_size_lines_and_print(int pixel, t_game *game)
+{
+	game->dda.wall_line_height = HEIGHT/game->dda.perpendicular_ray;
+	if (game->dda.wall_line_height < 0)
+		game->dda.wall_line_height *= -1;
+	int	line_start_y = HEIGHT / 2 - game->dda.wall_line_height / 2;
+	int	line_end_y = HEIGHT / 2 + game->dda.wall_line_height / 2;
+	if (line_start_y < 0)
+		line_start_y = 0;
+	if (line_end_y > HEIGHT)
+		line_end_y = HEIGHT - 1;
+	/*int		color;
+	if (game->dda.hit_side == 0)
+		color = 0X8B0000;
+	else
+		color = 0XFF0000;
+	while (line_start_y < line_end_y)
+		my_mlx_pixel_put(&game->img, pixel, line_start_y++, color);*/
+	print_texture(game, line_start_y, line_end_y, (int)pixel);
+}
 
 int	ft_close(t_game *game) // fecha o jogo vai pra exit_utils depois
 {
@@ -89,116 +204,12 @@ int	game_play(t_game *game)
 	fill_background(game);
 	while (++pixel < WIDTH)
 	{
-		float	multiplier = 2 * (pixel / WIDTH) - 1;
-		float	camera_pixel[2];
-		camera_pixel[0] = game->player.camera_plane[0] * multiplier;
-		camera_pixel[1] = game->player.camera_plane[1] * multiplier;
-		float	ray_dir[2];
-		ray_dir[0] = game->player.dir[0] + camera_pixel[0];
-		ray_dir[1] = game->player.dir[1] + camera_pixel[1];
-		float	delta_dist_x;
-		float	delta_dist_y;
-		delta_dist_x = 1 / ray_dir[0];
-		delta_dist_y = 1 / ray_dir[1];
-		if (delta_dist_x < 0)
-			delta_dist_x *= -1;
-		if (delta_dist_y < 0)
-			delta_dist_y *= -1;
-
-		int	map_pos[2];
-		map_pos[0] = (int)game->player.pos[0];
-		map_pos[1] = (int)game->player.pos[1];
-
-		float	dist_to_side_x;
-		float	dist_to_side_y;
-		int		step_x;
-		int		step_y;
-		float	perpendicular_dist;
-
-		if (ray_dir[0] < 0)
-		{
-			dist_to_side_x = (game->player.pos[0] - (float)map_pos[0]) * delta_dist_x;
-			step_x = -1;
-		}
-		else
-		{
-			dist_to_side_x = ((float)map_pos[1] + 1 - game->player.pos[1]) * delta_dist_x;
-			step_x = 1;
-		}
-		if (ray_dir[1] < 0)
-		{
-			dist_to_side_y = (game->player.pos[1] - (float)map_pos[1]) * delta_dist_y;
-			step_y = -1;
-		}
-		else
-		{
-			dist_to_side_y = ((float)map_pos[1] + 1 - game->player.pos[1]) * delta_dist_y;
-			step_y = 1;
-		}
-
-		int		hit = FALSE;
-		int		hit_side;
-
-		float	dda_line_size_x = dist_to_side_x;
-		float	dda_line_size_y = dist_to_side_y;
-
-		float	wall_map_pos[2];
-		wall_map_pos[0] = map_pos[0];
-		wall_map_pos[1] = map_pos[1];
-
-		while (hit == FALSE)
-		{
-			if (dda_line_size_x < dda_line_size_y)
-			{
-				wall_map_pos[0] += step_x;
-				dda_line_size_x += delta_dist_x;
-				hit_side = 0;
-			}
-			else
-			{
-				wall_map_pos[1] += step_y;
-				dda_line_size_y += delta_dist_y;
-				hit_side = 1;
-			}
-
-			if (game->map[(int)wall_map_pos[0]][(int)wall_map_pos[1]] > '0')
-				hit = TRUE;
-		}
-
-		if (hit_side == 0)
-		{
-			perpendicular_dist = (wall_map_pos[0] - game->player.pos[0] + ((1 - step_x) / 2));
-			if (perpendicular_dist < 0)
-				perpendicular_dist *= -1;
-			perpendicular_dist /= ray_dir[0];
-		}
-		else
-		{
-			perpendicular_dist = (wall_map_pos[1] - game->player.pos[1] + ((1 - step_y) / 2));
-			if (perpendicular_dist < 0)
-				perpendicular_dist *= -1;
-			perpendicular_dist /= ray_dir[1];
-		}
-		float	wall_line_height = HEIGHT/perpendicular_dist;
-
-		if (wall_line_height < 0)
-			wall_line_height *= -1;
-		int	line_start_y = HEIGHT / 2 - wall_line_height / 2;
-		int	line_end_y = HEIGHT / 2 + wall_line_height / 2;
-
-		if (line_start_y < 0)
-			line_start_y = 0;
-		if (line_end_y > HEIGHT)
-			line_end_y = HEIGHT - 1;
-		int		color;
-		if (hit_side == 0)
-			color = 0X8B0000;
-		else
-			color = 0XFF0000;
-
-		while (line_start_y < line_end_y)
-			my_mlx_pixel_put(&game->img, pixel, line_start_y++, color);
-		//print_texture(game, line_start_y, line_end_y, (int)pixel);
+		calc_ray_dir(pixel, game);
+		calc_delta_dist_x_and_y(game);
+		calc_dist_to_side_x_and_y(game);
+		dda_find_wall(game);
+		calc_perpendicular_distance(game);
+		calc_size_lines_and_print(pixel, game);
 	}
 	mlx_put_image_to_window(game->mlx, game->window, game->img.img_ptr, 0, 0);
 	return (0);
@@ -212,12 +223,7 @@ void	play_game(t_game *game)
 	game->img.img_ptr = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	game->img.addr = mlx_get_data_addr(game->img.img_ptr, &game->img.bpp, &game->img.wdt, &game->img.endian);
 	game->img.data =  (int *)mlx_get_data_addr(game->img.img_ptr, &game->img.bpp, &game->img.size_l,  &game->img.endian);
-	game->player.pos[0] = 5;
-	game->player.pos[1] = 5;
-	game->player.dir[0] = 0;
-	game->player.dir[1] = -1;
-	game->player.camera_plane[0] = 0.66;
-	game->player.camera_plane[1] = 0;
+	init_player(game);
 	mlx_loop_hook(game->mlx, &game_play, game); //roda o jogo em loop
 	mlx_key_hook(game->window, &ft_key, game); // verifica tecla foi pressionada
 	mlx_hook(game->window, 33, 1L << 17, ft_close, game); // Clicar no X =ESC

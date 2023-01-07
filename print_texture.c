@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/06 01:27:37 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/07 13:17:16 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	print_texture_2(t_game *game, int wall_start, int wall_end, int i)
 		textuy = (int)game->print_textu.texpos & (TILE_SIZE - 1);
 		game->print_textu.texpos += game->print_textu.step;
 		color = game->textu[game->print_textu.textu_index].img.data[TILE_SIZE * textuy + game->print_textu.textux];
-		if (game->dda.hit_side[i] == 1)
+		if (game->dda.hit_side == 1)
 			color = (color >> 1) & 8355711;
 		game->img.data[y * WIDTH + i] = color;
 		y++;
@@ -40,22 +40,22 @@ void	print_texture(t_game *game, int wall_start, int wall_end, int i)
 //	texpos; //posição da textura que vai alterando com cada passo dado
 	game->print_textu.textu_index = game->map[(int)(game->player.pos[0])][(int)
 			(game->player.pos[1])] - 48;
-	if (game->dist.dist_to_side_x == 0)
+	if (game->dist.side_x == 0)
 		game->print_textu.wallx = game->player.pos[1] + game->dda.
-			perpendicular_ray[i] * game->ray.ray_dir_y;
+			perpendicular_ray * game->ray.dir_y;
 	else
-		game->print_textu.wallx = game->player.pos[0] +game->dda.
-			perpendicular_ray[i] * game->ray.ray_dir_x[i];
+		game->print_textu.wallx = game->player.pos[0] + game->dda.
+			perpendicular_ray * game->ray.dir_x;
 	game->print_textu.wallx -=floor(game->print_textu.wallx);
 		game->print_textu.textux = (int)(game->print_textu.wallx * (float)
 			TILE_SIZE);
-	if ((game->dda.hit_side[i] == 0 && game->ray.ray_dir_x > 0) || (game->dda.
-		hit_side[i] == 1 && 	game->ray.ray_dir_y < 0))
+	if ((game->dda.hit_side == 0 && game->ray.dir_x > 0) || (game->dda.
+		hit_side == 1 && 	game->ray.dir_y < 0))
 	game->print_textu.textux = TILE_SIZE - game->print_textu.textux - 1;
-		game->print_textu.step = 1.0 * TILE_SIZE / game->print_line.
-			wall_line_height[i];
-		game->print_textu.texpos = (wall_start - HEIGHT / 2 + game->print_line.
-			wall_line_height[i] / 2) * game->print_textu.step;
+		game->print_textu.step = 1.0 * TILE_SIZE / game->dda.
+			wall_line_height;
+		game->print_textu.texpos = (wall_start - HEIGHT / 2 + game->dda.
+			wall_line_height / 2) * game->print_textu.step;
 	print_texture_2(game, wall_start, wall_end, i);
 }
 void	get_texture_2(t_game *game)
