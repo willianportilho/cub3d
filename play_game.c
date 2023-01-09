@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/07 18:35:28 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/08 20:08:06 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	calc_dist_to_side_x_and_y(t_game *game)
 	}
 	else
 	{
-		game->dist.side_x = ((float)game->dda.map_pos[0] + 1 - game->player.pos[0]) * game->delta.dist_x;
+		game->dist.side_x = ((float)game->dda.map_pos[0] + 1.0 - game->player.pos[0]) * game->delta.dist_x;
 		game->dda.step_x = 1;
 	}
 	if (game->ray.dir_y < 0)
@@ -118,7 +118,7 @@ void	calc_dist_to_side_x_and_y(t_game *game)
 	}
 	else
 	{
-		game->dist.side_y = ((float)game->dda.map_pos[1] + 1 - game->player.pos[1]) * game->delta.dist_y;
+		game->dist.side_y = ((float)game->dda.map_pos[1] + 1.0 - game->player.pos[1]) * game->delta.dist_y;
 		game->dda.step_y = 1;
 	}
 }
@@ -179,13 +179,6 @@ void	calc_size_lines_and_print(int pixel, t_game *game)
 		line_start_y = 0;
 	if (line_end_y > HEIGHT)
 		line_end_y = HEIGHT - 1;
-	/*int		color;
-	if (game->dda.hit_side == 0)
-		color = 0X8B0000;
-	else
-		color = 0XFF0000;
-	while (line_start_y < line_end_y)
-		my_mlx_pixel_put(&game->img, pixel, line_start_y++, color);*/
 	print_texture(game, line_start_y, line_end_y, (int)pixel);
 }
 

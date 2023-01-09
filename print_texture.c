@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/07 18:06:04 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/08 20:07:18 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,7 @@ void	print_texture_2(t_game *game, int wall_start, int wall_end, int i)
 		textuy = (int)game->print_textu.texpos & (TILE_SIZE - 1);
 		game->print_textu.texpos += game->print_textu.step;
 		color = game->textu[game->print_textu.textu_index].img.data[TILE_SIZE * textuy + game->print_textu.textux];
-//		if (game->dda.hit_side == 1)
-//			color = (color >> 1) & 8355711;
-//		else if (game->dda.hit_side == 0)
-//			color = (color >> 1) & 8355711;
-		game->img.data[y * WIDTH + i] = color;
+			game->img.data[y * WIDTH + i] = color;
 		y++;
 	}
 }
@@ -40,23 +36,28 @@ void	print_texture(t_game *game, int wall_start, int wall_end, int i)
 //	textux; // Coordenada x da textura
 //	step; // cada passo dado é um step que é baseado na altura da linha
 //	texpos; //posição da textura que vai alterando com cada passo dado
-	game->print_textu.textu_index = game->map[(int)(game->player.pos[0])][(int)
-			(game->player.pos[1])] - 47;
-	if (game->dist.side_x == 0)
+	if (game->dda.hit_side == 0 && game->ray.dir_x >= 0)
+		game->print_textu.textu_index = 0;
+	if (game->dda.hit_side == 0 && game->ray.dir_x < 0)
+		game->print_textu.textu_index = 1;
+	if (game->dda.hit_side == 1 && game->ray.dir_y >= 0)
+		game->print_textu.textu_index = 2;
+	if (game->dda.hit_side == 1 && game->ray.dir_y < 0)
+		game->print_textu.textu_index = 3;
+	if (game->dda.hit_side == 0)
 		game->print_textu.wallx = game->player.pos[1] + game->dda.
 			perpendicular_ray * game->ray.dir_y;
 	else
 		game->print_textu.wallx = game->player.pos[0] + game->dda.
 			perpendicular_ray * game->ray.dir_x;
 	game->print_textu.wallx -=floor(game->print_textu.wallx);
-		game->print_textu.textux = (int)(game->print_textu.wallx * (float)
+	game->print_textu.textux = (int)(game->print_textu.wallx * (float)
 			TILE_SIZE);
 	if ((game->dda.hit_side == 0 && game->ray.dir_x > 0) || (game->dda.
 		hit_side == 1 && 	game->ray.dir_y < 0))
-	game->print_textu.textux = TILE_SIZE - game->print_textu.textux - 1;
-		game->print_textu.step = 1.0 * TILE_SIZE / game->dda.
-			wall_line_height;
-		game->print_textu.texpos = (wall_start - HEIGHT / 2 + game->dda.
+		game->print_textu.textux = TILE_SIZE - game->print_textu.textux - 1;
+	game->print_textu.step = 1.0 * TILE_SIZE / game->dda.wall_line_height;
+	game->print_textu.texpos = (wall_start - HEIGHT / 2 + game->dda.
 			wall_line_height / 2) * game->print_textu.step;
 	print_texture_2(game, wall_start, wall_end, i);
 }
