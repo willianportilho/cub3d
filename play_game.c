@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/18 15:08:40 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:56:43 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,29 @@ static void	fill_background(t_game *game)
 
 static void	init_player(t_game *game)
 {
-	game->player.pos[0] = 5;
-	game->player.pos[1] = 5;
+	int	x;
+	int	y;
+
 	game->player.dir[0] = 0;
 	game->player.dir[1] = -1;
 	game->player.camera_plane[0] = 0.66;
 	game->player.camera_plane[1] = 0;
+	y = -1;
+	while (game->map[++y])
+	{
+		x = -1;
+		while (game->map[y][++x])
+		{
+			printf("'%c'", game->map[y][x]);
+			if (ft_isalpha(game->map[y][x]))
+			{
+				game->player.pos[0] = (float)x + 0.5;
+				game->player.pos[1] = (float)y + 0.5;
+				return ;
+			}
+		}
+		printf("\n");
+	}
 }
 
 static void	calc_ray_dir(float pixel, t_game *game)
@@ -146,7 +163,7 @@ void	dda_find_wall(t_game *game)
 			game->dda.line_size_y += game->delta.dist_y;
 			game->dda.hit_side = 1;
 		}
-		if (game->map[(int)game->dda.wall_map_pos_x][(int)game->dda.wall_map_pos_y] > '0')
+		if (game->map[(int)game->dda.wall_map_pos_y][(int)game->dda.wall_map_pos_x] > '0')
 			hit = TRUE;
 	}
 }

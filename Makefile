@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/16 22:45:46 by acosta-a          #+#    #+#              #
-#    Updated: 2023/01/07 18:35:55 by acosta-a         ###   ########.fr        #
+#    Updated: 2023/01/18 18:42:34 by wportilh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 
 # Compilation Flags#
-FLAGS = -g -Werror -Wextra -Wall
+FLAGS = -g3 -Werror -Wextra -Wall
 MLX_FLAGS = -lm -lbsd -lmlx -lXext -lX11
 RM = rm -rf
 

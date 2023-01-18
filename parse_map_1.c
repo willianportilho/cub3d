@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:39:20 by wportilh          #+#    #+#             */
-/*   Updated: 2023/01/18 14:59:37 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:26:53 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,14 +113,11 @@ void	check_break_line(t_game *game)
 	{
 		if (ft_isalpha(game->single_line_map[i]))
 		{
-			printf("index: %d\n", i);
-			printf("letra: %c\n", game->single_line_map[i]);
 			elements++;
 			while (game->single_line_map[i] != '\n')
 				i++;
 		}
 	}
-	printf("teste %d\n", i);
 	while ((game->single_line_map[i] == '\n')
 		|| (game->single_line_map[i] == ' '))
 		i++;
