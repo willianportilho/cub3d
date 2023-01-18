@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   play_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/08 20:08:06 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:08:40 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "cub3D.h"
 
@@ -56,9 +55,10 @@ static void	init_player(t_game *game)
 
 static void	calc_ray_dir(float pixel, t_game *game)
 {
-	float	multiplier = 2 * (pixel / WIDTH) - 1;
+	float	multiplier;
 	float	camera_pixel[2];
 
+	multiplier = 2 * (pixel / WIDTH) - 1;
 	camera_pixel[0] = game->player.camera_plane[0] * multiplier;
 	camera_pixel[1] = game->player.camera_plane[1] * multiplier;
 	game->ray.dir_x = game->player.dir[0] + camera_pixel[0];
@@ -125,8 +125,9 @@ void	calc_dist_to_side_x_and_y(t_game *game)
 
 void	dda_find_wall(t_game *game)
 {
-	int		hit = FALSE;
+	int		hit;
 
+	hit = FALSE;
 	game->dda.line_size_x = game->dist.side_x;
 	game->dda.line_size_y = game->dist.side_y;
 	game->dda.wall_map_pos_x = game->dda.map_pos[0];
@@ -170,11 +171,14 @@ void	calc_perpendicular_distance(t_game *game)
 
 void	calc_size_lines_and_print(int pixel, t_game *game)
 {
-	game->dda.wall_line_height = HEIGHT/game->dda.perpendicular_ray;
+	int	line_start_y;
+	int	line_end_y;
+
+	game->dda.wall_line_height = HEIGHT / game->dda.perpendicular_ray;
 	if (game->dda.wall_line_height < 0)
 		game->dda.wall_line_height *= -1;
-	int	line_start_y = HEIGHT / 2 - game->dda.wall_line_height / 2;
-	int	line_end_y = HEIGHT / 2 + game->dda.wall_line_height / 2;
+	line_start_y = HEIGHT / 2 - game->dda.wall_line_height / 2;
+	line_end_y = HEIGHT / 2 + game->dda.wall_line_height / 2;
 	if (line_start_y < 0)
 		line_start_y = 0;
 	if (line_end_y > HEIGHT)
@@ -193,8 +197,8 @@ int	ft_close(t_game *game) // fecha o jogo vai pra exit_utils depois
 int	game_play(t_game *game)
 {
 	float	pixel;
-	pixel = -1;
 
+	pixel = -1;
 	fill_background(game);
 	while (++pixel < WIDTH)
 	{
@@ -216,7 +220,7 @@ void	play_game(t_game *game)
 	game->window = mlx_new_window(game->mlx, WIDTH, HEIGHT, "cub3d");
 	game->img.img_ptr = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	game->img.addr = mlx_get_data_addr(game->img.img_ptr, &game->img.bpp, &game->img.wdt, &game->img.endian);
-	game->img.data =  (int *)mlx_get_data_addr(game->img.img_ptr, &game->img.bpp, &game->img.size_l,  &game->img.endian);
+	game->img.data = (int *)mlx_get_data_addr(game->img.img_ptr, &game->img.bpp, &game->img.size_l, &game->img.endian);
 	init_player(game);
 	mlx_loop_hook(game->mlx, &game_play, game); //roda o jogo em loop
 	mlx_key_hook(game->window, &ft_key, game); // verifica tecla foi pressionada

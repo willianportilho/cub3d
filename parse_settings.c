@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_settings.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 18:30:52 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/25 16:32:17 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:00:18 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	get_settings_2(t_game *game, char *map_line)
 	}
 	if (map_line && !ft_strncmp(map_line, "EA", 2))
 	{
-		game->ea_wall_path = ft_substr(map_line, 2,  ft_strlen(map_line) - 2);
+		game->ea_wall_path = ft_substr(map_line, 2, ft_strlen(map_line) - 2);
 		game->settings_count += 13;
 		return (1);
 	}

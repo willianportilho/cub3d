@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/08 20:07:18 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:07:51 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	print_texture_2(t_game *game, int wall_start, int wall_end, int i)
 		y++;
 	}
 }
-//lendo a linha que vai ser printada e calculando os tamanhos e coordenas antes de atribuir os pixels
+
+/*lendo a linha que vai ser printada e calculando os tamanhos e coordenas antes de atribuir os pixels*/
 void	print_texture(t_game *game, int wall_start, int wall_end, int i)
 {
 //	textu_index; //indice do pixel da textura a ser usado
@@ -45,33 +46,34 @@ void	print_texture(t_game *game, int wall_start, int wall_end, int i)
 	if (game->dda.hit_side == 1 && game->ray.dir_y < 0)
 		game->print_textu.textu_index = 3;
 	if (game->dda.hit_side == 0)
-		game->print_textu.wallx = game->player.pos[1] + game->dda.
-			perpendicular_ray * game->ray.dir_y;
+		game->print_textu.wallx = game->player.pos[1]
+			+ game->dda.perpendicular_ray * game->ray.dir_y;
 	else
-		game->print_textu.wallx = game->player.pos[0] + game->dda.
-			perpendicular_ray * game->ray.dir_x;
-	game->print_textu.wallx -=floor(game->print_textu.wallx);
+		game->print_textu.wallx = game->player.pos[0]
+			+ game->dda.perpendicular_ray * game->ray.dir_x;
+	game->print_textu.wallx -= floor(game->print_textu.wallx);
 	game->print_textu.textux = (int)(game->print_textu.wallx * (float)
 			TILE_SIZE);
-	if ((game->dda.hit_side == 0 && game->ray.dir_x > 0) || (game->dda.
-		hit_side == 1 && 	game->ray.dir_y < 0))
+	if ((game->dda.hit_side == 0 && game->ray.dir_x > 0)
+		|| (game->dda.hit_side == 1 && game->ray.dir_y < 0))
 		game->print_textu.textux = TILE_SIZE - game->print_textu.textux - 1;
 	game->print_textu.step = 1.0 * TILE_SIZE / game->dda.wall_line_height;
-	game->print_textu.texpos = (wall_start - HEIGHT / 2 + game->dda.
-			wall_line_height / 2) * game->print_textu.step;
+	game->print_textu.texpos = (wall_start - HEIGHT / 2
+			+ game->dda.wall_line_height / 2) * game->print_textu.step;
 	print_texture_2(game, wall_start, wall_end, i);
 }
+
 void	get_texture_2(t_game *game)
 {
-	while(game->i < 4)
+	while (game->i < 4)
 	{
 		if (!game->textu[game->i].img.img_ptr || !game->textu[game->i].img.data)
 			print_exit("Error");
 		game->i++;
-
 	}
 }
-//Salva texturas em um array pra serem lidas posteriormente
+
+/*Salva texturas em um array pra serem lidas posteriormente*/
 void	get_texture(t_game *game)
 {
 	game->textu[0].img.img_ptr = mlx_xpm_file_to_image(game->mlx,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/07 18:35:04 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:48:23 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@
 # define S	115
 # define D	100
 # define A	97
-
 
 typedef struct s_print_textu
 {
@@ -129,6 +128,7 @@ typedef struct s_game
 	t_rgb			c;
 	t_rgb			f;
 	t_textu			textu[4];
+	char			*single_line_map;
 	char			**map;
 	t_img			img;
 	int				i;
@@ -174,7 +174,6 @@ void	play_game(t_game *game);
 int		game_play(t_game *game);
 int		ft_close(t_game *game);
 
-
 /* move.c*/
 void	ft_rotate(t_game *game, double angle);
 void	up_down(t_game *game, int direction);
@@ -186,6 +185,6 @@ void	print_texture(t_game *game, int wall_start, int wall_end, int i);
 void	get_texture(t_game *game);
 
 /* game_utils.c*/
-int createRGB(int r, int g, int b);
+int		createRGB(int r, int g, int b);
 
 #endif

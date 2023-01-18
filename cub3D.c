@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:17 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/30 00:05:12 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:25:28 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,11 @@
 /*função que faz leitura do mapa e o transforma em um vetor
 ela retorna um vetor onde cada indice do vetor é uma linha*/
 
-char	**read_cubfile(char *map)
+char	**read_cubfile(char *map, t_game *game)
 {
 	int		fd;
 	char	*line;
 	char	**vector_map;
-	char	*single_line_map;
 
 	fd = open(map, O_DIRECTORY);
 	if (fd != -1)
@@ -28,16 +27,15 @@ char	**read_cubfile(char *map)
 	fd = open(map, O_RDONLY);
 	if (fd == -1)
 		print_exit("File cannot be a opened");
-	single_line_map = '\0';
+	game->single_line_map = '\0';
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		single_line_map = ft_strjoin(single_line_map, line);
+		game->single_line_map = ft_strjoin(game->single_line_map, line);
 		free(line);
 		line = get_next_line(fd);
 	}
-	vector_map = ft_split(single_line_map, '\n');
-	free(single_line_map);
+	vector_map = ft_split(game->single_line_map, '\n');
 	return (vector_map);
 }
 
@@ -75,7 +73,7 @@ int	main(int argc, char **argv)
 		print_exit("Error\nType 2 arguments");
 	init_game(&game);
 	check_args(argv);
-	game.map = read_cubfile(argv[1]); // lendo o mapa e transformando em vetor
+	game.map = read_cubfile(argv[1], &game); // lendo o mapa e transformando em vetor
 	parse_settings(&game, game.map);
 	parse_map(&game);
 	play_game(&game);

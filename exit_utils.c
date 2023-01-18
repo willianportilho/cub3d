@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:28:40 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/23 22:23:23 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:48:57 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	print_exit(char *input)
 void	clean_exit(t_game *game)
 {
 	destroy_pointers_char(game->map);
+	free(game->single_line_map);
 	free(game->no_wall_path);
 	free(game->so_wall_path);
 	free(game->we_wall_path);
@@ -41,7 +42,8 @@ void	destroy_pointers_char(char **p)
 		free(p[i++]);
 	free(p);
 }
-//função utilizada pra printar o vetor apenas pra checar se funciona
+
+/*função utilizada pra printar o vetor apenas pra checar se funciona*/
 void	print_vector(char **p)
 {
 	int	i;

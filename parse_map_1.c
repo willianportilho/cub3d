@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:39:20 by wportilh          #+#    #+#             */
-/*   Updated: 2022/12/26 15:32:24 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:59:37 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,36 @@ static void	check_characters(t_game *game)
 		map_error("needed one player (only one is allowed)", game);
 }
 
+void	check_break_line(t_game *game)
+{
+	int	i;
+	int	elements;
+
+	i = -1;
+	elements = 0;
+	while ((game->single_line_map[++i]) && (elements < 6))
+	{
+		if (ft_isalpha(game->single_line_map[i]))
+		{
+			printf("index: %d\n", i);
+			printf("letra: %c\n", game->single_line_map[i]);
+			elements++;
+			while (game->single_line_map[i] != '\n')
+				i++;
+		}
+	}
+	printf("teste %d\n", i);
+	while ((game->single_line_map[i] == '\n')
+		|| (game->single_line_map[i] == ' '))
+		i++;
+	while (game->single_line_map[i++])
+	{
+		if ((game->single_line_map[i] == '\n')
+			&& (game->single_line_map[i + 1] == '\n'))
+			map_error("double break line founded in the map", game);
+	}
+}
+
 /*análise do mapa
   Essa análise pode ter várias funções no começo,
   mas aos poucos vou tentar diminuir e otimizar*/
@@ -110,6 +140,7 @@ void	parse_map(t_game *game)
 	get_only_map(game);
 	normalization(game);
 	check_characters(game);
+	check_break_line(game);
 	check_walls_1(game);
 	check_walls_2(game);
 	check_corners(game);
