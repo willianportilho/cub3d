@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/18 21:49:22 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/19 13:52:45 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,21 @@ void	up_down(t_game *game, int direction) // função pra cima e baixo
 {
 	float	speed;
 	float	pos;
+	float	check_pos_x;
+	float	check_pos_y;
 
 	speed = 0.1;
 	if (direction == UP)
 	{
-		pos = game->player.pos[0] + game->player.dir[0] * speed;
-		if(game->map[(int)pos][(int)game->player.pos[1]] == '0');
+		check_pos_x = (game->player.pos[0] + game->player.dir[0] * speed) - 0.1;
+		check_pos_y = (game->player.pos[1] + game->player.dir[1] * speed) - 0.1;
+		printf("x = %f\n", check_pos_x);
+		printf("y = %f\n", check_pos_y);
+		if (game->map[(int)check_pos_y][(int)check_pos_x] != '1')
+		{
 			game->player.pos[0] += game->player.dir[0] * speed;
-		pos = game->player.pos[1] + game->player.dir[1] * speed;
-		if(game->map[(int)game->player.pos[0]][(int)pos] == '0');
 			game->player.pos[1] += game->player.dir[1] * speed;
+		}
 	}
 	if (direction == DOWN)
 	{
