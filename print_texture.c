@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   print_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/18 15:07:51 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/19 00:22:52 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-//função que ralmente imprimi as texturas
+
 void	print_texture_2(t_game *game, int wall_start, int wall_end, int i)
 {
 	int	y;
@@ -23,20 +23,23 @@ void	print_texture_2(t_game *game, int wall_start, int wall_end, int i)
 	{
 		textuy = (int)game->print_textu.texpos & (TILE_SIZE - 1);
 		game->print_textu.texpos += game->print_textu.step;
-		color = game->textu[game->print_textu.textu_index].img.data[TILE_SIZE * textuy + game->print_textu.textux];
+		color = game->textu[game->print_textu.textu_index].img.data[TILE_SIZE
+			* textuy + game->print_textu.textux];
 			game->img.data[y * WIDTH + i] = color;
 		y++;
 	}
 }
 
-/*lendo a linha que vai ser printada e calculando os tamanhos e coordenas antes de atribuir os pixels*/
+/*lendo a linha que vai ser printada e calculando os tamanhos e coordenas antes
+	de atribuir os pixels*/
+/*	textu_index; //indice do pixel da textura a ser usado
+	wallx; // ponto exato onde o raio atingiu a parede
+	textux; // Coordenada x da textura
+	step; // cada passo dado é um step que é baseado na altura da linha
+	texpos; //posição da textura que vai alterando com cada passo dado*/
+
 void	print_texture(t_game *game, int wall_start, int wall_end, int i)
 {
-//	textu_index; //indice do pixel da textura a ser usado
-//	wallx; // ponto exato onde o raio atingiu a parede
-//	textux; // Coordenada x da textura
-//	step; // cada passo dado é um step que é baseado na altura da linha
-//	texpos; //posição da textura que vai alterando com cada passo dado
 	if (game->dda.hit_side == 0 && game->ray.dir_x >= 0)
 		game->print_textu.textu_index = 0;
 	if (game->dda.hit_side == 0 && game->ray.dir_x < 0)
@@ -65,12 +68,22 @@ void	print_texture(t_game *game, int wall_start, int wall_end, int i)
 
 void	get_texture_2(t_game *game)
 {
-	while (game->i < 4)
-	{
-		if (!game->textu[game->i].img.img_ptr || !game->textu[game->i].img.data)
-			print_exit("Error");
-		game->i++;
-	}
+	game->textu[2].img.img_ptr = mlx_xpm_file_to_image(game->mlx,
+			game->we_wall_path, &game->textu[2].img.wdt, &game->textu[2].img
+			.hgt);
+	if (!game->textu[2].img.img_ptr)
+		texture_error("Texture error", game);
+	game->textu[2].img.data = (int *)mlx_get_data_addr(game->textu[2].img
+			.img_ptr, &game->textu[2].img.bpp, &game->textu[2].img.size_l,
+			&game->textu[2].img.endian);
+	game->textu[3].img.img_ptr = mlx_xpm_file_to_image(game->mlx,
+			game->ea_wall_path, &game->textu[3].img.wdt, &game->textu[3].img
+			.hgt);
+	if (!game->textu[3].img.img_ptr)
+		texture_error("Texture error", game);
+	game->textu[3].img.data = (int *)mlx_get_data_addr(game->textu[3].img
+			.img_ptr, &game->textu[3].img.bpp, &game->textu[3].img.size_l,
+			&game->textu[3].img.endian);
 }
 
 /*Salva texturas em um array pra serem lidas posteriormente*/
@@ -79,26 +92,18 @@ void	get_texture(t_game *game)
 	game->textu[0].img.img_ptr = mlx_xpm_file_to_image(game->mlx,
 			game->no_wall_path, &game->textu[0].img.wdt, &game->textu[0].img
 			.hgt);
+	if (!game->textu[0].img.img_ptr)
+		texture_error("Texture error", game);
 	game->textu[0].img.data = (int *)mlx_get_data_addr(game->textu[0].img
 			.img_ptr, &game->textu[0].img.bpp, &game->textu[0].img.size_l,
 			&game->textu[0].img.endian);
 	game->textu[1].img.img_ptr = mlx_xpm_file_to_image(game->mlx,
 			game->so_wall_path, &game->textu[1].img.wdt, &game->textu[1].img
 			.hgt);
+	if (!game->textu[1].img.img_ptr)
+		texture_error("Texture error", game);
 	game->textu[1].img.data = (int *)mlx_get_data_addr(game->textu[1].img
 			.img_ptr, &game->textu[1].img.bpp, &game->textu[1].img.size_l,
 			&game->textu[1].img.endian);
-	game->textu[2].img.img_ptr = mlx_xpm_file_to_image(game->mlx,
-			game->we_wall_path, &game->textu[2].img.wdt, &game->textu[2].img
-			.hgt);
-	game->textu[2].img.data = (int *)mlx_get_data_addr(game->textu[2].img
-			.img_ptr, &game->textu[2].img.bpp, &game->textu[2].img.size_l,
-			&game->textu[2].img.endian);
-	game->textu[3].img.img_ptr = mlx_xpm_file_to_image(game->mlx,
-			game->ea_wall_path, &game->textu[3].img.wdt, &game->textu[3].img
-			.hgt);
-	game->textu[3].img.data = (int *)mlx_get_data_addr(game->textu[3].img
-			.img_ptr, &game->textu[3].img.bpp, &game->textu[3].img.size_l,
-			&game->textu[3].img.endian);
 	get_texture_2(game);
 }

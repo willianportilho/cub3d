@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/18 21:48:45 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/19 00:41:52 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,8 +146,13 @@ typedef struct s_game
 void	print_exit(char *input);
 void	destroy_pointers_char(char **p);
 void	clean_exit(t_game *game);
-void	print_vector(char **p);
+void	map_missing_error(char *message, t_game *game);
+void	print_vector(char **p);//deletar
+
+
+/* exit_utils_mlx.c*/
 int		ft_close(t_game *game);
+void	texture_error(char *message, t_game *game);
 
 /* parse_settings.c*/
 void	parse_settings(t_game *game, char **map);
@@ -193,7 +198,7 @@ void	print_texture(t_game *game, int wall_start, int wall_end, int i);
 void	get_texture(t_game *game);
 
 /* game_utils.c*/
-int		createRGB(int r, int g, int b);
+int		create_rgb(int r, int g, int b);
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
 
 #endif

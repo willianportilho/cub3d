@@ -3,10 +3,9 @@ EA ./textures/tonneau.xpm
 NO 			./textures/purplestone.xpm
 SO    ./textures/red.xpm
 
-C 0, 240,90
+C 0, 240, 254
 F 170, 109,101
 
- 
 1111111111
 1100100001
 1000000001
