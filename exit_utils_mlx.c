@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils_mlx.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:28:40 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/19 00:33:07 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/19 13:57:21 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	ft_close(t_game *game)
 			mlx_destroy_image(game->mlx, game->textu[i].img.img_ptr);
 	if (game->img.img_ptr)
 		mlx_destroy_image(game->mlx, game->img.img_ptr);
-	mlx_destroy_window(game->mlx, game->window);
 	mlx_destroy_display(game->mlx);
+	mlx_destroy_window(game->mlx, game->window);
 	free(game->mlx);
 	clean_exit(game);
 	return (1);
