@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 20:06:16 by wportilh          #+#    #+#             */
-/*   Updated: 2023/01/18 21:38:20 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/18 22:56:18 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	calc_dda_find_wall(t_game *game)
 			game->dda.hit_side = 1;
 		}
 		if (game->map[(int)game->dda.wall_map_pos_y]
-			[(int)game->dda.wall_map_pos_x] > '0')
+			[(int)game->dda.wall_map_pos_x] == '1')
 			hit = TRUE;
 	}
 }
