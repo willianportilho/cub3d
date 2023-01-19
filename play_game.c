@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/18 20:20:39 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/18 21:54:58 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	play_game(t_game *game)
 			&game->img.size_l, &game->img.endian);
 	init_player(game);
 	mlx_loop_hook(game->mlx, &load_game, game);
-	mlx_key_hook(game->window, &ft_key, game);
+	mlx_hook(game->window, 2, 1L << 0, ft_key, game);
 	mlx_hook(game->window, 33, 1L << 17, ft_close, game);
 	mlx_loop(game->mlx);
 }

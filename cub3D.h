@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/18 20:11:13 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/18 21:48:45 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ void	check_corners(t_game *game);
 
 /* play_game.c*/
 void	play_game(t_game *game);
-int		run(t_game *game);
+int		load_game(t_game *game);
 int		ft_close(t_game *game);
 
 /* play_game_2.c*/
