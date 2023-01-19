@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/18 14:58:52 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/18 20:04:20 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,5 @@ int	ft_key(int key, t_game *game) // leitura de teclas
 		ft_rotate(game, -PI / 36);
 	else if (key == 65363) // gira pra direita pressionando seta
 		ft_rotate(game, +PI / 36);
-	game_play(game);
+	load_game(game);
 }

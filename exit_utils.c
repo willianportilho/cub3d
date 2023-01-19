@@ -6,11 +6,19 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:28:40 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/18 14:48:57 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/18 19:56:59 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+int	ft_close(t_game *game) // fecha o jogo vai pra exit_utils depois
+{
+	printf("Bye bye\n");
+//	mlx_destroy_window(game->mlx, game->window);
+	clean_exit(game);
+	return (1);
+}
 
 //função pra printar a saida e economizar linhas
 void	print_exit(char *input)

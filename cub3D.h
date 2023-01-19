@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/18 14:48:23 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/18 20:11:13 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 
 # define WIDTH 1024
 # define HEIGHT 768
-# define TRUE 1 // Vou precisar em algumas funções
-# define FALSE 0 // Essa também kkk
+# define TRUE 1
+# define FALSE 0
 # define PI 3.14159265359
 # define WHITE 0x0000FF00 // só pra testar
 # define BLUE 0x000000FF // só pra testar
@@ -147,6 +147,7 @@ void	print_exit(char *input);
 void	destroy_pointers_char(char **p);
 void	clean_exit(t_game *game);
 void	print_vector(char **p);
+int		ft_close(t_game *game);
 
 /* parse_settings.c*/
 void	parse_settings(t_game *game, char **map);
@@ -171,8 +172,15 @@ void	check_corners(t_game *game);
 
 /* play_game.c*/
 void	play_game(t_game *game);
-int		game_play(t_game *game);
+int		run(t_game *game);
 int		ft_close(t_game *game);
+
+/* play_game_2.c*/
+void	calc_ray_dir(float pixel, t_game *game);
+void	calc_delta_dist_x_and_y(t_game *game);
+void	calc_dist_to_side_x_and_y(t_game *game);
+void	calc_dda_find_wall(t_game *game);
+void	calc_perpendicular_distance(t_game *game);
 
 /* move.c*/
 void	ft_rotate(t_game *game, double angle);
@@ -186,5 +194,6 @@ void	get_texture(t_game *game);
 
 /* game_utils.c*/
 int		createRGB(int r, int g, int b);
+void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
 
 #endif

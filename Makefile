@@ -6,7 +6,7 @@
 #    By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/16 22:45:46 by acosta-a          #+#    #+#              #
-#    Updated: 2023/01/18 18:42:34 by wportilh         ###   ########.fr        #
+#    Updated: 2023/01/18 20:12:37 by wportilh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ RM = rm -rf
 
 #Objects
 SRCS = cub3D.c exit_utils.c parse_settings.c parse_utils.c parse_map_1.c \
-parse_map_2.c play_game.c print_texture.c move.c game_utils.c
+parse_map_2.c play_game.c play_game_2.c print_texture.c move.c game_utils.c
 OBJS = ${SRCS:.c=.o}
 
 #HEADER = /include#
