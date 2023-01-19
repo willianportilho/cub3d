@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 20:06:16 by wportilh          #+#    #+#             */
-/*   Updated: 2023/01/18 21:07:41 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/18 21:38:20 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	calc_ray_dir(float pixel, t_game *game)
 void	calc_delta_dist_x_and_y(t_game *game)
 {
 	if (game->ray.dir_x == 0)
-		game->delta.dist_x = game->delta.dist_y + 1;
+		game->delta.dist_y = -1;
 	else
 	{
 		if (game->ray.dir_y)
@@ -38,7 +38,7 @@ void	calc_delta_dist_x_and_y(t_game *game)
 		}
 	}
 	if (game->ray.dir_y == 0)
-		game->delta.dist_y = game->delta.dist_y + 1;
+		game->delta.dist_x = -1;
 	else
 	{
 		if (game->ray.dir_x)
