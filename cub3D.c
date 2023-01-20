@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:17 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/18 14:25:28 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/19 00:07:35 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-/*função que faz leitura do mapa e o transforma em um vetor
-ela retorna um vetor onde cada indice do vetor é uma linha*/
 
 char	**read_cubfile(char *map, t_game *game)
 {
@@ -60,11 +57,21 @@ void	check_args(char **argv)
 
 void	init_game(t_game *game)
 {
+	int	i;
+
+	i = -1;
 	game->settings_count = 0;
 	game->i = 0;
+	game->no_wall_path = NULL;
+	game->so_wall_path = NULL;
+	game->we_wall_path = NULL;
+	game->ea_wall_path = NULL;
+	game->c_inputs = NULL;
+	game->f_inputs = NULL;
+	while (++i < 4)
+		game->textu[i].img.img_ptr = NULL;
 }
 
-/*main principal já checa quantos argumentos e se for != de 2 ele sai*/
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -73,7 +80,7 @@ int	main(int argc, char **argv)
 		print_exit("Error\nType 2 arguments");
 	init_game(&game);
 	check_args(argv);
-	game.map = read_cubfile(argv[1], &game); // lendo o mapa e transformando em vetor
+	game.map = read_cubfile(argv[1], &game);
 	parse_settings(&game, game.map);
 	parse_map(&game);
 	play_game(&game);

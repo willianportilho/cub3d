@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/18 21:54:58 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/20 12:00:47 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	fill_background(t_game *game)
 		x = -1;
 		while (++x < WIDTH)
 			my_mlx_pixel_put(&game->img, x, y,
-				createRGB(game->c.r, game->c.g, game->c.b));
+				create_rgb(game->c.r, game->c.g, game->c.b));
 	}
 	--y;
 	while (++y < HEIGHT)
@@ -32,7 +32,7 @@ static void	fill_background(t_game *game)
 		x = -1;
 		while (++x < WIDTH)
 			my_mlx_pixel_put(&game->img, x, y,
-				createRGB(game->f.r, game->f.g, game->f.b));
+				create_rgb(game->f.r, game->f.g, game->f.b));
 	}
 }
 
@@ -41,6 +41,7 @@ static void	init_player(t_game *game)
 	int	x;
 	int	y;
 
+	game->is_wall = FALSE;
 	game->player.dir[0] = 0;
 	game->player.dir[1] = -1;
 	game->player.camera_plane[0] = 0.66;
@@ -76,6 +77,9 @@ static void	get_size_lines_and_print(int pixel, t_game *game)
 	if (line_end_y > HEIGHT)
 		line_end_y = HEIGHT - 1;
 	print_texture(game, line_start_y, line_end_y, (int)pixel);
+	printf("perpendicular = %f\n", game->dda.perpendicular_ray);
+	if ((game->dda.perpendicular_ray - (float)0.1) < (float)0.1)
+		game->is_wall = TRUE;
 }
 
 int	load_game(t_game *game)
