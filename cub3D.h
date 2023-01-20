@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/20 16:35:53 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/20 19:53:33 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@
 # define TILE_SIZE 64 // tamanho dos .xpm
 # define UP 1
 # define DOWN 0
-# define RIGHT 1
-# define LEFT 0
+# define RIGHT 2
+# define LEFT 3
 # define W	119
 # define S	115
 # define D	100
@@ -125,7 +125,6 @@ typedef struct s_game
 	char			*ea_wall_path;
 	char			*f_inputs;
 	char			*c_inputs;
-	int				is_wall;
 	t_rgb			c;
 	t_rgb			f;
 	t_textu			textu[4];
@@ -201,5 +200,8 @@ void	get_texture(t_game *game);
 /* game_utils.c*/
 int		create_rgb(int r, int g, int b);
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
+
+/*colision.c*/
+int		will_collide(int angle, t_game *game);
 
 #endif

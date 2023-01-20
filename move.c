@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/20 17:41:51 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/20 19:53:44 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ void	up_down(t_game *game, int direction)
 	speed = 0.1;
 	if (direction == UP)
 	{
-		printf("is_wall = %d\n", game->is_wall);
-		if (game->is_wall == FALSE)
+		if (will_collide(FALSE, game) != TRUE)
 		{
 			game->player.pos[0] += game->player.dir[0] * speed;
 			game->player.pos[1] += game->player.dir[1] * speed;
@@ -51,28 +50,35 @@ void	up_down(t_game *game, int direction)
 	}
 	if (direction == DOWN)
 	{
-		game->player.pos[0] -= game->player.dir[0] * speed;
-		game->player.pos[1] -= game->player.dir[1] * speed;
+		if (will_collide(PI, game) != TRUE)
+		{
+			game->player.pos[0] -= game->player.dir[0] * speed;
+			game->player.pos[1] -= game->player.dir[1] * speed;
+		}
 	}
-	game->is_wall = FALSE;
 }
 
 /* moves LEFT/RIGHT*/
 void	left_right(t_game *game, int direction)
 {
 	float	speed;
-	float	pos;
 
 	speed = 0.1;
 	if (direction == LEFT)
 	{
+		if (will_collide(-PI / 2, game) != TRUE)
+		{
 			game->player.pos[0] += game->player.dir[1] * speed;
 			game->player.pos[1] -= game->player.dir[0] * speed;
+		}
 	}
 	if (direction == RIGHT)
 	{
+		if (will_collide(PI / 2, game) != TRUE)
+		{
 			game->player.pos[0] -= game->player.dir[1] * speed;
 			game->player.pos[1] += game->player.dir[0] * speed;
+		}
 	}
 }
 
