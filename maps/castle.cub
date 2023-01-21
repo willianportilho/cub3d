@@ -1,7 +1,7 @@
-WE ./textures/castle_wall.xpm
-EA ./textures/light_wall.xpm
-NO 			./textures/red_wall.xpm
-SO    ./textures/blue_wall.xpm
+WE ./textures/castle_blue_wall_512.xpm
+EA ./textures/castle_light_shadow_wall_512.xpm
+NO 			./textures/castle_orange_wall_512.xpm
+SO    ./textures/castle_gray_wall_512.xpm
 
 C 0, 0, 0
 F 0, 0, 0
