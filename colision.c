@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 19:03:20 by wportilh          #+#    #+#             */
-/*   Updated: 2023/01/20 19:53:18 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/20 21:17:31 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ int	will_collide(int angle, t_game *game)
 	int		colision;
 	float	pixel;
 
+	colision = FALSE;
+	pixel = -1;
 	if (angle)
 		ft_rotate(game, angle);
-	colision = FALSE;
 	while (++pixel < WIDTH)
 	{
 		calc_ray_dir(pixel, game);
