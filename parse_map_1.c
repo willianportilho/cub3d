@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:39:20 by wportilh          #+#    #+#             */
-/*   Updated: 2022/12/26 15:32:24 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/21 13:15:07 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,12 @@ static void	get_only_map(t_game *game)
 	}
 	if (start < 6)
 		map_error("needed 6 elements", game);
-	game->map = ft_str_arrayndup_free(start, game->map); // Aqui eu coloco manualmente a posição do mapa. Depois podemos mudar isso.
+	game->map = ft_str_arrayndup_free(start, game->map); /* Aqui eu coloco
+	 manualmente a posição do mapa. Depois podemos mudar isso.*/
 	if (!game->map)
-		return (destroy_pointers_char(game->map)); // Estou limpando aqui por enquanto, mas depois podemos unir na função clean se eu incluir game->map no t_game
+		return (destroy_pointers_char(game->map)); /* Estou limpando aqui por
+		 enquanto, mas depois podemos unir na função clean se eu incluir
+		  game->map no t_game*/
 }
 
 static void	normalization(t_game *game)
@@ -55,7 +58,8 @@ static void	normalization(t_game *game)
 		if (greather_line < ft_strlen(game->map[i]))
 			greather_line = ft_strlen(game->map[i]);
 	}
-	normalized_map = (char **)malloc((ft_str_arraylen(game->map) + 1) * sizeof(char *));
+	normalized_map = (char **)malloc((ft_str_arraylen(game->map) + 1)
+		* sizeof(char *));
 	if (normalized_map == NULL)
 		exit (EXIT_FAILURE);
 	normalized_map[i] = NULL;
@@ -77,8 +81,6 @@ static void	normalization(t_game *game)
 	print_vector(game->map);
 }
 
-/* Por enquanto, nessa função, itero o mapa e checo caracteres inválidos.
-Aceito somente esses: " 01ENSW"*/
 static void	check_characters(t_game *game)
 {
 	int	i;
@@ -92,7 +94,7 @@ static void	check_characters(t_game *game)
 		j = -1;
 		while (game->map[i][++j])
 		{
-			if (ft_strchr(" 10ENSW", game->map[i][j]) == NULL)
+			if (ft_strchr(" 10ENSW2", game->map[i][j]) == NULL) //alterado bonus
 				map_error("invalid character", game);
 			if (ft_strchr("ENSW", game->map[i][j]))
 				player++;
@@ -102,14 +104,39 @@ static void	check_characters(t_game *game)
 		map_error("needed one player (only one is allowed)", game);
 }
 
-/*análise do mapa
-  Essa análise pode ter várias funções no começo,
-  mas aos poucos vou tentar diminuir e otimizar*/
+void	check_break_line(t_game *game)
+{
+	int	i;
+	int	elements;
+
+	i = -1;
+	elements = 0;
+	while ((game->single_line_map[++i]) && (elements < 6))
+	{
+		if (ft_isalpha(game->single_line_map[i]))
+		{
+			elements++;
+			while (game->single_line_map[i] != '\n')
+				i++;
+		}
+	}
+	while ((game->single_line_map[i] == '\n')
+		|| (game->single_line_map[i] == ' '))
+		i++;
+	while (game->single_line_map[i++])
+	{
+		if ((game->single_line_map[i] == '\n')
+			&& (game->single_line_map[i + 1] == '\n'))
+			map_error("double break line founded in the map", game);
+	}
+}
+
 void	parse_map(t_game *game)
 {
 	get_only_map(game);
 	normalization(game);
 	check_characters(game);
+	check_break_line(game);
 	check_walls_1(game);
 	check_walls_2(game);
 	check_corners(game);

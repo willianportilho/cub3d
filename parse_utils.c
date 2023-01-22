@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:28:40 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/26 15:23:30 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/19 00:30:48 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,4 @@ char	*remove_space(char *str)
 	}
 	str[char_count] = '\0';
 	return (str);
-}
-
-/* printa error seguido da mensagem da nossa escolha
-e chama a função clean para não dar leak*/
-int	map_error(char *message, t_game *game)
-{
-	printf("Error\n%s\n", message);
-	clean_exit(game);
-	exit(-1);
 }

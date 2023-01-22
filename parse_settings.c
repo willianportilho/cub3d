@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 18:30:52 by acosta-a          #+#    #+#             */
-/*   Updated: 2022/12/25 16:32:17 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/19 00:34:11 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,23 +69,23 @@ void	get_f_colors(t_game *game, char *map_line)
 
 int	get_settings_2(t_game *game, char *map_line)
 {
-	if (map_line && !ft_strncmp(map_line, "F", 1))
+	if (map_line && !ft_strncmp(map_line, "F", 1) && !game->f_inputs)
 	{
 		game->f_inputs = ft_substr(map_line, 1, ft_strlen(map_line) - 1);
 		get_f_colors(game, map_line);
 		game->settings_count += 17;
 		return (1);
 	}
-	if (map_line && !ft_strncmp(map_line, "C", 1))
+	if (map_line && !ft_strncmp(map_line, "C", 1) && !game->c_inputs)
 	{
 		game->c_inputs = ft_substr(map_line, 1, ft_strlen(map_line) - 1);
 		get_c_colors(game, map_line);
 		game->settings_count += 19;
 		return (1);
 	}
-	if (map_line && !ft_strncmp(map_line, "EA", 2))
+	if (map_line && !ft_strncmp(map_line, "EA", 2) && !game->ea_wall_path)
 	{
-		game->ea_wall_path = ft_substr(map_line, 2,  ft_strlen(map_line) - 2);
+		game->ea_wall_path = ft_substr(map_line, 2, ft_strlen(map_line) - 2);
 		game->settings_count += 13;
 		return (1);
 	}
@@ -95,19 +95,19 @@ int	get_settings_2(t_game *game, char *map_line)
 //função que pega tudo que vem escrito após o NO, EA, SO ,WE , F e C
 int	get_settings(t_game *game, char *map_line)
 {
-	if (map_line && !ft_strncmp(map_line, "NO", 2))
+	if (map_line && !ft_strncmp(map_line, "NO", 2) && !game->no_wall_path)
 	{
 		game->no_wall_path = ft_substr(map_line, 2, ft_strlen(map_line) - 2);
 		game->settings_count += 5;
 		return (1);
 	}
-	if (map_line && !ft_strncmp(map_line, "SO", 2))
+	if (map_line && !ft_strncmp(map_line, "SO", 2) && !game->so_wall_path)
 	{
 		game->so_wall_path = ft_substr(map_line, 2, ft_strlen(map_line) - 2);
 		game->settings_count += 7;
 		return (1);
 	}
-	if (map_line && !ft_strncmp(map_line, "WE", 2))
+	if (map_line && !ft_strncmp(map_line, "WE", 2) && !game->we_wall_path)
 	{
 		game->we_wall_path = ft_substr(map_line, 2, ft_strlen(map_line) - 2);
 		game->settings_count += 11;
@@ -137,5 +137,10 @@ void	parse_settings(t_game *game, char **map)
 		}
 	}
 	if (game->settings_count != 72)
-		print_exit("You must type 6 settings");
+		map_missing_error("Map must have 6 valid settings", game);
+	if (game->f.r > 255 || game->f.g > 255 || game->f.b > 255 || game->c.r > 255
+		|| game->c.g > 255 || game->c.b > 255 || game->f.r < 0
+		|| game->f.g < 0 || game->f.b < 0 || game->c.r < 0
+		|| game->c.g < 0 || game->c.b < 0)
+		map_error("Colors range must be from 0 to 255", game);
 }

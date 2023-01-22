@@ -6,9 +6,10 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/07 18:35:04 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/21 20:16:38 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -27,21 +28,20 @@
 
 # define WIDTH 1024
 # define HEIGHT 768
-# define TRUE 1 // Vou precisar em algumas funções
-# define FALSE 0 // Essa também kkk
+# define TRUE 1
+# define FALSE 0
 # define PI 3.14159265359
 # define WHITE 0x0000FF00 // só pra testar
 # define BLUE 0x000000FF // só pra testar
 # define TILE_SIZE 64 // tamanho dos .xpm
 # define UP 1
 # define DOWN 0
-# define RIGHT 1
-# define LEFT 0
+# define RIGHT 2
+# define LEFT 3
 # define W	119
 # define S	115
 # define D	100
 # define A	97
-
 
 typedef struct s_print_textu
 {
@@ -115,6 +115,34 @@ typedef struct s_rgb
 	int				b;
 }					t_rgb;
 
+typedef struct s_spr_pos
+{
+	float	x;
+	float	y;
+}				t_spr_pos;
+
+typedef struct s_sprite
+{
+	float	*zbuffer;
+	int		*order;
+	int		i;
+	int		count;
+	float	invert;
+	float	*dist;
+	float	spr_x;
+	float	spr_y;
+	float	adjust_x;
+	float	adjust_y;
+	int		screenx;
+	int		height;
+	int		width;
+	int		line_start_x;
+	int		line_start_y;
+	int		line_end_x;
+	int		line_end_y;
+
+}					t_sprite;
+
 typedef struct s_game
 {
 	int				settings_count;
@@ -129,6 +157,7 @@ typedef struct s_game
 	t_rgb			c;
 	t_rgb			f;
 	t_textu			textu[4];
+	char			*single_line_map;
 	char			**map;
 	t_img			img;
 	int				i;
@@ -138,6 +167,8 @@ typedef struct s_game
 	t_dist			dist;
 	t_dda			dda;
 	t_print_textu	print_textu;
+	t_sprite		spr;
+	t_spr_pos		*spr_pos;
 }	t_game;
 
 /* cub3D.c*/
@@ -146,7 +177,13 @@ typedef struct s_game
 void	print_exit(char *input);
 void	destroy_pointers_char(char **p);
 void	clean_exit(t_game *game);
-void	print_vector(char **p);
+void	map_missing_error(char *message, t_game *game);
+void	print_vector(char **p);//deletar
+
+
+/* exit_utils_mlx.c*/
+int		ft_close(t_game *game);
+void	texture_error(char *message, t_game *game);
 
 /* parse_settings.c*/
 void	parse_settings(t_game *game, char **map);
@@ -171,9 +208,15 @@ void	check_corners(t_game *game);
 
 /* play_game.c*/
 void	play_game(t_game *game);
-int		game_play(t_game *game);
+int		load_game(t_game *game);
 int		ft_close(t_game *game);
 
+/* play_game_2.c*/
+void	calc_ray_dir(float pixel, t_game *game);
+void	calc_delta_dist_x_and_y(t_game *game);
+void	calc_dist_to_side_x_and_y(t_game *game);
+void	calc_dda_find_wall(t_game *game);
+void	calc_perpendicular_distance(t_game *game);
 
 /* move.c*/
 void	ft_rotate(t_game *game, double angle);
@@ -186,6 +229,13 @@ void	print_texture(t_game *game, int wall_start, int wall_end, int i);
 void	get_texture(t_game *game);
 
 /* game_utils.c*/
-int createRGB(int r, int g, int b);
+int		create_rgb(int r, int g, int b);
+void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
+
+/*colision.c*/
+int		will_collide(int angle, t_game *game);
+
+/*sprite.c*/
+void	sprite_main(t_game	*game);
 
 #endif
