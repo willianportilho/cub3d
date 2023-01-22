@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/21 20:16:38 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/22 13:24:44 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define PI 3.14159265359
 # define WHITE 0x0000FF00 // só pra testar
 # define BLUE 0x000000FF // só pra testar
-# define TILE_SIZE 64 // tamanho dos .xpm
+# define TILE_SIZE 512 // tamanho dos .xpm
 # define UP 1
 # define DOWN 0
 # define RIGHT 2
