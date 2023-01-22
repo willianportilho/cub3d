@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:39:20 by wportilh          #+#    #+#             */
-/*   Updated: 2023/01/19 00:18:47 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/21 13:15:07 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static void	check_characters(t_game *game)
 		j = -1;
 		while (game->map[i][++j])
 		{
-			if (ft_strchr(" 10ENSW", game->map[i][j]) == NULL)
+			if (ft_strchr(" 10ENSW2", game->map[i][j]) == NULL) //alterado bonus
 				map_error("invalid character", game);
 			if (ft_strchr("ENSW", game->map[i][j]))
 				player++;

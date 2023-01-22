@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   play_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/20 19:21:12 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/21 15:56:02 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,9 @@ int	load_game(t_game *game)
 		calc_dda_find_wall(game);
 		calc_perpendicular_distance(game);
 		get_size_lines_and_print(pixel, game);
+		game->spr.zbuffer[(int)pixel] = game->dda.perpendicular_ray; //bonus
 	}
+	sprite_main(game); //bonus
 	mlx_put_image_to_window(game->mlx, game->window, game->img.img_ptr, 0, 0);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/20 22:18:44 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/21 12:45:49 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,34 @@ typedef struct s_rgb
 	int				b;
 }					t_rgb;
 
+typedef struct s_spr_pos
+{
+	float	x;
+	float	y;
+}				t_spr_pos;
+
+typedef struct s_sprite
+{
+	float	*zbuffer;
+	int		*order;
+	int		i;
+	int		count;
+	float	invert;
+	float	*dist;
+	float	spr_x;
+	float	spr_y;
+	float	adjust_x;
+	float	adjust_y;
+	int		screenx;
+	int		height;
+	int		width;
+	int		line_start_x;
+	int		line_start_y;
+	int		line_end_x;
+	int		line_end_y;
+
+}					t_sprite;
+
 typedef struct s_game
 {
 	int				settings_count;
@@ -138,6 +166,8 @@ typedef struct s_game
 	t_dist			dist;
 	t_dda			dda;
 	t_print_textu	print_textu;
+	t_sprite		spr;
+	t_spr_pos		*spr_pos;
 }	t_game;
 
 /* cub3D.c*/
@@ -203,5 +233,8 @@ void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
 
 /*colision.c*/
 int		will_collide(int angle, t_game *game);
+
+/*sprite.c*/
+void	sprite_main(t_game	*game);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:17 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/19 00:07:35 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/21 19:52:13 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,48 @@ void	init_game(t_game *game)
 		game->textu[i].img.img_ptr = NULL;
 }
 
+void	init_sprite(t_game *game) // bonus 
+{
+	int	i;
+	int	j;
+	int	k;
+
+	i = -1;
+	game->spr.count = 0;
+	while (game->map[++i])
+	{
+		j = -1;
+		while (game->map[i][++j])
+		{
+			if (game->map[i][j] == '2')
+				game->spr.count++;
+		}
+	}
+	game->spr_pos = (t_spr_pos *)malloc(sizeof(t_spr_pos) * game->spr.count);
+	game->spr.order = (int *)malloc(sizeof(int) * game->spr.count);
+	game->spr.dist = (float *)malloc(sizeof(float) * game->spr.count);
+	game->spr.zbuffer = (float *)malloc(sizeof(float) * WIDTH);
+	i = -1;
+	k = 0;
+	while (game->map[++i])
+	{
+		j = -1;
+		while (game->map[i][++j])
+		{
+			if (game->map[i][j] == '2')
+			{
+				game->spr_pos[k].x = (float)i + 0.5;
+				game->spr_pos[k].y = (float)j + 0.5;
+				k++;
+			}
+		}
+	}
+}
+
+
+
+
+
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -83,6 +125,7 @@ int	main(int argc, char **argv)
 	game.map = read_cubfile(argv[1], &game);
 	parse_settings(&game, game.map);
 	parse_map(&game);
+	init_sprite(&game); //bonus
 	play_game(&game);
 	clean_exit(&game);
 }
