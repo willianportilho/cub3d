@@ -6,14 +6,12 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/22 13:24:44 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/22 19:18:27 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #ifndef CUB3D_H
 # define CUB3D_H
-
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -146,6 +144,7 @@ typedef struct s_sprite
 typedef struct s_game
 {
 	int				settings_count;
+	int				time;
 	void			*mlx;
 	void			*window;
 	char			*no_wall_path;
@@ -178,8 +177,6 @@ void	print_exit(char *input);
 void	destroy_pointers_char(char **p);
 void	clean_exit(t_game *game);
 void	map_missing_error(char *message, t_game *game);
-void	print_vector(char **p);//deletar
-
 
 /* exit_utils_mlx.c*/
 int		ft_close(t_game *game);
@@ -237,5 +234,9 @@ int		will_collide(int angle, t_game *game);
 
 /*sprite.c*/
 void	sprite_main(t_game	*game);
+
+/*sprite_init.c*/
+void	init_sprite_pos(t_game *game);
+void	init_sprite(t_game *game);
 
 #endif

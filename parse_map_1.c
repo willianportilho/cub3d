@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:39:20 by wportilh          #+#    #+#             */
-/*   Updated: 2023/01/21 13:15:07 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/22 18:53:50 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ static void	normalization(t_game *game)
 	}
 	destroy_pointers_char(game->map);
 	game->map = normalized_map;
-	print_vector(game->map);
 }
 
 static void	check_characters(t_game *game)

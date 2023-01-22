@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:28:40 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/19 00:34:25 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/22 18:50:33 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,4 @@ void	map_missing_error(char *message, t_game *game)
 	if (game->f_inputs)
 		free(game->f_inputs);
 	exit (1);
-}
-
-void	print_vector(char **p) ///deletar essa função!
-{
-	int	i;
-
-	i = 0;
-	while (p != NULL && p[i] != NULL)
-		printf("%s\n", p[i++]);
 }
