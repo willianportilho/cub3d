@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 09:00:06 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/22 13:22:56 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/22 16:11:14 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ void	dist_order_sort(t_game *game)
 void	spr_raycast(t_game	*game, int i)
 {
 	game->spr.spr_x = game->spr_pos[game->spr.order[i]].x - game->player.pos[0];
-	printf("spr_x =%f\n", game->spr.spr_x);
+	printf("spr_x =%f\n", game->spr_pos[game->spr.order[i]].x);
 	game->spr.spr_y = game->spr_pos[game->spr.order[i]].y - game->player.pos[1];
-
+	printf("spr_y =%f\n", game->spr.spr_y);
 	game->spr.invert = 1.0 / (game->player.camera_plane[0] * game->player.dir[1]
 		- game->player.camera_plane[1] * game->player.dir[0]);
 
-	game->spr.adjust_x = game->spr.invert * (game->player.dir[1] * game->spr
+	game->spr.adjust_x = -game->spr.invert * (game->player.dir[1] * game->spr
 		.spr_x - game->player.dir[0] * game->spr.spr_y);
 
 	game->spr.adjust_y = game->spr.invert * (- game->player.camera_plane[1]
@@ -76,7 +76,7 @@ void	spr_raycast(t_game	*game, int i)
 
 	game->spr.screenx = (int)((WIDTH / 2) * (1 + game->spr.adjust_x / game->spr.adjust_y));
 
-	game->spr.height = abs((int)(HEIGHT) / game->spr.adjust_y);
+	game->spr.height = abs((int)(HEIGHT / (game->spr.adjust_y)));
 	game->spr.line_start_y = - game->spr.height / 2 + HEIGHT / 2;
 	if ( game->spr.line_start_y < 0)
 		game->spr.line_start_y = 0;
@@ -102,19 +102,17 @@ void	draw_sprite(t_game *game, int y, int texx, int start)
 {
 	int	d;
 	int	texy;
+	int color;
 
 	while (y < game->spr.line_end_y)
 	{
 		d = (y) * 256 - HEIGHT * 128 + game->spr.height * 128;
-		texy = ((d * game->textu[4].img.hgt) / game->spr.height) / 256;
-		if (game->textu[4].img.data[texy * game->textu[4].img.size_l / 4 + texx] != -16777216)
+		texy = ((d * game->textu[3].img.hgt) / game->spr.height) / 256;
+		if (game->textu[3].img.data[texy * game->textu[3].img.size_l / 4 + texx] != -16777216)
 		{
-//			game->img.addr[y * game->img.size_l / 4 + start] = game->
-//			textu[4].img.addr[texy * game->textu[4].img.size_l / 4 + texx];
-//			game->img.data[y * game->img.size_l / 4 + start] = game->textu[4].img.data[texy * game->textu[4].img.size_l / 4 + texx];
-//			game->img.data[y + start] = game->textu[4].img.data[game->textu[4].img.wdt * texy + texx];
-			game->img.data[y * game->img.size_l / 4 + start] = WHITE;
-			printf("%d\n", y * game->img.size_l / 4 + start);
+			color = game->textu[3].img.data[texy * game->textu[3].img.size_l / 4
+				+ texx];
+			game->img.data[y * game->img.size_l / 4 + start] = color;
 		}
 		y++;
 	}
@@ -143,7 +141,6 @@ void	sprite_main(t_game	*game)
 			if (game->spr.adjust_y > 0 && start >= 0 && start < WIDTH && game->spr.adjust_y < game->spr.zbuffer[start])
 			{
 				y = game->spr.line_start_y;
-	//			y = (int)(0.0 / game->spr.adjust_y);
 				draw_sprite(game, y, texx, start);
 			}
 			start++;

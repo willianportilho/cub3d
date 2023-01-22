@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:17 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/22 12:52:18 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/22 16:04:05 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,12 @@ void	init_sprite(t_game *game) // bonus
 		{
 			if (game->map[i][j] == '2')
 			{
-				game->spr_pos[k].x = (float)i + 0.5;
-				game->spr_pos[k].y = (float)j + 0.5;
+				game->spr_pos[k].x = (float)j + 0.5;
+				game->spr_pos[k].y = (float)i + 0.5;
 				k++;
 				printf("%dspr_p_x = %f spr_p_y =%f\n",i, game->spr_pos[k - 1].x, game->spr_pos[k - 1].y);
 			}
 		}
-
 	}
 }
 

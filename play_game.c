@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/22 11:23:46 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/22 16:01:21 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ int	load_game(t_game *game)
 		calc_perpendicular_distance(game);
 		get_size_lines_and_print(pixel, game);
 		game->spr.zbuffer[(int)pixel] = game->dda.perpendicular_ray; //bonus
-//		sprite_main(game);
 	}
 	sprite_main(game); //bonus
 	mlx_put_image_to_window(game->mlx, game->window, game->img.img_ptr, 0, 0);
