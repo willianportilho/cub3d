@@ -6,32 +6,27 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/23 20:40:01 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/23 20:55:32 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /*Adiciona um fundo à tela (preenche a metade da tela)*/
-static void	fill_background(t_game *game)
+static void	fill_background(int start, int end, int pixel, t_game *game)
 {
-	int	x;
 	int	y;
 
 	y = -1;
-	while (++y < (HEIGHT / 2))
+	while (++y < start)
 	{
-		x = -1;
-		while (++x < WIDTH)
-			my_mlx_pixel_put(&game->img, x, y,
+		my_mlx_pixel_put(&game->img, pixel, y,
 				create_rgb(game->c.r, game->c.g, game->c.b));
 	}
-	--y;
+	y = end;
 	while (++y < HEIGHT)
 	{
-		x = -1;
-		while (++x < WIDTH)
-			my_mlx_pixel_put(&game->img, x, y,
+			my_mlx_pixel_put(&game->img, pixel, y,
 				create_rgb(game->f.r, game->f.g, game->f.b));
 	}
 }
@@ -75,6 +70,7 @@ static void	get_size_lines_and_print(int pixel, t_game *game)
 		line_start_y = 0;
 	if (line_end_y > HEIGHT)
 		line_end_y = HEIGHT - 1;
+	fill_background(line_start_y, line_end_y, (int)pixel, game);
 	print_texture(game, line_start_y, line_end_y, (int)pixel);
 }
 
@@ -83,7 +79,6 @@ int	load_game(t_game *game)
 	float	pixel;
 
 	pixel = -1;
-	fill_background(game);
 	while (++pixel < WIDTH)
 	{
 		calc_ray_dir(pixel, game);
