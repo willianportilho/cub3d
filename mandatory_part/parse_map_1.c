@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:39:20 by wportilh          #+#    #+#             */
-/*   Updated: 2023/01/22 18:53:50 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/23 20:38:10 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3d.h"
 
 /*Pega somente o mapa, sem os elementos. Essa variável start é incrementada
 até achar as 6 correspondências com strnstr. Se não acha, retorna erro.
@@ -36,12 +36,9 @@ static void	get_only_map(t_game *game)
 	}
 	if (start < 6)
 		map_error("needed 6 elements", game);
-	game->map = ft_str_arrayndup_free(start, game->map); /* Aqui eu coloco
-	 manualmente a posição do mapa. Depois podemos mudar isso.*/
+	game->map = ft_str_arrayndup_free(start, game->map);
 	if (!game->map)
-		return (destroy_pointers_char(game->map)); /* Estou limpando aqui por
-		 enquanto, mas depois podemos unir na função clean se eu incluir
-		  game->map no t_game*/
+		return (destroy_pointers_char(game->map));
 }
 
 static void	normalization(t_game *game)
@@ -93,7 +90,7 @@ static void	check_characters(t_game *game)
 		j = -1;
 		while (game->map[i][++j])
 		{
-			if (ft_strchr(" 10ENSW2", game->map[i][j]) == NULL) //alterado bonus
+			if (ft_strchr(" 10ENSW", game->map[i][j]) == NULL)
 				map_error("invalid character", game);
 			if (ft_strchr("ENSW", game->map[i][j]))
 				player++;

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.c                                            :+:      :+:    :+:   */
+/*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:17 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/22 18:49:54 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/23 20:37:57 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3d.h"
 
 char	**read_cubfile(char *map, t_game *game)
 {
@@ -68,7 +68,6 @@ void	init_game(t_game *game)
 	game->ea_wall_path = NULL;
 	game->c_inputs = NULL;
 	game->f_inputs = NULL;
-	game->time = 0; //bonus
 	while (++i < 4)
 		game->textu[i].img.img_ptr = NULL;
 }
@@ -84,7 +83,6 @@ int	main(int argc, char **argv)
 	game.map = read_cubfile(argv[1], &game);
 	parse_settings(&game, game.map);
 	parse_map(&game);
-	init_sprite(&game); //bonus
 	play_game(&game);
 	clean_exit(&game);
 }

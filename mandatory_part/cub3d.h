@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/22 19:18:27 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/23 20:34:56 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,15 @@
 # include <string.h>
 # include <math.h>
 # include "mlx.h"
-# include "libft/libft.h"
-# include "minilibx-linux/mlx.h"
+# include "../libft/libft.h"
+# include "../minilibx-linux/mlx.h"
 
 # define WIDTH 1024
 # define HEIGHT 768
 # define TRUE 1
 # define FALSE 0
 # define PI 3.14159265359
-# define WHITE 0x0000FF00 // só pra testar
-# define BLUE 0x000000FF // só pra testar
-# define TILE_SIZE 512 // tamanho dos .xpm
+# define TILE_SIZE 512
 # define UP 1
 # define DOWN 0
 # define RIGHT 2
@@ -113,38 +111,9 @@ typedef struct s_rgb
 	int				b;
 }					t_rgb;
 
-typedef struct s_spr_pos
-{
-	float	x;
-	float	y;
-}				t_spr_pos;
-
-typedef struct s_sprite
-{
-	float	*zbuffer;
-	int		*order;
-	int		i;
-	int		count;
-	float	invert;
-	float	*dist;
-	float	spr_x;
-	float	spr_y;
-	float	adjust_x;
-	float	adjust_y;
-	int		screenx;
-	int		height;
-	int		width;
-	int		line_start_x;
-	int		line_start_y;
-	int		line_end_x;
-	int		line_end_y;
-
-}					t_sprite;
-
 typedef struct s_game
 {
 	int				settings_count;
-	int				time;
 	void			*mlx;
 	void			*window;
 	char			*no_wall_path;
@@ -166,8 +135,6 @@ typedef struct s_game
 	t_dist			dist;
 	t_dda			dda;
 	t_print_textu	print_textu;
-	t_sprite		spr;
-	t_spr_pos		*spr_pos;
 }	t_game;
 
 /* cub3D.c*/

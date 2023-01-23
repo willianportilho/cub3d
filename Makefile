@@ -3,26 +3,29 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/16 22:45:46 by acosta-a          #+#    #+#              #
-#    Updated: 2023/01/22 18:49:31 by acosta-a         ###   ########.fr        #
+#    Updated: 2023/01/23 20:26:37 by wportilh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 
 # Compilation Flags#
-FLAGS = -g -Werror -Wextra -Wall
+FLAGS = -g3 -Werror -Wextra -Wall
 MLX_FLAGS = -lm -lbsd -lmlx -lXext -lX11
 RM = rm -rf
 
 #Objects
-SRCS = cub3D.c exit_utils.c parse_settings.c parse_utils.c parse_map_1.c \
+SOURCES = cub3d.c exit_utils.c parse_settings.c parse_utils.c parse_map_1.c \
 parse_map_2.c play_game.c play_game_2.c print_texture.c move.c game_utils.c \
-exit_utils_mlx.c colision.c sprite.c sprite_init.c
-OBJ_PATH = obj/
-OBJS =	$(addprefix $(OBJ_PATH), $(SRCS:.c=.o))
+exit_utils_mlx.c colision.c
+
+SRC_PATH =	mandatory_part/
+OBJ_PATH =	obj/
+SRCS =	${addprefix ${SRC_PATH}, ${SOURCES}}
+OBJS =	$(addprefix $(OBJ_PATH), $(SOURCES:.c=.o))
 
 #HEADER = /include#
 LIBFT = ./libft/libft.a
@@ -41,7 +44,7 @@ $(LIBFT):
 $(NAME) : $(OBJS) $(LIBFT) $(MLX)
 	gcc $(FLAGS) -o $(NAME) $(OBJS) -L $(LIBFT_PATH) -L $(MLX_PATH) -lft $(MLX_FLAGS)
 
-${OBJ_PATH}%.o:	./%.c
+${OBJ_PATH}%.o:	$(SRC_PATH)%.c
 				@mkdir -p obj
 				@${CC} ${CFLAGS} -c $< -o $@
 

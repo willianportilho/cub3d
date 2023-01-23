@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   play_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/22 16:01:21 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/23 20:40:01 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3d.h"
 
 /*Adiciona um fundo à tela (preenche a metade da tela)*/
 static void	fill_background(t_game *game)
@@ -92,9 +92,7 @@ int	load_game(t_game *game)
 		calc_dda_find_wall(game);
 		calc_perpendicular_distance(game);
 		get_size_lines_and_print(pixel, game);
-		game->spr.zbuffer[(int)pixel] = game->dda.perpendicular_ray; //bonus
 	}
-	sprite_main(game); //bonus
 	mlx_put_image_to_window(game->mlx, game->window, game->img.img_ptr, 0, 0);
 	return (0);
 }

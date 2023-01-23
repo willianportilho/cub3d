@@ -6,11 +6,11 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 20:06:16 by wportilh          #+#    #+#             */
-/*   Updated: 2023/01/19 23:49:14 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/23 20:38:48 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3d.h"
 
 void	calc_ray_dir(float pixel, t_game *game)
 {
