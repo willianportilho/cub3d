@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.c                                            :+:      :+:    :+:   */
+/*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:17 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/21 19:52:13 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/23 22:24:49 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3d.h"
 
-char	**read_cubfile(char *map, t_game *game)
+static char	**read_cubfile(char *map, t_game *game)
 {
 	int		fd;
 	char	*line;
@@ -20,10 +20,10 @@ char	**read_cubfile(char *map, t_game *game)
 
 	fd = open(map, O_DIRECTORY);
 	if (fd != -1)
-		print_exit("File cannot be a directory");
+		print_exit("file cannot be a directory");
 	fd = open(map, O_RDONLY);
 	if (fd == -1)
-		print_exit("File cannot be a opened");
+		print_exit("file cannot be a opened");
 	game->single_line_map = '\0';
 	line = get_next_line(fd);
 	while (line != NULL)
@@ -36,7 +36,7 @@ char	**read_cubfile(char *map, t_game *game)
 	return (vector_map);
 }
 
-void	check_args(char **argv)
+static void	check_args(char **argv)
 {
 	int		map_len;
 	char	*map_name;
@@ -45,17 +45,17 @@ void	check_args(char **argv)
 	if (map_len > 4)
 		map_name = ft_substr(argv[1], (map_len - 4), 5);
 	else
-		print_exit("Map must be .cub\n");
+		print_exit("map must be .cub\n");
 	if (!ft_strncmp(map_name, ".cub", 5))
 	{
 		free(map_name);
 		return ;
 	}
 	free(map_name);
-	print_exit("Map must be .cub\n");
+	print_exit("map must be .cub\n");
 }
 
-void	init_game(t_game *game)
+static void	init_game(t_game *game)
 {
 	int	i;
 
@@ -72,60 +72,17 @@ void	init_game(t_game *game)
 		game->textu[i].img.img_ptr = NULL;
 }
 
-void	init_sprite(t_game *game) // bonus 
-{
-	int	i;
-	int	j;
-	int	k;
-
-	i = -1;
-	game->spr.count = 0;
-	while (game->map[++i])
-	{
-		j = -1;
-		while (game->map[i][++j])
-		{
-			if (game->map[i][j] == '2')
-				game->spr.count++;
-		}
-	}
-	game->spr_pos = (t_spr_pos *)malloc(sizeof(t_spr_pos) * game->spr.count);
-	game->spr.order = (int *)malloc(sizeof(int) * game->spr.count);
-	game->spr.dist = (float *)malloc(sizeof(float) * game->spr.count);
-	game->spr.zbuffer = (float *)malloc(sizeof(float) * WIDTH);
-	i = -1;
-	k = 0;
-	while (game->map[++i])
-	{
-		j = -1;
-		while (game->map[i][++j])
-		{
-			if (game->map[i][j] == '2')
-			{
-				game->spr_pos[k].x = (float)i + 0.5;
-				game->spr_pos[k].y = (float)j + 0.5;
-				k++;
-			}
-		}
-	}
-}
-
-
-
-
-
 int	main(int argc, char **argv)
 {
 	t_game	game;
 
 	if (argc != 2)
-		print_exit("Error\nType 2 arguments");
+		print_exit("required 2 arguments");
 	init_game(&game);
 	check_args(argv);
 	game.map = read_cubfile(argv[1], &game);
 	parse_settings(&game, game.map);
 	parse_map(&game);
-	init_sprite(&game); //bonus
 	play_game(&game);
 	clean_exit(&game);
 }

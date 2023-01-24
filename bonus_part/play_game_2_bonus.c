@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   play_game_2.c                                      :+:      :+:    :+:   */
+/*   play_game_2_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 20:06:16 by wportilh          #+#    #+#             */
-/*   Updated: 2023/01/19 23:49:14 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/24 15:21:43 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3d_bonus.h"
 
+/*calculates a ray per pixel, based on width, until you reach a wall*/
 void	calc_ray_dir(float pixel, t_game *game)
 {
 	float	multiplier;
@@ -24,6 +25,7 @@ void	calc_ray_dir(float pixel, t_game *game)
 	game->ray.dir_y = game->player.dir[1] + camera_pixel[1];
 }
 
+/*calcula a distância de uma coluna até outra (x) e de uma linha até outra (y)*/
 void	calc_delta_dist_x_and_y(t_game *game)
 {
 	if (game->ray.dir_x == 0)
@@ -50,6 +52,10 @@ void	calc_delta_dist_x_and_y(t_game *game)
 	}
 }
 
+/*
+	calculates the initial distance from the player to a column (x)
+	and from the player to a row (y)
+*/
 void	calc_dist_to_side_x_and_y(t_game *game)
 {
 	game->dda.map_pos[0] = (int)game->player.pos[0];
@@ -74,6 +80,7 @@ void	calc_dist_to_side_x_and_y(t_game *game)
 	}
 }
 
+/* calculates where and on which side of the wall the ray strikes*/
 void	calc_dda_find_wall(t_game *game)
 {
 	int		hit;
@@ -103,6 +110,7 @@ void	calc_dda_find_wall(t_game *game)
 	}
 }
 
+/*calculates the perpendicular distance from the ray to the wall*/
 void	calc_perpendicular_distance(t_game *game)
 {
 	if (game->dda.hit_side == 0)

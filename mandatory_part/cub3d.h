@@ -1,18 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.h                                            :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/21 12:45:49 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/24 18:01:23 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
-
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -22,17 +21,15 @@
 # include <string.h>
 # include <math.h>
 # include "mlx.h"
-# include "libft/libft.h"
-# include "minilibx-linux/mlx.h"
+# include "../libft/libft.h"
+# include "../minilibx-linux/mlx.h"
 
 # define WIDTH 1024
 # define HEIGHT 768
 # define TRUE 1
 # define FALSE 0
 # define PI 3.14159265359
-# define WHITE 0x0000FF00 // só pra testar
-# define BLUE 0x000000FF // só pra testar
-# define TILE_SIZE 512 // tamanho dos .xpm
+# define TILE_SIZE 512
 # define UP 1
 # define DOWN 0
 # define RIGHT 2
@@ -114,34 +111,6 @@ typedef struct s_rgb
 	int				b;
 }					t_rgb;
 
-typedef struct s_spr_pos
-{
-	float	x;
-	float	y;
-}				t_spr_pos;
-
-typedef struct s_sprite
-{
-	float	*zbuffer;
-	int		*order;
-	int		i;
-	int		count;
-	float	invert;
-	float	*dist;
-	float	spr_x;
-	float	spr_y;
-	float	adjust_x;
-	float	adjust_y;
-	int		screenx;
-	int		height;
-	int		width;
-	int		line_start_x;
-	int		line_start_y;
-	int		line_end_x;
-	int		line_end_y;
-
-}					t_sprite;
-
 typedef struct s_game
 {
 	int				settings_count;
@@ -166,8 +135,6 @@ typedef struct s_game
 	t_dist			dist;
 	t_dda			dda;
 	t_print_textu	print_textu;
-	t_sprite		spr;
-	t_spr_pos		*spr_pos;
 }	t_game;
 
 /* cub3D.c*/
@@ -177,8 +144,6 @@ void	print_exit(char *input);
 void	destroy_pointers_char(char **p);
 void	clean_exit(t_game *game);
 void	map_missing_error(char *message, t_game *game);
-void	print_vector(char **p);//deletar
-
 
 /* exit_utils_mlx.c*/
 int		ft_close(t_game *game);
@@ -197,12 +162,9 @@ int		map_error(char *message, t_game *game);
 void	parse_map(t_game *game);
 
 /* parse_map_2.c*/
+void	check_break_line(t_game *game);
 void	check_walls_1(t_game *game);
-
-/* parse_map_2.c*/
 void	check_walls_2(t_game *game);
-
-/* parse_map_2.c*/
 void	check_corners(t_game *game);
 
 /* play_game.c*/
@@ -219,8 +181,6 @@ void	calc_perpendicular_distance(t_game *game);
 
 /* move.c*/
 void	ft_rotate(t_game *game, double angle);
-void	up_down(t_game *game, int direction);
-void	left_right(t_game *game, int direction);
 int		ft_key(int key, t_game *game);
 
 /* print_texture.c*/
@@ -236,5 +196,9 @@ int		will_collide(int angle, t_game *game);
 
 /*sprite.c*/
 void	sprite_main(t_game	*game);
+
+/*sprite_init.c*/
+void	init_sprite_pos(t_game *game);
+void	init_sprite(t_game *game);
 
 #endif

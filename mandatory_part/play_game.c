@@ -3,36 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   play_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/21 15:56:02 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/24 16:49:37 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3d.h"
 
-/*Adiciona um fundo à tela (preenche a metade da tela)*/
-static void	fill_background(t_game *game)
+/* adds the background (floor and ceiling)*/
+static void	fill_background(int start, int end, int pixel, t_game *game)
 {
-	int	x;
 	int	y;
 
 	y = -1;
-	while (++y < (HEIGHT / 2))
+	while (++y <= start)
 	{
-		x = -1;
-		while (++x < WIDTH)
-			my_mlx_pixel_put(&game->img, x, y,
-				create_rgb(game->c.r, game->c.g, game->c.b));
+		my_mlx_pixel_put(&game->img, pixel, y,
+			create_rgb(game->c.r, game->c.g, game->c.b));
 	}
-	--y;
-	while (++y < HEIGHT)
+	y = end;
+	while (y < HEIGHT)
 	{
-		x = -1;
-		while (++x < WIDTH)
-			my_mlx_pixel_put(&game->img, x, y,
-				create_rgb(game->f.r, game->f.g, game->f.b));
+		my_mlx_pixel_put(&game->img, pixel, y++,
+			create_rgb(game->f.r, game->f.g, game->f.b));
 	}
 }
 
@@ -75,6 +70,7 @@ static void	get_size_lines_and_print(int pixel, t_game *game)
 		line_start_y = 0;
 	if (line_end_y > HEIGHT)
 		line_end_y = HEIGHT - 1;
+	fill_background(line_start_y, line_end_y, (int)pixel, game);
 	print_texture(game, line_start_y, line_end_y, (int)pixel);
 }
 
@@ -83,7 +79,6 @@ int	load_game(t_game *game)
 	float	pixel;
 
 	pixel = -1;
-	fill_background(game);
 	while (++pixel < WIDTH)
 	{
 		calc_ray_dir(pixel, game);
@@ -92,15 +87,15 @@ int	load_game(t_game *game)
 		calc_dda_find_wall(game);
 		calc_perpendicular_distance(game);
 		get_size_lines_and_print(pixel, game);
-		game->spr.zbuffer[(int)pixel] = game->dda.perpendicular_ray; //bonus
 	}
-	sprite_main(game); //bonus
 	mlx_put_image_to_window(game->mlx, game->window, game->img.img_ptr, 0, 0);
 	return (0);
 }
 
-/*	load game: runs the game; ft_key: right and left arrows (rotation) and
-	WSAD (up, down, left, right); ft_close: press 'X' or ESC, closes the game*/
+/*
+	load game: runs the game; ft_key: right and left arrows (rotation) and
+	WSAD (up, down, left, right); ft_close: press 'X' or ESC (closes the game)
+*/
 void	play_game(t_game *game)
 {
 	game->mlx = mlx_init();
