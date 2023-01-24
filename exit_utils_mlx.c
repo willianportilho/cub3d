@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:28:40 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/22 19:05:01 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/23 22:51:23 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,12 @@ int	ft_close(t_game *game)
 
 	i = -1;
 	printf("Bye bye\n");
-	while (++i < 4)
+	while (++i < 6)
 		if (game->textu[i].img.img_ptr)
 			mlx_destroy_image(game->mlx, game->textu[i].img.img_ptr);
 	if (game->img.img_ptr)
 		mlx_destroy_image(game->mlx, game->img.img_ptr);
 	mlx_destroy_window(game->mlx, game->window);
-	free(game->spr_pos); //bonus
-	free(game->spr.order);//bonus
-	free(game->spr.dist);//bonus
-	free(game->spr.zbuffer);//bonus
 	mlx_destroy_display(game->mlx);
 	free(game->mlx);
 	clean_exit(game);
@@ -40,7 +36,7 @@ void	texture_error(char *message, t_game *game)
 
 	i = -1;
 	printf("Bye bye\n");
-	while (++i < 4)
+	while (++i < 6)
 		if (game->textu[i].img.img_ptr)
 			mlx_destroy_image(game->mlx, game->textu[i].img.img_ptr);
 	printf("%s\n", message);

@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/22 16:01:21 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/23 22:22:59 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ void	play_game(t_game *game)
 {
 	game->mlx = mlx_init();
 	get_texture(game);
+	get_sprite_texture(game); //bonus
 	game->window = mlx_new_window(game->mlx, WIDTH, HEIGHT, "cub3d");
 	game->img.img_ptr = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	game->img.addr = mlx_get_data_addr(game->img.img_ptr, &game->img.bpp,

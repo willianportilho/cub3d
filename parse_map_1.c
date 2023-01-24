@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:39:20 by wportilh          #+#    #+#             */
-/*   Updated: 2023/01/22 18:53:50 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/23 20:15:16 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	get_only_map(t_game *game)
 
 	i = -1;
 	start = 0;
-	while (start < 6 && game->map[++i])
+	while (start < 8 && game->map[++i])
 	{
 		size = ft_strlen(game->map[i]) - 1;
 		if ((ft_strnstr(game->map[i], "WE", size) != 0)
@@ -31,11 +31,13 @@ static void	get_only_map(t_game *game)
 			|| (ft_strnstr(game->map[i], "NO", size) != 0)
 			|| (ft_strnstr(game->map[i], "SO", size) != 0)
 			|| (ft_strnstr(game->map[i], "F", size) != 0)
-			|| (ft_strnstr(game->map[i], "C", size) != 0))
+			|| (ft_strnstr(game->map[i], "C", size) != 0)
+			|| (ft_strnstr(game->map[i], "S1", size) != 0)//alterei
+			|| (ft_strnstr(game->map[i], "S2", size) != 0))//alterei
 			start++;
 	}
-	if (start < 6)
-		map_error("needed 6 elements", game);
+	if (start < 8)//alterei
+		map_error("needed 8 elements", game);//alterei
 	game->map = ft_str_arrayndup_free(start, game->map); /* Aqui eu coloco
 	 manualmente a posição do mapa. Depois podemos mudar isso.*/
 	if (!game->map)
@@ -110,7 +112,7 @@ void	check_break_line(t_game *game)
 
 	i = -1;
 	elements = 0;
-	while ((game->single_line_map[++i]) && (elements < 6))
+	while ((game->single_line_map[++i]) && (elements < 8))//alterei
 	{
 		if (ft_isalpha(game->single_line_map[i]))
 		{

@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/22 19:18:27 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/23 22:13:43 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,11 +151,13 @@ typedef struct s_game
 	char			*so_wall_path;
 	char			*we_wall_path;
 	char			*ea_wall_path;
+	char			*s1_path; /*bonus*/
+	char			*s2_path; /*bonus*/
 	char			*f_inputs;
 	char			*c_inputs;
 	t_rgb			c;
 	t_rgb			f;
-	t_textu			textu[4];
+	t_textu			textu[6];
 	char			*single_line_map;
 	char			**map;
 	t_img			img;
@@ -184,6 +186,10 @@ void	texture_error(char *message, t_game *game);
 
 /* parse_settings.c*/
 void	parse_settings(t_game *game, char **map);
+
+/* parse_settings_2.c*/
+void	get_f_colors(t_game *game, char *map_line);
+void	get_c_colors(t_game *game, char *map_line);
 
 /* parse_utils.c*/
 char	*remove_space(char *str);
@@ -238,5 +244,6 @@ void	sprite_main(t_game	*game);
 /*sprite_init.c*/
 void	init_sprite_pos(t_game *game);
 void	init_sprite(t_game *game);
+void	get_sprite_texture(t_game *game);
 
 #endif

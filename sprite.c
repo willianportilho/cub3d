@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 09:00:06 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/22 19:14:03 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/23 21:57:08 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,15 @@ void	draw_sprite(t_game *game, int y, int texx, int start)
 	while (y < game->spr.line_end_y)
 	{
 		d = (y) * 256 - HEIGHT * 128 + game->spr.height * 128;
-		texy = ((d * game->textu[3].img.hgt) / game->spr.height) / 256;
-		if (game->time < 10000 && game->textu[3].img.data[texy * game
-				->textu[3].img.size_l / 4 + texx] != -16777216)
-			game->img.data[y * game->img.size_l / 4 + start] = game->textu[3]
-				.img.data[texy * game->textu[3].img.size_l / 4 + texx];
-		if (game->time > 10000 && game->textu[2].img.data[texy * game
-				->textu[2].img.size_l / 4 + texx] != -16777216)
-			game->img.data[y * game->img.size_l / 4 + start] = game->textu[2]
-				.img.data[texy * game->textu[2].img.size_l / 4 + texx];
+		texy = ((d * game->textu[4].img.hgt) / game->spr.height) / 256;
+		if (game->time < 10000 && game->textu[4].img.data[texy * game
+				->textu[4].img.size_l / 4 + texx] != -16777216)
+			game->img.data[y * game->img.size_l / 4 + start] = game->textu[4]
+				.img.data[texy * game->textu[4].img.size_l / 4 + texx];
+		if (game->time > 10000 && game->textu[5].img.data[texy * game
+				->textu[5].img.size_l / 4 + texx] != -16777216)
+			game->img.data[y * game->img.size_l / 4 + start] = game->textu[5]
+				.img.data[texy * game->textu[5].img.size_l / 4 + texx];
 		if (game->time == 20000)
 			game->time = 0;
 		y++;

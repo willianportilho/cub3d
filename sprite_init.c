@@ -6,7 +6,7 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 09:00:06 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/22 18:48:41 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/23 21:50:49 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,24 @@ void	init_sprite(t_game *game) // bonus
 	game->spr.dist = (float *)malloc(sizeof(float) * game->spr.count);
 	game->spr.zbuffer = (float *)malloc(sizeof(float) * WIDTH);
 	init_sprite_pos(game);
+}
+
+void	get_sprite_texture(t_game *game)
+{
+	game->textu[4].img.img_ptr = mlx_xpm_file_to_image(game->mlx,
+			game->s1_path, &game->textu[4].img.wdt, &game->textu[4].img
+			.hgt);
+	if (!game->textu[4].img.img_ptr)
+		texture_error("Texture error", game);
+	game->textu[4].img.data = (int *)mlx_get_data_addr(game->textu[4].img
+			.img_ptr, &game->textu[4].img.bpp, &game->textu[4].img.size_l,
+			&game->textu[4].img.endian);
+	game->textu[5].img.img_ptr = mlx_xpm_file_to_image(game->mlx,
+			game->s2_path, &game->textu[5].img.wdt, &game->textu[5].img
+			.hgt);
+	if (!game->textu[5].img.img_ptr)
+		texture_error("Texture error", game);
+	game->textu[5].img.data = (int *)mlx_get_data_addr(game->textu[5].img
+			.img_ptr, &game->textu[5].img.bpp, &game->textu[5].img.size_l,
+			&game->textu[5].img.endian);
 }

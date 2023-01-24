@@ -6,67 +6,28 @@
 /*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 18:30:52 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/19 00:34:11 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/23 22:42:54 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-//função pega numero das cores do C e salva em vetor rgb red green blue
-void	get_c_colors(t_game *game, char *map_line)
+
+int	get_settings_3(t_game *game, char *map_line)
 {
-	int		i;
-	int		j;
-	char	*color;
-
-	i = 0;
-	while (map_line && map_line[i] != ',')
-		i++;
-	color = ft_substr(map_line, 1, i - 1);
-	game->c.r = ft_atoi(color);
-	free(color);
-	j = i + 1;
-	i++;
-	while (map_line && map_line[i] != ',')
-		i++;
-	color = ft_substr(map_line, j, i - j);
-	game->c.g = ft_atoi(color);
-	free(color);
-	j = i;
-	while (map_line && map_line[i])
-		i++;
-	color = ft_substr(map_line, j + 1, i - j);
-	game->c.b = ft_atoi(color);
-	free(color);
+	if (map_line && !ft_strncmp(map_line, "S1", 2) && !game->s1_path)
+	{
+		game->s1_path = ft_substr(map_line, 2, ft_strlen(map_line) - 2);
+		game->settings_count += 23;
+		return (1);
+	}
+	if (map_line && !ft_strncmp(map_line, "S2", 2) && !game->s2_path)
+	{
+		game->s2_path = ft_substr(map_line, 2, ft_strlen(map_line) - 2);
+		game->settings_count += 29;
+		return (1);
+	}
+	return(0);
 }
-
-//função pega numero das cores do F e salva em vetor rgb red green blue
-void	get_f_colors(t_game *game, char *map_line)
-{
-	int		i;
-	int		j;
-	char	*color;
-
-	i = 0;
-	while (map_line && map_line[i] != ',')
-		i++;
-	color = ft_substr(map_line, 1, i - 1);
-	game->f.r = ft_atoi(color);
-	free(color);
-	j = i + 1;
-	i++;
-	while (map_line && map_line[i] != ',')
-		i++;
-	color = ft_substr(map_line, j, i - j);
-	game->f.g = ft_atoi(color);
-	free(color);
-	j = i;
-	while (map_line && map_line[i])
-		i++;
-	color = ft_substr(map_line, j + 1, i - j);
-	game->f.b = ft_atoi(color);
-	free(color);
-}
-
 int	get_settings_2(t_game *game, char *map_line)
 {
 	if (map_line && !ft_strncmp(map_line, "F", 1) && !game->f_inputs)
@@ -89,6 +50,8 @@ int	get_settings_2(t_game *game, char *map_line)
 		game->settings_count += 13;
 		return (1);
 	}
+	if (get_settings_3(game, map_line) == 1)
+		return (1);
 	return (0);
 }
 
@@ -129,15 +92,15 @@ void	parse_settings(t_game *game, char **map)
 		j = 0;
 		while (map[i] && map[i][j])
 		{
-			if (i < 6)
+			if (i < 8) //bonus
 				remove_space(map[i]);
 			if (get_settings(game, map[i]) == 1)
 				i++;
 			j++;
 		}
 	}
-	if (game->settings_count != 72)
-		map_missing_error("Map must have 6 valid settings", game);
+	if (game->settings_count != 124)
+		map_missing_error("Map must have 8 valid settings", game);
 	if (game->f.r > 255 || game->f.g > 255 || game->f.b > 255 || game->c.r > 255
 		|| game->c.g > 255 || game->c.b > 255 || game->f.r < 0
 		|| game->f.g < 0 || game->f.b < 0 || game->c.r < 0
