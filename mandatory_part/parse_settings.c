@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 18:30:52 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/23 21:20:55 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/23 22:25:48 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 	takes the number of colors from C, and saves in a rgb vector
 	(red, green and blue)
 */
-void	get_c_colors(t_game *game, char *map_line)
+static void	get_c_colors(t_game *game, char *map_line)
 {
 	int		i;
 	int		j;
@@ -47,7 +47,7 @@ void	get_c_colors(t_game *game, char *map_line)
 	takes the number of colors from F, and saves in a rgb vector
 	(red, green and blue)
 */
-void	get_f_colors(t_game *game, char *map_line)
+static void	get_f_colors(t_game *game, char *map_line)
 {
 	int		i;
 	int		j;
@@ -74,7 +74,7 @@ void	get_f_colors(t_game *game, char *map_line)
 	free(color);
 }
 
-int	get_settings_2(t_game *game, char *map_line)
+static int	get_settings_2(t_game *game, char *map_line)
 {
 	if (map_line && !ft_strncmp(map_line, "F", 1) && !game->f_inputs)
 	{
@@ -102,7 +102,7 @@ int	get_settings_2(t_game *game, char *map_line)
 /*
 	takes all the path written after NO, EA, SO ,WE , F and C
 */
-int	get_settings(t_game *game, char *map_line)
+static int	get_settings(t_game *game, char *map_line)
 {
 	if (map_line && !ft_strncmp(map_line, "NO", 2) && !game->no_wall_path)
 	{

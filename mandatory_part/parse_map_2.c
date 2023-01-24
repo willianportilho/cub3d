@@ -6,11 +6,38 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 15:18:14 by wportilh          #+#    #+#             */
-/*   Updated: 2023/01/23 21:56:13 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/23 22:13:09 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	check_break_line(t_game *game)
+{
+	int	i;
+	int	elements;
+
+	i = -1;
+	elements = 0;
+	while ((game->single_line_map[++i]) && (elements < 6))
+	{
+		if (ft_isalpha(game->single_line_map[i]))
+		{
+			elements++;
+			while (game->single_line_map[i] != '\n')
+				i++;
+		}
+	}
+	while ((game->single_line_map[i] == '\n')
+		|| (game->single_line_map[i] == ' '))
+		i++;
+	while (game->single_line_map[i++])
+	{
+		if ((game->single_line_map[i] == '\n')
+			&& (game->single_line_map[i + 1] == '\n'))
+			map_error("double break line founded in the map", game);
+	}
+}
 
 /*	checks if spaces ' ' are next to a invalid character "0ENSW"*/
 void	check_walls_1(t_game *game)

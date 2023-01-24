@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/23 21:54:30 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/23 22:28:23 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	ft_rotate(t_game *game, double angle)
 
 /*
 	moves UP/DOWN
-	sum/subtraction the player position on the 0 (x axis) and 1 (y axis), based on the
-	direction he is pointing. It is a sum of vectors.
+	sum/subtraction the player position on the 0 (x axis) and 1 (y axis),
+	based on the direction he is pointing. It is a sum of vectors.
 */
-void	up_down(t_game *game, int direction)
+static void	up_down(t_game *game, int direction)
 {
 	float	speed;
 
@@ -59,10 +59,10 @@ void	up_down(t_game *game, int direction)
 
 /*
 	moves LEFT/RIGHT
-	sum/subtraction the player position on the 0 (x axis) and 1 (y axis), based on the
-	direction he is pointing. It is a sum of vectors.
+	sum/subtraction the player position on the 0 (x axis) and 1 (y axis),
+	based on the direction he is pointing. It is a sum of vectors.
 */
-void	left_right(t_game *game, int direction)
+static void	left_right(t_game *game, int direction)
 {
 	float	speed;
 

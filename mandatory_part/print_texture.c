@@ -6,13 +6,13 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/23 21:59:08 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/23 22:27:04 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	print_texture_2(t_game *game, int wall_start, int wall_end, int i)
+static void	print_texture_2(t_game *game, int wall_start, int wall_end, int i)
 {
 	int	y;
 	int	textuy;
@@ -68,7 +68,7 @@ void	print_texture(t_game *game, int wall_start, int wall_end, int i)
 	print_texture_2(game, wall_start, wall_end, i);
 }
 
-void	get_texture_2(t_game *game)
+static void	get_texture_2(t_game *game)
 {
 	game->textu[2].img.img_ptr = mlx_xpm_file_to_image(game->mlx,
 			game->we_wall_path, &game->textu[2].img.wdt, &game->textu[2].img

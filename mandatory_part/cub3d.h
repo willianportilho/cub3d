@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.h                                            :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/23 20:34:56 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/23 22:28:12 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,12 +162,9 @@ int		map_error(char *message, t_game *game);
 void	parse_map(t_game *game);
 
 /* parse_map_2.c*/
+void	check_break_line(t_game *game);
 void	check_walls_1(t_game *game);
-
-/* parse_map_2.c*/
 void	check_walls_2(t_game *game);
-
-/* parse_map_2.c*/
 void	check_corners(t_game *game);
 
 /* play_game.c*/
@@ -184,8 +181,6 @@ void	calc_perpendicular_distance(t_game *game);
 
 /* move.c*/
 void	ft_rotate(t_game *game, double angle);
-void	up_down(t_game *game, int direction);
-void	left_right(t_game *game, int direction);
 int		ft_key(int key, t_game *game);
 
 /* print_texture.c*/

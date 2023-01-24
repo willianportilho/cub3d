@@ -6,13 +6,13 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:17 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/23 21:58:48 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/23 22:24:49 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	**read_cubfile(char *map, t_game *game)
+static char	**read_cubfile(char *map, t_game *game)
 {
 	int		fd;
 	char	*line;
@@ -36,7 +36,7 @@ char	**read_cubfile(char *map, t_game *game)
 	return (vector_map);
 }
 
-void	check_args(char **argv)
+static void	check_args(char **argv)
 {
 	int		map_len;
 	char	*map_name;
@@ -55,7 +55,7 @@ void	check_args(char **argv)
 	print_exit("map must be .cub\n");
 }
 
-void	init_game(t_game *game)
+static void	init_game(t_game *game)
 {
 	int	i;
 
