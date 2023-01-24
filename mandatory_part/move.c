@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/23 22:28:23 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/24 17:47:05 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,5 @@ int	ft_key(int key, t_game *game)
 	else if (key == 65363)
 		ft_rotate(game, +PI / 100);
 	load_game(game);
+	return (0);
 }

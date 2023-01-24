@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:39:20 by wportilh          #+#    #+#             */
-/*   Updated: 2023/01/24 15:21:30 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/24 17:47:23 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	normalization(t_game *game)
 	greather_line = 0;
 	while (game->map[++i])
 	{
-		if (greather_line < ft_strlen(game->map[i]))
+		if (greather_line < (int)ft_strlen(game->map[i]))
 			greather_line = ft_strlen(game->map[i]);
 	}
 	normalized_map = malloc((ft_str_arraylen(game->map) + 1) * sizeof(char *));

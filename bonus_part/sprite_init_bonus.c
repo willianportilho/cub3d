@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 09:00:06 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/24 15:22:00 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/24 17:47:35 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	init_sprite(t_game *game)
 {
 	int	i;
 	int	j;
-	int	k;
 
 	i = -1;
 	game->spr.count = 0;
