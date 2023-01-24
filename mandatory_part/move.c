@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/23 20:38:27 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/23 21:07:50 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,9 @@ void	ft_rotate(t_game *game, double angle)
 }
 
 /*
-	UP and DOWN
-	up_down e left_right funcionam da mesma maneira, elas somam a posição do
-	player no eixo 0 =x e eixo 1 = y quanto o player andou baseado na direção
-	que ele está apontando. Se trata de uma soma de vetores.
+	moves UP/DOWN
+	sum/subtraction the player position on the 0 (x axis) and 1 (y axis), based on the
+	direction he is pointing. It is a sum of vectors.
 */
 void	up_down(t_game *game, int direction)
 {
@@ -58,7 +57,11 @@ void	up_down(t_game *game, int direction)
 	}
 }
 
-/* moves LEFT/RIGHT*/
+/*
+	moves LEFT/RIGHT
+	sum/subtraction the player position on the 0 (x axis) and 1 (y axis), based on the
+	direction he is pointing. It is a sum of vectors.
+*/
 void	left_right(t_game *game, int direction)
 {
 	float	speed;
@@ -82,7 +85,7 @@ void	left_right(t_game *game, int direction)
 	}
 }
 
-/* detect keys WSAD and arrow left/right*/
+/*	detect keys WSAD and arrows left/right*/
 int	ft_key(int key, t_game *game)
 {
 	if (key == 113 || key == 65307)

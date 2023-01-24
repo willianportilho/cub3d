@@ -6,13 +6,13 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/23 20:55:32 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/23 21:22:39 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/*Adiciona um fundo à tela (preenche a metade da tela)*/
+/* adds the background (floor and ceiling)*/
 static void	fill_background(int start, int end, int pixel, t_game *game)
 {
 	int	y;
@@ -92,8 +92,10 @@ int	load_game(t_game *game)
 	return (0);
 }
 
-/*	load game: runs the game; ft_key: right and left arrows (rotation) and
-	WSAD (up, down, left, right); ft_close: press 'X' or ESC, closes the game*/
+/*
+	load game: runs the game; ft_key: right and left arrows (rotation) and
+	WSAD (up, down, left, right); ft_close: press 'X' or ESC (closes the game)
+*/
 void	play_game(t_game *game)
 {
 	game->mlx = mlx_init();

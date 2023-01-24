@@ -6,13 +6,13 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:28:40 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/23 20:38:43 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/23 21:21:33 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/*função remove todos espaços do arquivo .cub*/
+/* remove all .cub spaces*/
 
 char	*remove_space(char *str)
 {

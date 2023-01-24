@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/23 20:38:55 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/23 21:27:41 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,16 @@ void	print_texture_2(t_game *game, int wall_start, int wall_end, int i)
 	}
 }
 
-/*lendo a linha que vai ser printada e calculando os tamanhos e coordenas antes
-	de atribuir os pixels*/
-/*	textu_index; //indice do pixel da textura a ser usado
-	wallx; // ponto exato onde o raio atingiu a parede
-	textux; // Coordenada x da textura
-	step; // cada passo dado é um step que é baseado na altura da linha
-	texpos; //posição da textura que vai alterando com cada passo dado*/
+/*
+	reads the line that will be printed and calculates the size and coordinates
+	before assigning the pixels.
 
+	textu_index: texture pixel index to be used
+	wallx: point where the lightning hit the wall
+	textux: texture X coordenate
+	step: each step taken is a step based on the height of the line
+	texpos: texture position that changes with each step taken
+*/
 void	print_texture(t_game *game, int wall_start, int wall_end, int i)
 {
 	if (game->dda.hit_side == 0 && game->ray.dir_x >= 0)
@@ -86,7 +88,7 @@ void	get_texture_2(t_game *game)
 			&game->textu[3].img.endian);
 }
 
-/*Salva texturas em um array pra serem lidas posteriormente*/
+/* saves textures in an array to be read later*/
 void	get_texture(t_game *game)
 {
 	game->textu[0].img.img_ptr = mlx_xpm_file_to_image(game->mlx,

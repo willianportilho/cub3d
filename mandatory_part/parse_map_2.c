@@ -6,17 +6,13 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 15:18:14 by wportilh          #+#    #+#             */
-/*   Updated: 2023/01/23 20:38:33 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/23 21:16:46 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/* Aqui estou testando uma outra abordagem que parece melhor, para checar
-se ' ' espaços estão ao lado de um caratere proibido "0ENSW"
-   Os espaços só podem ficar ao lado de espaços ' ' e muros '1'
-   Por enquanto, eu tirei o "!= NULL" das checagens para caber na norma
-(80 colunas), mas depois vejo se consigo otimizar para ficar mais legível*/
+/*	checks if spaces ' ' are next to a invalid character "0ENSW"*/
 void	check_walls_1(t_game *game)
 {
 	int		i;
@@ -46,8 +42,10 @@ void	check_walls_1(t_game *game)
 	}
 }
 
-/*Essa fução checa se as linhas e colunas no index 0 e último index antes do
-'\0' são diferentes de espaço ' ' ou um '1'*/
+/*
+	checks if rows and columns at index 0 and last index are different from
+	space ' ' or '1'
+*/
 void	check_walls_2(t_game *game)
 {
 	int	i;
@@ -57,22 +55,27 @@ void	check_walls_2(t_game *game)
 	i = -1;
 	j = -1;
 	size = ft_strlen(game->map[0]);
-	while (game->map[++i]) // checa linhas
+	while (game->map[++i])
 	{
-		if ((ft_strchr("0ENSW", game->map[i][0])) // index 0
-		|| (ft_strchr("0ENSW", game->map[i][size - 1]))) // último index
+		if ((ft_strchr("0ENSW", game->map[i][0]))
+		|| (ft_strchr("0ENSW", game->map[i][size - 1])))
 			map_error("invalid format: needed '1' around the map", game);
 	}
-	while (++j < size) // checa colunas
+	while (++j < size)
 	{
-		if ((ft_strchr("0ENSW", game->map[0][j])) // index 0
+		if ((ft_strchr("0ENSW", game->map[0][j]))
 		|| (ft_strchr("0ENSW", game->map[ft_str_arraylen(game->map) - 1][j])))
-		// último index
 			map_error("invalid format: needed '1' around the map", game);
 	}
 }
 
-/* Checa as condições dos espaços com 0ENSW*/
+/*
+	checks space conditions with "0ENSW"
+	ex: 111  (space next 0 is wrong)
+		1101
+		1001
+		1111
+*/
 static void	check_conditions(int i, int j, t_game *game)
 {
 	if ((j > 0) && (game->map[i][j - 1] == '1'))
@@ -92,11 +95,10 @@ static void	check_conditions(int i, int j, t_game *game)
 }
 
 /*
-	Essa função checa se alguma quina que tenha espaço coincide com 0ENSW
-
+	checks if some corner that containing a space, matches with "0ENSW"
 	ex: 1111
 		11 1
-		1011 (esse 0 é errado nesse cenário)
+		1011 (0 and ' ' are wrong)
 		1111
 */
 void	check_corners(t_game *game)

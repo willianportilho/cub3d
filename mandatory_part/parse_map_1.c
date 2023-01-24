@@ -6,15 +6,17 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:39:20 by wportilh          #+#    #+#             */
-/*   Updated: 2023/01/23 20:38:10 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/23 21:07:37 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/*Pega somente o mapa, sem os elementos. Essa variável start é incrementada
-até achar as 6 correspondências com strnstr. Se não acha, retorna erro.
-  Com start, consigo saber de qual index eu começo a copiar o mapa*/
+/*
+	takes only the map, without elements. the start variable is incremented
+	until finds 6 elements acronyms (WE, EA, NO, SO, F and C). if not finds,
+	returns a error.
+*/
 static void	get_only_map(t_game *game)
 {
 	int	i;
