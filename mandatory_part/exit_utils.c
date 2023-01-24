@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:28:40 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/23 20:38:20 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/23 21:55:46 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	print_exit(char *input)
 {
-	printf("%s", input);
-	exit (1);
+	printf("Error\n%s\n", input);
+	exit (EXIT_FAILURE);
 }
 
 void	clean_exit(t_game *game)
@@ -28,7 +28,7 @@ void	clean_exit(t_game *game)
 	free(game->ea_wall_path);
 	free(game->c_inputs);
 	free(game->f_inputs);
-	exit (1);
+	exit (EXIT_FAILURE);
 }
 
 void	destroy_pointers_char(char **p)
@@ -45,7 +45,7 @@ int	map_error(char *message, t_game *game)
 {
 	printf("Error\n%s\n", message);
 	clean_exit(game);
-	exit(-1);
+	exit(EXIT_FAILURE);
 }
 
 void	map_missing_error(char *message, t_game *game)
@@ -65,5 +65,5 @@ void	map_missing_error(char *message, t_game *game)
 		free(game->c_inputs);
 	if (game->f_inputs)
 		free(game->f_inputs);
-	exit (1);
+	exit (EXIT_FAILURE);
 }

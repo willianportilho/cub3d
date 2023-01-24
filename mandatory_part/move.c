@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/23 21:07:50 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/23 21:54:30 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	left_right(t_game *game, int direction)
 	}
 }
 
-/*	detect keys WSAD and arrows left/right*/
+/*detects keys WSAD and arrows left/right*/
 int	ft_key(int key, t_game *game)
 {
 	if (key == 113 || key == 65307)

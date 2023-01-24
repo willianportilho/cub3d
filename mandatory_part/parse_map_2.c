@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 15:18:14 by wportilh          #+#    #+#             */
-/*   Updated: 2023/01/23 21:16:46 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/23 21:56:13 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	check_walls_1(t_game *game)
 			{
 				if ((j > 0) && (ft_strchr("0ENSW", arr[i][j - 1])))
 					map_error("invalid format: needed 1 around the map", game);
-					// Acho que vou fazer um define com essas mensagens depois
 				if ((arr[i][j + 1]) && (ft_strchr("0ENSW", arr[i][j + 1])))
 					map_error("invalid format: needed 1 around the map", game);
 				if ((i > 0) && (ft_strchr("0ENSW", arr[i - 1][j])))

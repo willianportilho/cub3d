@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/23 21:27:41 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/23 21:59:08 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	get_texture_2(t_game *game)
 			game->we_wall_path, &game->textu[2].img.wdt, &game->textu[2].img
 			.hgt);
 	if (!game->textu[2].img.img_ptr)
-		texture_error("Texture error", game);
+		texture_error("texture error", game);
 	game->textu[2].img.data = (int *)mlx_get_data_addr(game->textu[2].img
 			.img_ptr, &game->textu[2].img.bpp, &game->textu[2].img.size_l,
 			&game->textu[2].img.endian);
@@ -82,7 +82,7 @@ void	get_texture_2(t_game *game)
 			game->ea_wall_path, &game->textu[3].img.wdt, &game->textu[3].img
 			.hgt);
 	if (!game->textu[3].img.img_ptr)
-		texture_error("Texture error", game);
+		texture_error("texture error", game);
 	game->textu[3].img.data = (int *)mlx_get_data_addr(game->textu[3].img
 			.img_ptr, &game->textu[3].img.bpp, &game->textu[3].img.size_l,
 			&game->textu[3].img.endian);
@@ -95,7 +95,7 @@ void	get_texture(t_game *game)
 			game->no_wall_path, &game->textu[0].img.wdt, &game->textu[0].img
 			.hgt);
 	if (!game->textu[0].img.img_ptr)
-		texture_error("Texture error", game);
+		texture_error("texture error", game);
 	game->textu[0].img.data = (int *)mlx_get_data_addr(game->textu[0].img
 			.img_ptr, &game->textu[0].img.bpp, &game->textu[0].img.size_l,
 			&game->textu[0].img.endian);
@@ -103,7 +103,7 @@ void	get_texture(t_game *game)
 			game->so_wall_path, &game->textu[1].img.wdt, &game->textu[1].img
 			.hgt);
 	if (!game->textu[1].img.img_ptr)
-		texture_error("Texture error", game);
+		texture_error("texture error", game);
 	game->textu[1].img.data = (int *)mlx_get_data_addr(game->textu[1].img
 			.img_ptr, &game->textu[1].img.bpp, &game->textu[1].img.size_l,
 			&game->textu[1].img.endian);

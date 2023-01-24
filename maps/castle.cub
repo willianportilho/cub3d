@@ -1,6 +1,6 @@
 WE ./textures/castle_gray_wall_512.xpm
 EA ./textures/castle_blue_wall_512.xpm
-NO 			./textures/castle_light_shadow_wall_512.xpm
+NO 			./textures/castle_light_shdadow_wall_512.xpm
 SO    ./textures/castle_orange_wall_512.xpm
 
 C 0, 0, 0

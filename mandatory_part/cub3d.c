@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:17 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/23 20:37:57 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/23 21:58:48 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ char	**read_cubfile(char *map, t_game *game)
 
 	fd = open(map, O_DIRECTORY);
 	if (fd != -1)
-		print_exit("File cannot be a directory");
+		print_exit("file cannot be a directory");
 	fd = open(map, O_RDONLY);
 	if (fd == -1)
-		print_exit("File cannot be a opened");
+		print_exit("file cannot be a opened");
 	game->single_line_map = '\0';
 	line = get_next_line(fd);
 	while (line != NULL)
@@ -45,14 +45,14 @@ void	check_args(char **argv)
 	if (map_len > 4)
 		map_name = ft_substr(argv[1], (map_len - 4), 5);
 	else
-		print_exit("Map must be .cub\n");
+		print_exit("map must be .cub\n");
 	if (!ft_strncmp(map_name, ".cub", 5))
 	{
 		free(map_name);
 		return ;
 	}
 	free(map_name);
-	print_exit("Map must be .cub\n");
+	print_exit("map must be .cub\n");
 }
 
 void	init_game(t_game *game)
@@ -77,7 +77,7 @@ int	main(int argc, char **argv)
 	t_game	game;
 
 	if (argc != 2)
-		print_exit("Error\nType 2 arguments");
+		print_exit("required 2 arguments");
 	init_game(&game);
 	check_args(argv);
 	game.map = read_cubfile(argv[1], &game);
