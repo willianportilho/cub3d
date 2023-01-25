@@ -1,9 +1,9 @@
-WE ./textures/castle_gray_wall_512.xpm
-EA ./textures/castle_blue_wall_512.xpm
-NO 			./textures/castle_light_shadow_wall_512.xpm
-SO    ./textures/castle_orange_wall_512.xpm
-S1 			./textures/alien_1.xpm
-S2    ./textures/alien_2.xpm
+WE ./textures/walls/castle_1.xpm
+EA ./textures/walls/castle_2.xpm
+NO 			./textures/walls/castle_3.xpm
+SO    ./textures/walls/castle_4.xpm
+S1 			./textures/sprites/alien_1.xpm
+S2    ./textures/sprites/alien_2.xpm
 C 0, 0, 0
 F 0, 0, 0
 
