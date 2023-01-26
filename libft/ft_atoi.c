@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcesar-d <mcesar-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 10:24:44 by mcesar-d          #+#    #+#             */
-/*   Updated: 2022/05/09 11:02:48 by mcesar-d         ###   ########.fr       */
+/*   Updated: 2023/01/24 23:18:21 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_atoi(const char *s)
 	isneg = 1;
 	result = 0;
 	if (!*s)
-		return (0);
+		return (257);
 	while (ft_isspace(s[index]) == 1)
 		index++;
 	if (s[index] == '-' || s[index] == '+')

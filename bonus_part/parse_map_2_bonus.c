@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_2_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 15:18:14 by wportilh          #+#    #+#             */
-/*   Updated: 2023/01/24 15:21:32 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/25 20:02:39 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	check_break_line(t_game *game)
 	{
 		if ((game->single_line_map[i] == '\n')
 			&& (game->single_line_map[i + 1] == '\n'))
-			map_error("double break line founded in the map", game);
+			map_error_2("double break line founded in the map", game);
 	}
 }
 
@@ -55,14 +55,14 @@ void	check_walls_1(t_game *game)
 		{
 			if (arr[i][j] == ' ')
 			{
-				if ((j > 0) && (ft_strchr("0ENSW", arr[i][j - 1])))
-					map_error("invalid format: needed 1 around the map", game);
-				if ((arr[i][j + 1]) && (ft_strchr("0ENSW", arr[i][j + 1])))
-					map_error("invalid format: needed 1 around the map", game);
-				if ((i > 0) && (ft_strchr("0ENSW", arr[i - 1][j])))
-					map_error("invalid format: needed 1 around the map", game);
-				if ((arr[i + 1]) && (ft_strchr("0ENSW", arr[i + 1][j])))
-					map_error("invalid format: needed 1 around the map", game);
+				if ((j > 0) && (ft_strchr("0ENSW2", arr[i][j - 1])))
+					map_error_2("invalid map: needed 1 around the map", game);
+				if ((arr[i][j + 1]) && (ft_strchr("0ENSW2", arr[i][j + 1])))
+					map_error_2("invalid map: needed 1 around the map", game);
+				if ((i > 0) && (ft_strchr("0ENSW2", arr[i - 1][j])))
+					map_error_2("invalid map: needed 1 around the map", game);
+				if ((arr[i + 1]) && (ft_strchr("0ENSW2", arr[i + 1][j])))
+					map_error_2("invalid map: needed 1 around the map", game);
 			}
 		}
 	}
@@ -83,15 +83,15 @@ void	check_walls_2(t_game *game)
 	size = ft_strlen(game->map[0]);
 	while (game->map[++i])
 	{
-		if ((ft_strchr("0ENSW", game->map[i][0]))
-		|| (ft_strchr("0ENSW", game->map[i][size - 1])))
-			map_error("invalid format: needed '1' around the map", game);
+		if ((ft_strchr("0ENSW2", game->map[i][0]))
+		|| (ft_strchr("0ENSW2", game->map[i][size - 1])))
+			map_error_2("invalid format: needed '1' around the map", game);
 	}
 	while (++j < size)
 	{
-		if ((ft_strchr("0ENSW", game->map[0][j]))
-		|| (ft_strchr("0ENSW", game->map[ft_str_arraylen(game->map) - 1][j])))
-			map_error("invalid format: needed '1' around the map", game);
+		if ((ft_strchr("0ENSW2", game->map[0][j]))
+		|| (ft_strchr("0ENSW2", game->map[ft_str_arraylen(game->map) - 1][j])))
+			map_error_2("invalid format: needed '1' around the map", game);
 	}
 }
 
@@ -106,17 +106,18 @@ static void	check_conditions(int i, int j, t_game *game)
 {
 	if ((j > 0) && (game->map[i][j - 1] == '1'))
 	{
-		if ((game->map[i + 1]) && (ft_strchr("0ENSW", game->map[i + 1][j - 1])))
-			map_error("invalid format1: needed 1 around the map", game);
-		if ((i > 1) && (ft_strchr("0ENSW", game->map[i - 1][j - 1])))
-			map_error("invalid format2: needed 1 around the map", game);
+		if ((game->map[i + 1]) && (ft_strchr("0ENSW2", game->map[i + 1][j
+					- 1])))
+			map_error_2("invalid format1: needed 1 around the map", game);
+		if ((i > 1) && (ft_strchr("0ENSW2", game->map[i - 1][j - 1])))
+			map_error_2("invalid format2: needed 1 around the map", game);
 	}
 	if ((game->map[i][j + 1]) && (game->map[i][j + 1] == '1'))
 	{
 		if ((game->map[i + 1]) && (ft_strchr("0ENSW", game->map[i + 1][j + 1])))
-			map_error("invalid format3: needed 1 around the map", game);
+			map_error_2("invalid format3: needed 1 around the map", game);
 		if ((i > 1) && (ft_strchr("0ENSW2", game->map[i - 1][j + 1])))
-			map_error("invalid format4: needed 1 around the map", game);
+			map_error_2("invalid format4: needed 1 around the map", game);
 	}
 }
 

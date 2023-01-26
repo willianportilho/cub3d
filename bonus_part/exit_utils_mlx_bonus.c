@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils_mlx_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:28:40 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/24 15:21:23 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/25 20:04:27 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,10 @@ void	texture_error(char *message, t_game *game)
 	mlx_destroy_display(game->mlx);
 	free(game->mlx);
 	clean_exit(game);
+}
+
+void	print_exit(char *input)
+{
+	printf("Error\n%s\n", input);
+	exit (EXIT_FAILURE);
 }

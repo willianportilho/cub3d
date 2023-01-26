@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:28:40 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/24 15:21:41 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/25 19:46:07 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-/* remove all .cub spaces*/
 char	*remove_space(char *str)
 {
 	int	char_count;

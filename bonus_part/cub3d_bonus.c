@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:17 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/24 15:21:13 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/25 19:53:06 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ static void	init_game(t_game *game)
 	game->s2_path = NULL;
 	game->c_inputs = NULL;
 	game->f_inputs = NULL;
-	game->time = 0; //bonus
-	while (++i < 6) //alterado bonus
+	game->time = 0;
+	while (++i < 6)
 		game->textu[i].img.img_ptr = NULL;
 }
 
@@ -86,7 +86,7 @@ int	main(int argc, char **argv)
 	game.map = read_cubfile(argv[1], &game);
 	parse_settings(&game, game.map);
 	parse_map(&game);
-	init_sprite(&game); //bonus
+	init_sprite(&game);
 	play_game(&game);
 	clean_exit(&game);
 }

@@ -3,19 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse_settings_2_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 18:30:52 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/24 15:21:35 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/25 19:45:48 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-/*
-	takes the number of colors from C, and saves in a rgb vector
-	(red, green and blue)
-*/
 void	get_c_colors(t_game *game, char *map_line)
 {
 	int		i;
@@ -43,10 +39,6 @@ void	get_c_colors(t_game *game, char *map_line)
 	free(color);
 }
 
-/*
-	takes the number of colors from F, and saves in a rgb vector
-	(red, green and blue)
-*/
 void	get_f_colors(t_game *game, char *map_line)
 {
 	int		i;

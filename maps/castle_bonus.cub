@@ -4,7 +4,8 @@ NO 			./textures/walls/castle_3.xpm
 SO    ./textures/walls/castle_4.xpm
 S1 			./textures/sprites/alien_1.xpm
 S2    ./textures/sprites/alien_2.xpm
-C 0, 0, 0
+
+C 0, 0,0
 F 0, 0, 0
 
 111111111111111111111111111111111111111

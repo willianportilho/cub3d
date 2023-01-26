@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_1_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:39:20 by wportilh          #+#    #+#             */
-/*   Updated: 2023/01/24 17:47:23 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/25 19:58:59 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	get_only_map(t_game *game)
 			|| (ft_strnstr(game->map[i], "SO", size) != 0)
 			|| (ft_strnstr(game->map[i], "F", size) != 0)
 			|| (ft_strnstr(game->map[i], "C", size) != 0)
-			|| (ft_strnstr(game->map[i], "S1", size) != 0) //bonus
+			|| (ft_strnstr(game->map[i], "S1", size) != 0)
 			|| (ft_strnstr(game->map[i], "S2", size) != 0))
 			start++;
 	}
@@ -101,13 +101,13 @@ static void	check_characters(t_game *game)
 		while (game->map[i][++j])
 		{
 			if (ft_strchr(" 10ENSW2", game->map[i][j]) == NULL)
-				map_error("invalid character", game);
+				map_error_2("invalid character", game);
 			if (ft_strchr("ENSW", game->map[i][j]))
 				player++;
 		}
 	}
 	if (player != 1)
-		map_error("needed one player (only one is allowed)", game);
+		map_error_2("needed one player (only one is allowed)", game);
 }
 
 void	parse_map(t_game *game)

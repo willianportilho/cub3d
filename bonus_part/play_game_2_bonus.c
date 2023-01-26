@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   play_game_2_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 20:06:16 by wportilh          #+#    #+#             */
-/*   Updated: 2023/01/24 15:21:43 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/25 20:07:11 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	calc_ray_dir(float pixel, t_game *game)
 	game->ray.dir_y = game->player.dir[1] + camera_pixel[1];
 }
 
-/*calcula a distância de uma coluna até outra (x) e de uma linha até outra (y)*/
+/*calculates de distance between one column to other (x) and from a line to
+	other (y)*/
 void	calc_delta_dist_x_and_y(t_game *game)
 {
 	if (game->ray.dir_x == 0)

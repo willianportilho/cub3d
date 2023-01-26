@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_settings_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 18:30:52 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/24 15:21:38 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/25 19:45:59 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,6 @@ static int	get_settings_2(t_game *game, char *map_line)
 	return (0);
 }
 
-/*
-	takes all the path written after NO, EA, SO ,WE , F and C
-*/
 static int	get_settings(t_game *game, char *map_line)
 {
 	if (map_line && !ft_strncmp(map_line, "NO", 2) && !game->no_wall_path)
@@ -108,5 +105,5 @@ void	parse_settings(t_game *game, char **map)
 		|| game->c.g > 255 || game->c.b > 255 || game->f.r < 0
 		|| game->f.g < 0 || game->f.b < 0 || game->c.r < 0
 		|| game->c.g < 0 || game->c.b < 0)
-		map_error("Colors range must be from 0 to 255", game);
+		map_error_2("Colors range must be from 0 to 255", game);
 }

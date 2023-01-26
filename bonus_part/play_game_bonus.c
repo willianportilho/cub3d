@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   play_game_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/24 16:48:28 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/25 19:51:58 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ int	load_game(t_game *game)
 		calc_dda_find_wall(game);
 		calc_perpendicular_distance(game);
 		get_size_lines_and_print(pixel, game);
-		game->spr.zbuffer[(int)pixel] = game->dda.perpendicular_ray; //bonus
+		game->spr.zbuffer[(int)pixel] = game->dda.perpendicular_ray;
 	}
-	sprite_main(game); //bonus
+	sprite_main(game);
 	mlx_put_image_to_window(game->mlx, game->window, game->img.img_ptr, 0, 0);
 	return (0);
 }
@@ -102,7 +102,7 @@ void	play_game(t_game *game)
 {
 	game->mlx = mlx_init();
 	get_texture(game);
-	get_sprite_texture(game); //bonus
+	get_sprite_texture(game);
 	game->window = mlx_new_window(game->mlx, WIDTH, HEIGHT, "cub3d");
 	game->img.img_ptr = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	game->img.addr = mlx_get_data_addr(game->img.img_ptr, &game->img.bpp,

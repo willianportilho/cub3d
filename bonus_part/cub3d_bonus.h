@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/24 18:01:32 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/25 20:04:49 by acosta-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,14 +172,15 @@ typedef struct s_game
 
 /* cub3D.c*/
 /* exit_utils.c*/
-void	print_exit(char *input);
 void	destroy_pointers_char(char **p);
 void	clean_exit(t_game *game);
 void	map_missing_error(char *message, t_game *game);
+int		map_error_2(char *message, t_game *game);
 
 /* exit_utils_mlx.c*/
 int		ft_close(t_game *game);
 void	texture_error(char *message, t_game *game);
+void	print_exit(char *input);
 
 /* parse_settings.c*/
 void	parse_settings(t_game *game, char **map);
