@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:17 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/25 19:53:06 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/25 21:49:11 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	**read_cubfile(char *map, t_game *game)
 	fd = open(map, O_RDONLY);
 	if (fd == -1)
 		print_exit("file cannot be a opened");
-	game->single_line_map = '\0';
+	game->single_line_map = NULL;
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
