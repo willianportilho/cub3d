@@ -6,13 +6,13 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 19:03:20 by wportilh          #+#    #+#             */
-/*   Updated: 2023/01/24 15:21:08 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/26 01:38:07 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-int	will_collide(int angle, t_game *game)
+int	will_collide(float angle, t_game *game)
 {
 	int		colision;
 	float	pixel;

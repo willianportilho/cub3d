@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/24 18:01:23 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/26 01:39:05 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ int		create_rgb(int r, int g, int b);
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
 
 /*colision.c*/
-int		will_collide(int angle, t_game *game);
+int		will_collide(float angle, t_game *game);
 
 /*sprite.c*/
 void	sprite_main(t_game	*game);

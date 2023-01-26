@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/25 20:04:49 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/26 01:38:17 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ int		create_rgb(int r, int g, int b);
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
 
 /*colision.c*/
-int		will_collide(int angle, t_game *game);
+int		will_collide(float angle, t_game *game);
 
 /*sprite.c*/
 void	sprite_main(t_game	*game);
