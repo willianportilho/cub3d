@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:28:40 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/25 20:04:23 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/26 00:31:31 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	clean_exit(t_game *game)
 {
 	destroy_pointers_char(game->map);
-	free(game->single_line_map); //readiconado nao sei pq
+	free(game->single_line_map);
 	if (game->no_wall_path)
 		free(game->no_wall_path);
 	if (game->so_wall_path)
@@ -53,7 +53,7 @@ int	map_error_2(char *message, t_game *game)
 {
 	printf("Error\n%s\n", message);
 	destroy_pointers_char(game->map);
-	free(game->single_line_map); //readiconado nao sei pq
+	free(game->single_line_map);
 	if (game->no_wall_path)
 		free(game->no_wall_path);
 	if (game->so_wall_path)
