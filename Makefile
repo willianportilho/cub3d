@@ -6,7 +6,7 @@
 #    By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/16 22:45:46 by acosta-a          #+#    #+#              #
-#    Updated: 2023/01/26 13:49:32 by wportilh         ###   ########.fr        #
+#    Updated: 2023/01/26 14:21:30 by wportilh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -109,6 +109,6 @@ re: fclean all
 rebonus: fclean bonus
 
 norm:
-					norminette $(SRC_PATH) $(SRC_B_PATH)
+					norminette $(SRC_PATH) $(SRC_B_PATH) $(LIBFT_PATH)
 
 .PHONY: all bonus clean fclean re rebonus mlx
