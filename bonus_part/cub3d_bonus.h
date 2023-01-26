@@ -6,23 +6,18 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/26 01:38:17 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/26 13:48:42 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_BONUS_H
 # define CUB3D_BONUS_H
-# include <stdlib.h>
-# include <unistd.h>
 # include <stdio.h>
 # include <fcntl.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <string.h>
 # include <math.h>
 # include "mlx.h"
 # include "../libft/libft.h"
-# include "../minilibx-linux/mlx.h"
+# include "../minilibx_linux/mlx.h"
 
 # define WIDTH 1024
 # define HEIGHT 768

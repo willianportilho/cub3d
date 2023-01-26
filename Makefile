@@ -6,7 +6,7 @@
 #    By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/16 22:45:46 by acosta-a          #+#    #+#              #
-#    Updated: 2023/01/24 17:58:31 by wportilh         ###   ########.fr        #
+#    Updated: 2023/01/26 13:49:32 by wportilh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,8 +58,8 @@ VAL =		valgrind --leak-check=full --show-leak-kinds=all
 #HEADER
 LIBFT = ./libft/libft.a
 LIBFT_PATH = ./libft
-MLX = ./minilibx-linux/libmlx.a
-MLX_PATH = ./minilibx-linux
+MLX = ./minilibx_linux/libmlx.a
+MLX_PATH = ./minilibx_linux
 
 SRC_PATH =	mandatory_part/
 OBJ_PATH =	obj/
@@ -107,5 +107,8 @@ fclean: clean
 re: fclean all
 
 rebonus: fclean bonus
+
+norm:
+					norminette $(SRC_PATH) $(SRC_B_PATH)
 
 .PHONY: all bonus clean fclean re rebonus mlx
