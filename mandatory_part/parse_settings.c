@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_settings.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 18:30:52 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/24 23:15:08 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/25 22:59:30 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,14 +135,16 @@ void	parse_settings(t_game *game, char **map)
 	i = -1;
 	while (map[++i])
 	{
-		j = 0;
-		while (map[i] && map[i][j])
+		j = -1;
+		while ((map[i]) && (map[i][++j]))
 		{
 			if (i < 6)
 				remove_space(map[i]);
 			if (get_settings(game, map[i]) == 1)
+			{
 				i++;
-			j++;
+				j = 0;
+			}
 		}
 	}
 	if (game->settings_count != 72)
