@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/27 11:52:14 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/27 12:04:53 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ static void	print_texture_2(t_game *game, int wall_start, int wall_end, int i)
 void	print_texture(t_game *game, int wall_start, int wall_end, int i)
 {
 	if (game->dda.hit_side == 0 && game->ray.dir_x >= 0)
-		game->print_textu.textu_index = 0;
-	if (game->dda.hit_side == 0 && game->ray.dir_x < 0)
-		game->print_textu.textu_index = 1;
-	if (game->dda.hit_side == 1 && game->ray.dir_y >= 0)
-		game->print_textu.textu_index = 2;
-	if (game->dda.hit_side == 1 && game->ray.dir_y < 0)
 		game->print_textu.textu_index = 3;
+	if (game->dda.hit_side == 0 && game->ray.dir_x < 0)
+		game->print_textu.textu_index = 2;
+	if (game->dda.hit_side == 1 && game->ray.dir_y >= 0)
+		game->print_textu.textu_index = 1;
+	if (game->dda.hit_side == 1 && game->ray.dir_y < 0)
+		game->print_textu.textu_index = 0;
 	if (game->dda.hit_side == 0)
 		game->print_textu.wallx = game->player.pos[1]
 			+ game->dda.perpendicular_ray * game->ray.dir_y;
