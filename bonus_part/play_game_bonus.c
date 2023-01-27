@@ -3,31 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   play_game_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acosta-a <acosta-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/25 19:51:58 by acosta-a         ###   ########.fr       */
+/*   Updated: 2023/01/27 11:52:57 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-/* adds the background (floor and ceiling)*/
-static void	fill_background(int start, int end, int pixel, t_game *game)
+static void	init_player_2(t_game *game, int x, int y)
 {
-	int	y;
-
-	y = -1;
-	while (++y <= start)
+	if (game->map[y][x] == 'N')
 	{
-		my_mlx_pixel_put(&game->img, pixel, y,
-			create_rgb(game->c.r, game->c.g, game->c.b));
+		game->player.dir[1] = -1;
+		game->player.camera_plane[0] = 0.66;
 	}
-	y = end;
-	while (y < HEIGHT)
+	if (game->map[y][x] == 'S')
 	{
-		my_mlx_pixel_put(&game->img, pixel, y++,
-			create_rgb(game->f.r, game->f.g, game->f.b));
+		game->player.dir[1] = 1;
+		game->player.camera_plane[0] = -0.66;
+	}
+	if (game->map[y][x] == 'E')
+	{
+		game->player.dir[0] = 1;
+		game->player.camera_plane[1] = 0.66;
+	}
+	if (game->map[y][x] == 'W')
+	{
+		game->player.dir[0] = -1;
+		game->player.camera_plane[1] = -0.66;
 	}
 }
 
@@ -37,8 +42,8 @@ static void	init_player(t_game *game)
 	int	y;
 
 	game->player.dir[0] = 0;
-	game->player.dir[1] = -1;
-	game->player.camera_plane[0] = 0.66;
+	game->player.dir[1] = 0;
+	game->player.camera_plane[0] = 0;
 	game->player.camera_plane[1] = 0;
 	y = -1;
 	while (game->map[++y])
@@ -48,6 +53,7 @@ static void	init_player(t_game *game)
 		{
 			if (ft_isalpha(game->map[y][x]))
 			{
+				init_player_2(game, x, y);
 				game->player.pos[0] = (float)x + 0.5;
 				game->player.pos[1] = (float)y + 0.5;
 				return ;

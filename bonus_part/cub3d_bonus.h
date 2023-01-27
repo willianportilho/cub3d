@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:53 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/26 13:48:42 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/27 11:51:36 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,7 @@ void	ft_rotate(t_game *game, double angle);
 int		ft_key(int key, t_game *game);
 
 /* print_texture.c*/
+void	fill_background(int start, int end, int pixel, t_game *game);
 void	print_texture(t_game *game, int wall_start, int wall_end, int i);
 void	get_texture(t_game *game);
 

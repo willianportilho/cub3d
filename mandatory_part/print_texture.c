@@ -6,11 +6,30 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/23 22:27:04 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/27 11:53:46 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+/* adds the background (floor and ceiling)*/
+void	fill_background(int start, int end, int pixel, t_game *game)
+{
+	int	y;
+
+	y = -1;
+	while (++y <= start)
+	{
+		my_mlx_pixel_put(&game->img, pixel, y,
+			create_rgb(game->c.r, game->c.g, game->c.b));
+	}
+	y = end;
+	while (y < HEIGHT)
+	{
+		my_mlx_pixel_put(&game->img, pixel, y++,
+			create_rgb(game->f.r, game->f.g, game->f.b));
+	}
+}
 
 static void	print_texture_2(t_game *game, int wall_start, int wall_end, int i)
 {
