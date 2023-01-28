@@ -6,7 +6,7 @@
 /*   By: wportilh <wportilh@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 16:03:00 by acosta-a          #+#    #+#             */
-/*   Updated: 2023/01/27 11:52:57 by wportilh         ###   ########.fr       */
+/*   Updated: 2023/01/27 21:08:10 by wportilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,11 @@ int	load_game(t_game *game)
 void	play_game(t_game *game)
 {
 	game->mlx = mlx_init();
+	if (!game->mlx)
+	{
+		printf("Error\nmlx_init was unsuccessful\n");
+		clean_exit(game);
+	}
 	get_texture(game);
 	get_sprite_texture(game);
 	game->window = mlx_new_window(game->mlx, WIDTH, HEIGHT, "cub3d");
